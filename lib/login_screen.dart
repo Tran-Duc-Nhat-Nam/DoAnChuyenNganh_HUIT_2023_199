@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -144,33 +147,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   ElevatedButton(
                       style: RoundButtonStyle(),
-                      onPressed: () async {
-                        final GoogleSignInAccount? googleUser =
-                            await GoogleSignIn().signIn();
-
-                        // Obtain the auth details from the request
-                        final GoogleSignInAuthentication? googleAuth =
-                            await googleUser?.authentication;
-
-                        // Create a new credential
-                        final credential = GoogleAuthProvider.credential(
-                          accessToken: googleAuth?.accessToken,
-                          idToken: googleAuth?.idToken,
-                        );
-
-                        // Once signed in, return the UserCredential
-                        await widget.auth.signInWithCredential(credential);
-
-                        if (widget.auth.currentUser != null) {
-                          widget.notifyParent();
-                        }
-                      },
+                      onPressed: DangNhapGoogle,
                       child: const Text("Gmail")),
-                  HorizontalGapSizedBox(),
-                  ElevatedButton(
-                      style: RoundButtonStyle(),
-                      onPressed: () {},
-                      child: const Text("Facebook")),
                 ],
               ),
             ],
@@ -178,6 +156,36 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+
+  void DangNhapGoogle() async {
+    if (kIsWeb) {
+      GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+      googleProvider
+          .addScope('https://www.googleapis.com/auth/contacts.readonly');
+      googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
+
+      UserCredential user =
+          await FirebaseAuth.instance.signInWithPopup(googleProvider);
+    } else if (Platform.isAndroid) {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      await widget.auth.signInWithCredential(credential);
+    }
+
+    if (widget.auth.currentUser != null) {
+      widget.notifyParent();
+    }
   }
 
   ButtonStyle RoundButtonStyle() {
