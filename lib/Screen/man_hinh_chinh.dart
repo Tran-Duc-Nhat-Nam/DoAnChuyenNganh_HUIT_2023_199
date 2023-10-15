@@ -1,5 +1,5 @@
-import 'home_page.dart';
-import 'user_page.dart';
+import '../Page/trang_chu.dart';
+import '../Page/trang_nguoi_dung.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
