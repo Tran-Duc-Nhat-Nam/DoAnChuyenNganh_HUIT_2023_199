@@ -3,8 +3,8 @@ import '../Page/trang_nguoi_dung.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({
+class ManHinhChinh extends StatefulWidget {
+  const ManHinhChinh({
     super.key,
     required this.title,
     required this.notifyParent,
@@ -16,16 +16,16 @@ class MainScreen extends StatefulWidget {
   final String title;
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<ManHinhChinh> createState() => _ManHinhChinhState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _ManHinhChinhState extends State<ManHinhChinh> {
   Widget? page;
   var selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    page ??= HomePage(text: widget.auth.currentUser!.email!);
+    page ??= TrangChu(text: widget.auth.currentUser!.email!);
 
     return Scaffold(
       appBar: AppBar(
@@ -70,10 +70,10 @@ class _MainScreenState extends State<MainScreen> {
           setState(() {
             switch (value) {
               case 0:
-                page = HomePage(text: widget.auth.currentUser!.email!);
+                page = TrangChu(text: widget.auth.currentUser!.email!);
                 break;
               case 1:
-                page = UserPage(auth: widget.auth, notifyParent: widget.notifyParent,);
+                page = TrangNguoiDung(auth: widget.auth, notifyParent: widget.notifyParent,);
                 break;
               case 2:
                 page = const Placeholder();

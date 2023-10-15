@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({
+class TrangChu extends StatefulWidget {
+  const TrangChu({
     super.key,
     required this.text,
   });
@@ -9,10 +9,10 @@ class HomePage extends StatefulWidget {
   final String text;
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<TrangChu> createState() => _TrangChuState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _TrangChuState extends State<TrangChu> {
   @override
   Widget build(BuildContext context) {
     return Column(

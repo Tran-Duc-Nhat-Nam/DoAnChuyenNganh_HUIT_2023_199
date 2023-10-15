@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:restart_app/restart_app.dart';
 
-class UserPage extends StatefulWidget {
-  UserPage({
+class TrangNguoiDung extends StatefulWidget {
+  TrangNguoiDung({
     super.key,
     required this.auth,
     required this.notifyParent,
@@ -14,10 +14,10 @@ class UserPage extends StatefulWidget {
   final TextEditingController emailController = TextEditingController();
 
   @override
-  State<UserPage> createState() => _UserPageState();
+  State<TrangNguoiDung> createState() => _TrangNguoiDungState();
 }
 
-class _UserPageState extends State<UserPage> {
+class _TrangNguoiDungState extends State<TrangNguoiDung> {
   @override
   Widget build(BuildContext context) {
     widget.emailController.text = widget.auth.currentUser!.uid;

@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class LoginScreen extends StatefulWidget {
-  LoginScreen({
+class ManHinhDangNhap extends StatefulWidget {
+  ManHinhDangNhap({
     super.key,
     required this.notifyParent,
     required this.auth,
@@ -20,10 +20,10 @@ class LoginScreen extends StatefulWidget {
   final TextEditingController passwordController = TextEditingController();
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<ManHinhDangNhap> createState() => _ManHinhDangNhapState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
   bool hidePassword = true;
 
   @override

@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'Screen/man_hinh_chinh.dart';
-import 'Screen/trang_dang_nhap.dart';
+import 'Screen/man_hinh_dang_nhap.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -42,13 +42,13 @@ class _MainAppState extends State<MainApp> {
     Widget bodyWidget;
 
     if (_auth.currentUser != null) {
-      bodyWidget = MainScreen(
+      bodyWidget = ManHinhChinh(
         title: "App đặc sản",
         notifyParent: notifyParent,
         auth: _auth,
       );
     } else {
-      bodyWidget = LoginScreen(
+      bodyWidget = ManHinhDangNhap(
         notifyParent: notifyParent,
         auth: _auth,
       );
