@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app_dac_san/Screen/man_hinh_dang_ky.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -115,30 +116,8 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
               VerticalGapSizedBox(),
               OutlinedButton(
                   style: MaxWidthRoundButtonStyle(),
-                  onPressed: () async {
-                    if (widget.formKey.currentState!.validate()) {
-                      try {
-                        User? user =
-                            (await widget.auth.createUserWithEmailAndPassword(
-                          email: widget.emailController.text,
-                          password: widget.passwordController.text,
-                        ))
-                                .user;
-
-                        if (user != null) {
-                          widget.auth.signInWithEmailAndPassword(
-                              email: widget.emailController.text,
-                              password: widget.passwordController.text);
-                          widget.notifyParent();
-                        }
-                      } on Exception catch (e) {
-                        var snackBar = SnackBar(
-                          content: Text(e.toString()),
-                        );
-
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                    }
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ManHinhDangKy(notifyParent: widget.notifyParent, auth: widget.auth)));
                   },
                   child: const Text("Đăng ký")),
               VerticalGapSizedBox(),

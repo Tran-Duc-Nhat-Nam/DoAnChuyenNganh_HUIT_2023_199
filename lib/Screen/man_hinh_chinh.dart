@@ -1,3 +1,5 @@
+import 'package:app_dac_san/Page/trang_dac_san.dart';
+
 import '../Page/trang_chu.dart';
 import '../Page/trang_nguoi_dung.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -53,15 +55,15 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Đặc sản',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.deck),
+            label: 'Địa điểm',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
-            label: 'User',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.cancel),
-            label: 'Placeholder',
+            label: 'Người dùng',
           ),
         ],
         currentIndex: selectedIndex,
@@ -70,13 +72,13 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
           setState(() {
             switch (value) {
               case 0:
-                page = TrangChu(text: widget.auth.currentUser!.email!);
+                page = const TrangDacSan();
                 break;
               case 1:
-                page = TrangNguoiDung(auth: widget.auth, notifyParent: widget.notifyParent,);
+                page = TrangChu(text: widget.auth.currentUser!.email!);
                 break;
               case 2:
-                page = const Placeholder();
+                page = TrangNguoiDung(auth: widget.auth, notifyParent: widget.notifyParent,);
                 break;
             }
             selectedIndex = value;
