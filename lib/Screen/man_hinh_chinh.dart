@@ -1,3 +1,4 @@
+import 'package:app_dac_san/Page/trang_bai_viet.dart';
 import 'package:app_dac_san/Page/trang_dac_san.dart';
 
 import '../Page/trang_chu.dart';
@@ -31,10 +32,14 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.title,
-          style: const TextStyle(color: Colors.white),
-        ),
+        actions: [
+          SizedBox(
+            width: 200,
+            child: TextField(
+              controller: TextEditingController(),
+            ),
+          ),
+        ],
         iconTheme: const IconThemeData(color: Colors.white),
         flexibleSpace: Container(
           padding: EdgeInsets.zero,
@@ -62,7 +67,11 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
             label: 'Địa điểm',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
+            icon: Icon(Icons.article),
+            label: 'Bài viết',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_box),
             label: 'Người dùng',
           ),
         ],
@@ -78,12 +87,19 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
                 page = TrangChu(text: widget.auth.currentUser!.email!);
                 break;
               case 2:
-                page = TrangNguoiDung(auth: widget.auth, notifyParent: widget.notifyParent,);
+                page = TrangBaiViet();
+                break;
+              case 3:
+                page = TrangNguoiDung(
+                  auth: widget.auth,
+                  notifyParent: widget.notifyParent,
+                );
                 break;
             }
             selectedIndex = value;
           });
         },
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }

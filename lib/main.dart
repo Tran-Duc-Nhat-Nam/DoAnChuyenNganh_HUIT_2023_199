@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'Screen/man_hinh_chinh.dart';
 import 'Screen/man_hinh_dang_nhap.dart';
 
@@ -56,6 +57,57 @@ class _MainAppState extends State<MainApp> {
 
     return MaterialApp(
       title: "App đặc sản",
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255,148, 0, 211),
+          background: Colors.black,
+          brightness: Brightness.dark
+        ),
+        scaffoldBackgroundColor: Colors.black,
+        textTheme: TextTheme(
+          displayLarge: const TextStyle(
+            fontSize: 72,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+          // ···
+          titleLarge: GoogleFonts.robotoFlex(
+            fontSize: 30,
+            color: Colors.white,
+          ),
+          bodyMedium: GoogleFonts.robotoFlex(
+            color: Colors.white,
+          ),
+          displaySmall: GoogleFonts.robotoFlex(
+            color: Colors.white,
+          ),
+        ),
+      ),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255,148, 0, 211),
+          background: Colors.black
+        ),
+        textTheme: TextTheme(
+          displayLarge: const TextStyle(
+            fontSize: 50,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+          // ···
+          titleLarge: GoogleFonts.oswald(
+            fontSize: 25,
+            fontStyle: FontStyle.italic,
+            color: Colors.white,
+          ),
+          bodyMedium: GoogleFonts.merriweather(
+            color: Colors.white,
+          ),
+          displaySmall: GoogleFonts.pacifico(
+            color: Colors.white,
+          ),
+        ),
+      ),
       home: bodyWidget,
       debugShowCheckedModeBanner: false,
     );

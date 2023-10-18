@@ -180,9 +180,12 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
               VerticalGapSizedBox(),
-              DropdownMenu(
-                dropdownMenuEntries: dsLabelTinhThanh,
-                hintText: "Danh sách tỉnh thành",
+              Flexible(
+                flex: 1,
+                child: DropdownMenu(
+                  dropdownMenuEntries: dsLabelTinhThanh,
+                  hintText: "Danh sách tỉnh thành",
+                ),
               ),
               VerticalGapSizedBox(),
               Row(
