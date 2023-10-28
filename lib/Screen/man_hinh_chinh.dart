@@ -1,10 +1,10 @@
 import 'package:app_dac_san/Page/trang_bai_viet.dart';
 import 'package:app_dac_san/Page/trang_dac_san.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import '../Page/trang_chu.dart';
 import '../Page/trang_nguoi_dung.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class ManHinhChinh extends StatefulWidget {
   const ManHinhChinh({
@@ -24,11 +24,11 @@ class ManHinhChinh extends StatefulWidget {
 
 class _ManHinhChinhState extends State<ManHinhChinh> {
   Widget? page;
-  var selectedIndex = 0;
+  var selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
-    page ??= TrangChu(text: widget.auth.currentUser!.email!);
+    page ??= TrangChu(text: widget.auth.currentUser!.uid);
 
     return Scaffold(
       appBar: AppBar(
@@ -84,7 +84,7 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
                 page = const TrangDacSan();
                 break;
               case 1:
-                page = TrangChu(text: widget.auth.currentUser!.email!);
+                page = TrangChu(text: widget.auth.currentUser!.uid);
                 break;
               case 2:
                 page = TrangBaiViet();

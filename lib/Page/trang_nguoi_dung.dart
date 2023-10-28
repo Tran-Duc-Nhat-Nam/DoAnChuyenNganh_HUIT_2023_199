@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class TrangNguoiDung extends StatefulWidget {
@@ -40,10 +41,12 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                   child: MaterialButton(
                     child: const Text("Đăng xuất"),
                     onPressed: () async {
-                      await widget.auth.signOut().whenComplete(() async =>
-                          await GoogleSignIn()
-                              .signOut()
-                              .whenComplete(() => widget.notifyParent()));
+                      await widget.auth.signOut().whenComplete(() async {
+                        await FacebookAuth.instance.logOut();
+                        await GoogleSignIn()
+                            .signOut()
+                            .whenComplete(() => widget.notifyParent());
+                      });
                     },
                   ),
                 )
