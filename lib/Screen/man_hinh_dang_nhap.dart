@@ -117,7 +117,12 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
               OutlinedButton(
                   style: MaxWidthRoundButtonStyle(),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ManHinhDangKy(notifyParent: widget.notifyParent, auth: widget.auth)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ManHinhDangKy(
+                                notifyParent: widget.notifyParent,
+                                auth: widget.auth)));
                   },
                   child: const Text("Đăng ký")),
               VerticalGapSizedBox(),
@@ -136,7 +141,6 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
       ),
     );
   }
-
 
   void DangNhapGoogle() async {
     if (kIsWeb) {

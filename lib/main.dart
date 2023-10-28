@@ -1,11 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'Screen/man_hinh_chinh.dart';
 import 'Screen/man_hinh_dang_nhap.dart';
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,14 +13,13 @@ Future<void> main() async {
       options: const FirebaseOptions(
           apiKey: "AIzaSyDbOO5dKhoiF8kmDrnbigTKsTmj_8xSPDg",
           authDomain: "musicplayerz-63f2e.firebaseapp.com",
-          databaseURL: "https://musicplayerz-63f2e-default-rtdb.asia-southeast1.firebasedatabase.app",
+          databaseURL:
+              "https://musicplayerz-63f2e-default-rtdb.asia-southeast1.firebasedatabase.app",
           projectId: "musicplayerz-63f2e",
           storageBucket: "musicplayerz-63f2e.appspot.com",
           messagingSenderId: "132894885676",
           appId: "1:132894885676:web:659f463a6d8ac6aa3ece89",
-          measurementId: "G-ES189ZW8QH"
-      )
-  );
+          measurementId: "G-ES189ZW8QH"));
 
   runApp(const MainApp());
 }
@@ -41,6 +39,9 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     Widget bodyWidget;
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+
+    print(_auth.currentUser);
 
     if (_auth.currentUser != null) {
       bodyWidget = ManHinhChinh(
@@ -59,10 +60,9 @@ class _MainAppState extends State<MainApp> {
       title: "App đặc sản",
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255,148, 0, 211),
-          background: Colors.black,
-          brightness: Brightness.dark
-        ),
+            seedColor: const Color.fromARGB(255, 148, 0, 211),
+            background: Colors.black,
+            brightness: Brightness.dark),
         scaffoldBackgroundColor: Colors.black,
         textTheme: TextTheme(
           displayLarge: const TextStyle(
@@ -85,9 +85,8 @@ class _MainAppState extends State<MainApp> {
       ),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255,148, 0, 211),
-          background: Colors.black
-        ),
+            seedColor: const Color.fromARGB(255, 148, 0, 211),
+            background: Colors.black),
         textTheme: TextTheme(
           displayLarge: const TextStyle(
             fontSize: 50,
