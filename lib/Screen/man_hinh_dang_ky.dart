@@ -189,7 +189,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 children: [
                   Flexible(
                     child: ListTile(
-                      title: Text("Nam"),
+                      title: const Text("Nam"),
                       leading: Radio(
                         value: true,
                         groupValue: isNam,
@@ -203,7 +203,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   ),
                   Flexible(
                     child: ListTile(
-                      title: Text("Nữ"),
+                      title: const Text("Nữ"),
                       leading: Radio(
                         value: false,
                         groupValue: isNam,
@@ -321,8 +321,6 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
     for (var document in result) {
       TinhThanh tinhThanh = TinhThanh.fromJson(document);
       dsTT.add(tinhThanh);
-      print(document);
-      print(TinhThanh.fromJson(document).ten);
     }
 
     setState(() {});

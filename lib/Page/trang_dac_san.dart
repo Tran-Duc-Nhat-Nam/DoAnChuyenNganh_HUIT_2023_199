@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TrangDacSan extends StatefulWidget {
-  const TrangDacSan({Key? key}) : super(key: key);
+  const TrangDacSan({super.key});
 
   @override
   _TrangDacSanState createState() => _TrangDacSanState();
@@ -10,7 +10,7 @@ class TrangDacSan extends StatefulWidget {
 class _TrangDacSanState extends State<TrangDacSan> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
@@ -45,14 +45,12 @@ class ListNgang extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 12, bottom: 12),
       child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.black)
-        ),
+        decoration: BoxDecoration(border: Border.all(color: Colors.black)),
         child: SizedBox(
           height: 100,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            children: [
+            children: const [
               ListNgangItem(),
               ListNgangItem(),
               ListNgangItem(),
@@ -80,7 +78,7 @@ class ListNgangItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 8),
-      child: ElevatedButton(onPressed: () {}, child: Text("Item")),
+      child: ElevatedButton(onPressed: () {}, child: const Text("Item")),
     );
   }
 }

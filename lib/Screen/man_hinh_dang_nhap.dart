@@ -93,7 +93,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                           .user;
 
                       if (user != null && context.mounted) {
-                        context.go("/");
+                        context.go("/dacsan");
                       }
                     } on Exception catch (e) {
                       var snackBar = SnackBar(
@@ -138,7 +138,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
               VerticalGapSizedBox(),
               OutlinedButton(
                   style: MaxWidthRoundButtonStyle(),
-                  onPressed: () => context.go("/login/signup"),
+                  onPressed: () => context.go("/signup"),
                   child: const Text("Đăng ký")),
               VerticalGapSizedBox(),
               Row(
@@ -169,8 +169,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
           .addScope('https://www.googleapis.com/auth/contacts.readonly');
       googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
 
-      UserCredential user =
-          await FirebaseAuth.instance.signInWithPopup(googleProvider);
+      await FirebaseAuth.instance.signInWithPopup(googleProvider);
     } else if (Platform.isAndroid) {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 

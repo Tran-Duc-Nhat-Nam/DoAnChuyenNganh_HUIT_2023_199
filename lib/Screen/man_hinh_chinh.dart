@@ -1,35 +1,21 @@
-import 'package:app_dac_san/Page/trang_dac_san.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../Page/trang_nguoi_dung.dart';
 
 class ManHinhChinh extends StatefulWidget {
   const ManHinhChinh({
     super.key,
-    required this.title,
-    required this.auth,
+    required this.page,
   });
-  final FirebaseAuth auth;
-  final String title;
-
+  final StatefulNavigationShell page;
   @override
   State<ManHinhChinh> createState() => _ManHinhChinhState();
 }
 
 class _ManHinhChinhState extends State<ManHinhChinh> {
-  Widget? page;
   var selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    if (widget.auth.currentUser == null) {
-      context.go("/login");
-    }
-
-    page ??= const TrangDacSan();
-
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -55,7 +41,7 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
           ),
         ),
       ),
-      body: page,
+      body: widget.page,
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
@@ -71,14 +57,7 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
         selectedItemColor: const Color.fromRGBO(148, 0, 211, 1),
         onTap: (value) {
           setState(() {
-            switch (value) {
-              case 0:
-                page = const TrangDacSan();
-                break;
-              case 1:
-                page = TrangNguoiDung();
-                break;
-            }
+            widget.page.goBranch(value);
             selectedIndex = value;
           });
         },

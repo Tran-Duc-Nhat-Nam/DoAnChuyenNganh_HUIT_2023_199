@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class TrangBaiViet extends StatefulWidget {
-  const TrangBaiViet({Key? key}) : super(key: key);
+  const TrangBaiViet({super.key});
 
   @override
   _TrangBaiVietState createState() => _TrangBaiVietState();
@@ -28,7 +28,7 @@ class _TrangBaiVietState extends State<TrangBaiViet> {
                   ),
                 );
               },
-              child: Text("Xem web"),
+              child: const Text("Xem web"),
             ),
           ],
         ),

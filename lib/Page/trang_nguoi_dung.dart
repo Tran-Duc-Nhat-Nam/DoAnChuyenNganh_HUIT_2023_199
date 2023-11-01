@@ -43,7 +43,7 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                         await FacebookAuth.instance.logOut();
                         await GoogleSignIn().signOut().whenComplete(() {
                           if (context.mounted) {
-                            context.go("/login");
+                            context.go("/");
                           }
                         });
                       });
