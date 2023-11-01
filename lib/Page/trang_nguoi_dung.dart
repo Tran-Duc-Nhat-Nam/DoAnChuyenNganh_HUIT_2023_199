@@ -1,17 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class TrangNguoiDung extends StatefulWidget {
   TrangNguoiDung({
     super.key,
-    required this.auth,
-    required this.notifyParent,
   });
-
-  final Function() notifyParent;
-  final FirebaseAuth auth;
   final TextEditingController emailController = TextEditingController();
 
   @override
@@ -21,7 +17,7 @@ class TrangNguoiDung extends StatefulWidget {
 class _TrangNguoiDungState extends State<TrangNguoiDung> {
   @override
   Widget build(BuildContext context) {
-    widget.emailController.text = widget.auth.currentUser!.uid;
+    widget.emailController.text = FirebaseAuth.instance.currentUser!.uid;
     return Scaffold(
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -41,11 +37,15 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                   child: MaterialButton(
                     child: const Text("Đăng xuất"),
                     onPressed: () async {
-                      await widget.auth.signOut().whenComplete(() async {
+                      await FirebaseAuth.instance
+                          .signOut()
+                          .whenComplete(() async {
                         await FacebookAuth.instance.logOut();
-                        await GoogleSignIn()
-                            .signOut()
-                            .whenComplete(() => widget.notifyParent());
+                        await GoogleSignIn().signOut().whenComplete(() {
+                          if (context.mounted) {
+                            context.go("/login");
+                          }
+                        });
                       });
                     },
                   ),

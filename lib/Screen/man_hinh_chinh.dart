@@ -1,20 +1,16 @@
-import 'package:app_dac_san/Page/trang_bai_viet.dart';
 import 'package:app_dac_san/Page/trang_dac_san.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import '../Page/trang_chu.dart';
 import '../Page/trang_nguoi_dung.dart';
 
 class ManHinhChinh extends StatefulWidget {
   const ManHinhChinh({
     super.key,
     required this.title,
-    required this.notifyParent,
     required this.auth,
   });
-
-  final Function() notifyParent;
   final FirebaseAuth auth;
   final String title;
 
@@ -24,11 +20,15 @@ class ManHinhChinh extends StatefulWidget {
 
 class _ManHinhChinhState extends State<ManHinhChinh> {
   Widget? page;
-  var selectedIndex = 1;
+  var selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    page ??= TrangChu(text: widget.auth.currentUser!.uid);
+    if (widget.auth.currentUser == null) {
+      context.go("/login");
+    }
+
+    page ??= const TrangDacSan();
 
     return Scaffold(
       appBar: AppBar(
@@ -63,14 +63,6 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
             label: 'Đặc sản',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.deck),
-            label: 'Địa điểm',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.article),
-            label: 'Bài viết',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.account_box),
             label: 'Người dùng',
           ),
@@ -84,16 +76,7 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
                 page = const TrangDacSan();
                 break;
               case 1:
-                page = TrangChu(text: widget.auth.currentUser!.uid);
-                break;
-              case 2:
-                page = TrangBaiViet();
-                break;
-              case 3:
-                page = TrangNguoiDung(
-                  auth: widget.auth,
-                  notifyParent: widget.notifyParent,
-                );
+                page = TrangNguoiDung();
                 break;
             }
             selectedIndex = value;

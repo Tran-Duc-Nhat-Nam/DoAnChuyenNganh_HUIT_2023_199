@@ -1,10 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:app_dac_san/Router/router_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'Screen/man_hinh_chinh.dart';
-import 'Screen/man_hinh_dang_nhap.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,24 +36,8 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     Widget bodyWidget;
-    final FirebaseAuth _auth = FirebaseAuth.instance;
 
-    print(_auth.currentUser);
-
-    if (_auth.currentUser != null) {
-      bodyWidget = ManHinhChinh(
-        title: "App đặc sản",
-        notifyParent: notifyParent,
-        auth: _auth,
-      );
-    } else {
-      bodyWidget = ManHinhDangNhap(
-        notifyParent: notifyParent,
-        auth: _auth,
-      );
-    }
-
-    return MaterialApp(
+    return MaterialApp.router(
       title: "App đặc sản",
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -107,7 +88,7 @@ class _MainAppState extends State<MainApp> {
           ),
         ),
       ),
-      home: bodyWidget,
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
     );
   }

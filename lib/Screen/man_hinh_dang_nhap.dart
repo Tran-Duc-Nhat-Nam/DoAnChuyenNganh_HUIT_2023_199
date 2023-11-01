@@ -1,21 +1,16 @@
 import 'dart:io';
 
-import 'package:app_dac_san/Screen/man_hinh_dang_ky.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class ManHinhDangNhap extends StatefulWidget {
   ManHinhDangNhap({
     super.key,
-    required this.notifyParent,
-    required this.auth,
   });
-
-  final Function() notifyParent;
-  final FirebaseAuth auth;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
@@ -83,9 +78,33 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Vui lòng nhập tài khoản";
+                    return "Vui lòng nhập mật khẩu";
                   }
                   return null;
+                },
+                onFieldSubmitted: (value) async {
+                  if (widget.formKey.currentState!.validate()) {
+                    try {
+                      User? user = (await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                        email: widget.emailController.text,
+                        password: widget.passwordController.text,
+                      ))
+                          .user;
+
+                      if (user != null && context.mounted) {
+                        context.go("/");
+                      }
+                    } on Exception catch (e) {
+                      var snackBar = SnackBar(
+                        content: Text(e.toString()),
+                      );
+
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+                    }
+                  }
                 },
               ),
               VerticalGapSizedBox(),
@@ -94,22 +113,24 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                   onPressed: () async {
                     if (widget.formKey.currentState!.validate()) {
                       try {
-                        User? user =
-                            (await widget.auth.signInWithEmailAndPassword(
+                        User? user = (await FirebaseAuth.instance
+                                .signInWithEmailAndPassword(
                           email: widget.emailController.text,
                           password: widget.passwordController.text,
                         ))
-                                .user;
+                            .user;
 
-                        if (user != null) {
-                          widget.notifyParent();
+                        if (user != null && context.mounted) {
+                          context.go("/");
                         }
                       } on Exception catch (e) {
                         var snackBar = SnackBar(
                           content: Text(e.toString()),
                         );
 
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
                       }
                     }
                   },
@@ -117,14 +138,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
               VerticalGapSizedBox(),
               OutlinedButton(
                   style: MaxWidthRoundButtonStyle(),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ManHinhDangKy(
-                                notifyParent: widget.notifyParent,
-                                auth: widget.auth)));
-                  },
+                  onPressed: () => context.go("/login/signup"),
                   child: const Text("Đăng ký")),
               VerticalGapSizedBox(),
               Row(
@@ -168,11 +182,11 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
         idToken: googleAuth?.idToken,
       );
 
-      await widget.auth.signInWithCredential(credential);
+      await FirebaseAuth.instance.signInWithCredential(credential);
     }
 
-    if (widget.auth.currentUser != null) {
-      widget.notifyParent();
+    if (FirebaseAuth.instance.currentUser != null && context.mounted) {
+      context.go("/");
     }
   }
 
@@ -187,8 +201,8 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
     // Once signed in, return the UserCredential
     await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
 
-    if (widget.auth.currentUser != null) {
-      widget.notifyParent();
+    if (FirebaseAuth.instance.currentUser != null && context.mounted) {
+      context.go("/");
     }
   }
 

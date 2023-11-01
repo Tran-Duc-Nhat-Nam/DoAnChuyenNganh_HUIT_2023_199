@@ -4,17 +4,13 @@ import 'package:app_dac_san/Model/tinh_thanh.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 
 class ManHinhDangKy extends StatefulWidget {
   ManHinhDangKy({
     super.key,
-    required this.notifyParent,
-    required this.auth,
   });
-
-  final Function() notifyParent;
-  final FirebaseAuth auth;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
@@ -135,7 +131,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Vui lòng nhập tài khoản";
-                  } else if (value! != widget.matKhauController.text) {
+                  } else if (value != widget.matKhauController.text) {
                     return "Mật khẩu vừa nhập không trùng khớp";
                   }
                   return null;
@@ -161,7 +157,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
               ),
               VerticalGapSizedBox(),
               TextFormField(
-                controller: widget.hoTenController,
+                controller: widget.sdtController,
                 decoration: const InputDecoration(
                   labelText: "Số điện thoại",
                   border: OutlineInputBorder(
@@ -197,8 +193,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                       leading: Radio(
                         value: true,
                         groupValue: isNam,
-                        onChanged: (bool? value)
-                        {
+                        onChanged: (bool? value) {
                           setState(() {
                             isNam = value!;
                           });
@@ -212,8 +207,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                       leading: Radio(
                         value: false,
                         groupValue: isNam,
-                        onChanged: (bool? value)
-                        {
+                        onChanged: (bool? value) {
                           setState(() {
                             isNam = value!;
                           });
@@ -229,26 +223,30 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   onPressed: () async {
                     if (widget.formKey.currentState!.validate()) {
                       try {
-                        User? user =
-                            (await widget.auth.createUserWithEmailAndPassword(
+                        User? user = (await FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(
                           email: widget.emailController.text,
                           password: widget.matKhauController.text,
                         ))
-                                .user;
+                            .user;
 
-                        if (user != null) {
-                          widget.auth.signInWithEmailAndPassword(
-                              email: widget.emailController.text,
-                              password: widget.matKhauController.text);
-                          Navigator.pop(context);
-                          widget.notifyParent();
+                        if (user != null && context.mounted) {
+                          FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                  email: widget.emailController.text,
+                                  password: widget.matKhauController.text)
+                              .whenComplete(
+                                () => context.go("/"),
+                              );
                         }
                       } on Exception catch (e) {
                         var snackBar = SnackBar(
                           content: Text(e.toString()),
                         );
 
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
                       }
                     }
                   },
