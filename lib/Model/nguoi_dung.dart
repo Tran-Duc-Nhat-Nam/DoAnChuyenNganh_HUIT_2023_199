@@ -1,12 +1,26 @@
-class HinhAnhDacSan
+class NguoiDung
 {
-  String? maND;
-  String? tenND;
-  bool? gioiTinh;
-  DateTime? ngaySinh;
-  int? maDiaChi;
   String? email;
+  String? matKhau;
+  String? hoTen;
+  String? gioiTinh;
   String? sdt;
-  String? avatarURL;
-  bool? admin;
+
+  NguoiDung({
+    this.email,
+    this.matKhau,
+    this.hoTen,
+    this.gioiTinh,
+    this.sdt,
+  });
+
+  factory NguoiDung.fromJson(Map<String, dynamic> json) {
+    return NguoiDung(
+      email: json['email'],
+      matKhau: json['matkhau'],
+      gioiTinh: json['gioitinh'],
+      hoTen: json['hoten'],
+      sdt: json['sdt'],
+    );
+  }
 }

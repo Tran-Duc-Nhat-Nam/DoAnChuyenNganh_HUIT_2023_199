@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:app_dac_san/Model/nguoi_dung.dart';
 import 'package:app_dac_san/Model/tinh_thanh.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 class ManHinhDangKy extends StatefulWidget {
@@ -31,7 +33,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
 
   @override
   void initState() {
-    xeemTinhThanh();
+    xemTinhThanh();
     super.initState();
   }
 
@@ -223,6 +225,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   onPressed: () async {
                     if (widget.formKey.currentState!.validate()) {
                       try {
+                        addUser();
                         User? user = (await FirebaseAuth.instance
                                 .createUserWithEmailAndPassword(
                           email: widget.emailController.text,
@@ -313,16 +316,31 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
     );
   }
 
-  Future<void> xeemTinhThanh() async {
+  Future<void> xemTinhThanh() async {
     var reponse =
-        await get(Uri.parse('https://provinces.open-api.vn/api/?depth=1'));
+        await get(Uri.parse('https://cntt199.000webhostapp.com/getTinhThanh.php')); //https://cntt199.000webhostapp.com/getTinhThanh.php //https://provinces.open-api.vn/api/?depth=1
     var result = json.decode(utf8.decode(reponse.bodyBytes));
 
     for (var document in result) {
       TinhThanh tinhThanh = TinhThanh.fromJson(document);
       dsTT.add(tinhThanh);
     }
-
     setState(() {});
+  }
+
+  Future<void> addUser() async {
+    var gioitinh = "Nam";
+    if (!isNam) {
+      gioitinh = "Nữ";
+    }
+    Map<String, dynamic> data = {
+      'email' : widget.emailController.text,
+      'matkhau' : widget.matKhauController.text,
+      'hoten' : widget.hoTenController.text,
+      'gioitinh' : gioitinh,
+    };
+
+    var url = Uri.parse('https://cntt199.000webhostapp.com/registerUser.php');
+    await http.post(url, body: data);
   }
 }

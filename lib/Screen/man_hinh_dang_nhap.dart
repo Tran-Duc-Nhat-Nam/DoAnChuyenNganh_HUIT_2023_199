@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 
 class ManHinhDangNhap extends StatefulWidget {
   ManHinhDangNhap({
@@ -110,9 +112,11 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
               VerticalGapSizedBox(),
               ElevatedButton(
                   style: MaxWidthRoundButtonStyle(),
-                  onPressed: () async {
+                  onPressed: // () { DangNhapMySql(); },
+                      () async {
                     if (widget.formKey.currentState!.validate()) {
                       try {
+                        // DangNhapMySql();
                         User? user = (await FirebaseAuth.instance
                                 .signInWithEmailAndPassword(
                           email: widget.emailController.text,
@@ -159,6 +163,20 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
         ),
       ),
     );
+  }
+
+  void DangNhapMySql() async {
+    var url = Uri.parse('https://cntt199.000webhostapp.com/loginUser.php');
+    var reponse = await http.post(url, body: {
+      'email' : widget.emailController.text,
+      'matkhau' : widget.passwordController.text,
+    });
+
+    var result = json.decode(utf8.decode(reponse.bodyBytes));
+    print(result.toString().length);
+    if (result.toString().length > 10 && context.mounted) {
+      context.go("/");
+    }
   }
 
   void DangNhapGoogle() async {

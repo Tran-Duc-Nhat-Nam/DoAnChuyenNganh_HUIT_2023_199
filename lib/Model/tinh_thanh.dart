@@ -10,8 +10,8 @@ class TinhThanh
 
   factory TinhThanh.fromJson(Map<String, dynamic> json) {
     return TinhThanh(
-      maTT: json['code'],
-      ten: json['name'],
+      maTT: json['idtinh'],
+      ten: json['tentinh'],
     );
   }
 }
