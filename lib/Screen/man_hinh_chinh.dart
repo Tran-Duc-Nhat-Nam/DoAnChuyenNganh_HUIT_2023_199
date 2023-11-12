@@ -19,10 +19,34 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          SizedBox(
-            width: 200,
-            child: TextField(
-              controller: TextEditingController(),
+          Flexible(
+            flex: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const Flexible(
+                  flex: 1,
+                  child: Text("Đặc sản VN"),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: TextField(
+                      controller: TextEditingController(),
+                      decoration: InputDecoration(
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(25),
+                            ),
+                          ),
+                          suffixIcon: IconButton(
+                              onPressed: () => widget.page.goBranch(1),
+                              icon: const Icon(Icons.search_outlined))),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -30,15 +54,6 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
         flexibleSpace: Container(
           padding: EdgeInsets.zero,
           margin: EdgeInsets.zero,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: <Color>[
-                  Color.fromRGBO(30, 144, 255, 1),
-                  Color.fromRGBO(148, 0, 211, 1),
-                ]),
-          ),
         ),
       ),
       body: widget.page,
@@ -54,7 +69,7 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
           ),
         ],
         currentIndex: selectedIndex,
-        selectedItemColor: const Color.fromRGBO(148, 0, 211, 1),
+        selectedItemColor: Colors.purpleAccent,
         onTap: (value) {
           setState(() {
             widget.page.goBranch(value);

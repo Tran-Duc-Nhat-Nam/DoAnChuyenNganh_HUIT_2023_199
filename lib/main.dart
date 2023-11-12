@@ -36,7 +36,6 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     Widget bodyWidget;
-
     return MaterialApp.router(
       title: "App đặc sản",
       darkTheme: ThemeData(
@@ -67,7 +66,7 @@ class _MainAppState extends State<MainApp> {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromARGB(255, 148, 0, 211),
-            background: Colors.black),
+            background: Colors.white),
         textTheme: TextTheme(
           displayLarge: const TextStyle(
             fontSize: 50,

@@ -23,32 +23,27 @@ final GoRouter router = GoRouter(
         return ManHinhDangNhap();
       },
       branches: [
-        StatefulShellBranch(routes: [
-          GoRoute(
-            path: '/dacsan',
-            builder: (context, state) {
-              return const TrangDacSan();
-            },
-          ),
-        ]),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/dacsan',
+              name: "Danh sách đặc sản",
+              builder: (context, state) {
+                return const TrangDacSan();
+              },
+            ),
+          ],
+        ),
         StatefulShellBranch(routes: [
           GoRoute(
             path: '/nguoidung',
+            name: "Hồ sơ người dùng",
             builder: (context, state) {
               return TrangNguoiDung();
             },
           ),
         ])
       ],
-    ),
-    GoRoute(
-      path: "/signup",
-      builder: (context, state) {
-        return ManHinhDangKy();
-      },
-      redirect: (context, state) {
-        return null;
-      },
     ),
     GoRoute(
       path: "/",
@@ -61,6 +56,19 @@ final GoRouter router = GoRouter(
         }
         return null;
       },
+      routes: [
+        GoRoute(
+          path: "signup",
+          builder: (context, state) {
+            return ManHinhDangKy();
+          },
+          redirect: (context, state) {
+            if (FirebaseAuth.instance.currentUser != null) {
+              return null;
+            }
+          },
+        ),
+      ],
     ),
   ],
 );

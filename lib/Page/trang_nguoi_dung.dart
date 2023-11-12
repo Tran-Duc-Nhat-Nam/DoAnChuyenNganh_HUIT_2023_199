@@ -9,6 +9,8 @@ class TrangNguoiDung extends StatefulWidget {
     super.key,
   });
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController hoTenController = TextEditingController();
+  final TextEditingController diaChiController = TextEditingController();
 
   @override
   State<TrangNguoiDung> createState() => _TrangNguoiDungState();
@@ -26,11 +28,35 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                TextFormField(
-                  controller: widget.emailController,
-                  decoration: const InputDecoration(
-                    labelText: "Email",
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(
+                    children: [
+                      const Flexible(
+                        flex: 1,
+                        child: Text("ID người dùng:"),
+                      ),
+                      Flexible(
+                        flex: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: Text(FirebaseAuth.instance.currentUser!.uid),
+                        ),
+                      ),
+                    ],
                   ),
+                ),
+                TextFieldNguoiDung(
+                  controller: widget.emailController,
+                  text: "Email",
+                ),
+                TextFieldNguoiDung(
+                  controller: widget.hoTenController,
+                  text: "Họ tên",
+                ),
+                TextFieldNguoiDung(
+                  controller: widget.diaChiController,
+                  text: "Địa chỉ",
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -53,6 +79,38 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class TextFieldNguoiDung extends StatelessWidget {
+  const TextFieldNguoiDung({
+    super.key,
+    required this.controller,
+    required this.text,
+    this.isReadOnly = true,
+  });
+
+  final TextEditingController controller;
+  final String text;
+  final bool isReadOnly;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15),
+      child: TextFormField(
+        readOnly: isReadOnly,
+        controller: controller,
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(25),
+            ),
+          ),
+          labelText: text,
         ),
       ),
     );
