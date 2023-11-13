@@ -136,7 +136,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
     setState(() {});
   }
 
-  // String getURLImage(int? idImage) {
+  // String getURLImage(int? idImage) { //// cai nay dung duoc
   //   String url = 'http://www.clker.com/cliparts/2/l/m/p/B/b/error-md.png';
   //   int index = dsHinhAnh.indexWhere((hinhAnh) => hinhAnh.idAnh.toString() == idImage.toString());
   //   if (index != -1) {
@@ -154,7 +154,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
     return name;
   }
 
-  Future<String> getURLImage(int? idImage) async {
+  Future<String> getURLImage(int? idImage) async { // con loi fix nay nha. Api get ve se duoc chuoi strring html
     var url = Uri.parse('https://cntt199.000webhostapp.com/getLinkImage.php');
     var reponse = await http.post(url, body: {
       'idanh' : idImage.toString(),
