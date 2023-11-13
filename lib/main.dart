@@ -1,9 +1,6 @@
-import 'package:app_dac_san/Screen/man_hinh_dang_nhap.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:app_dac_san/Router/router_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
@@ -70,6 +67,7 @@ class _MainAppState extends State<MainApp> {
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromARGB(255, 148, 0, 211),
             background: Colors.white),
+        scaffoldBackgroundColor: Colors.white,
         textTheme: TextTheme(
           displayLarge: const TextStyle(
             fontSize: 50,
