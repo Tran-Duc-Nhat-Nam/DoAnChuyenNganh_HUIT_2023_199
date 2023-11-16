@@ -18,6 +18,7 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 148, 0, 211),
         actions: [
           Flexible(
             flex: 1,

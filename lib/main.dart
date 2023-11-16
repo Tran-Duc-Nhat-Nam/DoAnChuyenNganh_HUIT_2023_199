@@ -2,6 +2,9 @@ import 'package:app_dac_san/Router/router_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+late final SharedPreferences ref;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +20,8 @@ Future<void> main() async {
           messagingSenderId: "132894885676",
           appId: "1:132894885676:web:659f463a6d8ac6aa3ece89",
           measurementId: "G-ES189ZW8QH"));
+
+  ref = await SharedPreferences.getInstance();
 
   runApp(const MainApp());
 }

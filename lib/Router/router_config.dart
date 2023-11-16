@@ -3,9 +3,12 @@ import 'package:app_dac_san/Page/trang_nguoi_dung.dart';
 import 'package:app_dac_san/Screen/man_hinh_chinh.dart';
 import 'package:app_dac_san/Screen/man_hinh_dang_ky.dart';
 import 'package:app_dac_san/Screen/man_hinh_dang_nhap.dart';
+import 'package:app_dac_san/Screen/man_hinh_gioi_thieu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+
+import '../main.dart';
 
 final rootNavKey = GlobalKey<NavigatorState>();
 
@@ -20,7 +23,14 @@ final GoRouter router = GoRouter(
             page: child,
           );
         }
-        return ManHinhDangNhap();
+
+        if (ref.getBool("lanDau") == null || ref.getBool("LanDau")!) {
+          print("Check");
+          return const ManHinhGioiThieu();
+        } else {
+          print("No Check");
+          return ManHinhDangNhap();
+        }
       },
       branches: [
         StatefulShellBranch(
@@ -48,7 +58,13 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: "/",
       builder: (context, state) {
-        return ManHinhDangNhap();
+        if (ref.getBool("lanDau") == null) {
+          print("Check");
+          return const ManHinhGioiThieu();
+        } else {
+          print("No Check");
+          return ManHinhDangNhap();
+        }
       },
       redirect: (context, state) {
         if (FirebaseAuth.instance.currentUser != null) {

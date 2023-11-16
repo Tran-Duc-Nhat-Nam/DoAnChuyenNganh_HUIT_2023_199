@@ -1,13 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:app_dac_san/Model/nguoi_dung.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+
+import '../Service/thu_vien_chung.dart';
 
 class ManHinhDangNhap extends StatefulWidget {
   ManHinhDangNhap({
@@ -35,6 +39,18 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Container(
+                height: 150,
+                alignment: Alignment.center,
+                child: Text(
+                  "Đăng nhập",
+                  style: GoogleFonts.robotoFlex(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 36,
+                    color: Colors.purpleAccent,
+                  ),
+                ),
+              ),
               TextFormField(
                 controller: widget.emailController,
                 decoration: const InputDecoration(
@@ -110,6 +126,8 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                 },
               ),
               VerticalGapSizedBox(),
+              VerticalGapSizedBox(),
+              VerticalGapSizedBox(),
               ElevatedButton(
                   style: MaxWidthRoundButtonStyle(),
                   onPressed: // () { DangNhapMySql(); },
@@ -148,14 +166,17 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton(
-                      style: RoundButtonStyle(),
-                      onPressed: DangNhapGoogle,
-                      child: const Text("Gmail")),
-                  ElevatedButton(
-                      style: RoundButtonStyle(),
-                      onPressed: DangNhapFacebook,
-                      child: const Text("Facebook")),
+                  IconButton(
+                    style: RoundButtonStyle(),
+                    onPressed: DangNhapGoogle,
+                    icon: Image.network("images/google.png"),
+                  ),
+                  HorizontalGapSizedBox(),
+                  IconButton(
+                    style: RoundButtonStyle(),
+                    onPressed: DangNhapFacebook,
+                    icon: Image.network("images/facebook.png"),
+                  ),
                 ],
               ),
             ],
@@ -163,20 +184,6 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
         ),
       ),
     );
-  }
-
-  void DangNhapMySql() async {
-    var url = Uri.parse('https://cntt199.000webhostapp.com/loginUser.php');
-    var reponse = await http.post(url, body: {
-      'email' : widget.emailController.text,
-      'matkhau' : widget.passwordController.text,
-    });
-
-    var result = json.decode(utf8.decode(reponse.bodyBytes));
-    print(result.toString().length);
-    if (result.toString().length > 10 && context.mounted) {
-      context.go("/");
-    }
   }
 
   void DangNhapGoogle() async {
@@ -202,8 +209,30 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
       await FirebaseAuth.instance.signInWithCredential(credential);
     }
 
-    if (FirebaseAuth.instance.currentUser != null && context.mounted) {
-      context.go("/");
+    var user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      List<NguoiDung> dsNguoiDung = [];
+
+      var reponse = await get(Uri.parse(
+          'https://cntt199.000webhostapp.com/getNguoiDung.php')); //https://cntt199.000webhostapp.com/getTinhThanh.php //https://provinces.open-api.vn/api/?depth=1
+      var result = json.decode(utf8.decode(reponse.bodyBytes));
+
+      if (context.mounted) {
+        for (var document in result) {
+          NguoiDung nguoiDung = NguoiDung.fromJson(document);
+          dsNguoiDung.add(nguoiDung);
+        }
+
+        for (var nd in dsNguoiDung) {
+          if (nd.uid == user.uid) {
+            context.go("/");
+            return;
+          }
+        }
+
+        context.go("/signup");
+      }
     }
   }
 
@@ -223,27 +252,6 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
     }
   }
 
-  ButtonStyle RoundButtonStyle() {
-    return ButtonStyle(
-      textStyle: MaterialStateProperty.all(
-        const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      padding: MaterialStateProperty.all(const EdgeInsets.only(
-        top: 20,
-        bottom: 20,
-        left: 30,
-        right: 30,
-      )),
-      shape: MaterialStateProperty.all(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25.0),
-        ),
-      ),
-    );
-  }
-
   SizedBox HorizontalGapSizedBox() {
     return const SizedBox(
       width: 15,
@@ -258,17 +266,16 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
 
   ButtonStyle MaxWidthRoundButtonStyle() {
     return ButtonStyle(
-      minimumSize: MaterialStateProperty.all(const Size.fromHeight(40)),
       textStyle: MaterialStateProperty.all(
         const TextStyle(
           fontWeight: FontWeight.bold,
         ),
       ),
       padding: MaterialStateProperty.all(const EdgeInsets.only(
-        top: 15,
-        bottom: 15,
-        left: 30,
-        right: 30,
+        top: 20,
+        bottom: 20,
+        left: 35,
+        right: 35,
       )),
       shape: MaterialStateProperty.all(
         RoundedRectangleBorder(

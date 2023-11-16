@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:app_dac_san/Model/nguoi_dung.dart';
 import 'package:app_dac_san/Model/tinh_thanh.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +11,9 @@ import 'package:http/http.dart';
 class ManHinhDangKy extends StatefulWidget {
   ManHinhDangKy({
     super.key,
+    this.email,
   });
-
+  String? email;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController matKhauController = TextEditingController();
@@ -30,10 +30,18 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
   List<TinhThanh> dsTT = [];
   bool isNam = true;
   bool hidePassword = true;
+  String? tinhThanh;
+  bool isFixed = false;
 
   @override
   void initState() {
     xemTinhThanh();
+
+    if (widget.email != null) {
+      widget.emailController.text = widget.email!;
+      isFixed = true;
+    }
+
     super.initState();
   }
 
@@ -55,6 +63,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
+                readOnly: isFixed,
                 controller: widget.emailController,
                 decoration: const InputDecoration(
                   labelText: "Email",
@@ -66,7 +75,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Vui lòng nhập tài khoản";
+                    return "Vui lòng nhập email";
                   }
                   return null;
                 },
@@ -183,6 +192,9 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 child: DropdownMenu(
                   dropdownMenuEntries: dsLabelTinhThanh,
                   hintText: "Danh sách tỉnh thành",
+                  onSelected: (value) {
+                    tinhThanh = value!.ten;
+                  },
                 ),
               ),
               VerticalGapSizedBox(),
@@ -225,7 +237,6 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   onPressed: () async {
                     if (widget.formKey.currentState!.validate()) {
                       try {
-                        addUser();
                         User? user = (await FirebaseAuth.instance
                                 .createUserWithEmailAndPassword(
                           email: widget.emailController.text,
@@ -238,9 +249,14 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                               .signInWithEmailAndPassword(
                                   email: widget.emailController.text,
                                   password: widget.matKhauController.text)
-                              .whenComplete(
-                                () => context.go("/"),
-                              );
+                              .then(
+                            (value) async {
+                              await addUser(value.user!.uid);
+                              if (context.mounted) {
+                                context.go("/");
+                              }
+                            },
+                          );
                         }
                       } on Exception catch (e) {
                         var snackBar = SnackBar(
@@ -317,8 +333,8 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
   }
 
   Future<void> xemTinhThanh() async {
-    var reponse =
-        await get(Uri.parse('https://cntt199.000webhostapp.com/getTinhThanh.php')); //https://cntt199.000webhostapp.com/getTinhThanh.php //https://provinces.open-api.vn/api/?depth=1
+    var reponse = await get(Uri.parse(
+        'https://cntt199.000webhostapp.com/getTinhThanh.php')); //https://cntt199.000webhostapp.com/getTinhThanh.php //https://provinces.open-api.vn/api/?depth=1
     var result = json.decode(utf8.decode(reponse.bodyBytes));
 
     for (var document in result) {
@@ -328,16 +344,13 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
     setState(() {});
   }
 
-  Future<void> addUser() async {
-    var gioitinh = "Nam";
-    if (!isNam) {
-      gioitinh = "Nữ";
-    }
+  Future<void> addUser(String uid) async {
     Map<String, dynamic> data = {
-      'email' : widget.emailController.text,
-      'matkhau' : widget.matKhauController.text,
-      'hoten' : widget.hoTenController.text,
-      'gioitinh' : gioitinh,
+      'uid': uid,
+      'email': widget.emailController.text,
+      'hoten': widget.hoTenController.text,
+      'gioitinh': isNam ? "Nam" : "Nữ",
+      'diachi': tinhThanh,
     };
 
     var url = Uri.parse('https://cntt199.000webhostapp.com/registerUser.php');
