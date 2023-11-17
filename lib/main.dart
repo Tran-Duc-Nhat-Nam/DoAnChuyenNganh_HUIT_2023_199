@@ -45,7 +45,7 @@ class _MainAppState extends State<MainApp> {
       title: "App đặc sản",
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 148, 0, 211),
+            seedColor: const Color.fromARGB(255, 30, 144, 255),
             background: Colors.black,
             brightness: Brightness.dark),
         scaffoldBackgroundColor: Colors.black,
@@ -70,7 +70,7 @@ class _MainAppState extends State<MainApp> {
       ),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 148, 0, 211),
+            seedColor: const Color.fromARGB(255, 30, 144, 255),
             background: Colors.white),
         scaffoldBackgroundColor: Colors.white,
         textTheme: TextTheme(

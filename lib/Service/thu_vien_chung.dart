@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -6,6 +7,14 @@ void doiTenTab(String title, BuildContext context) {
     label: "App đặc sản - $title",
     primaryColor: Theme.of(context).primaryColor.value, // This line is required
   ));
+}
+
+Widget loadHinh(String duongDan) {
+  if (kIsWeb) {
+    return Image.network(duongDan);
+  } else {
+    return Image.asset(duongDan);
+  }
 }
 
 ButtonStyle RoundButtonStyle() {

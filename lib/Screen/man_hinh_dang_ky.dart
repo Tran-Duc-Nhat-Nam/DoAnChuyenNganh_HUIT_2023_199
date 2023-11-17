@@ -82,6 +82,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
               ),
               VerticalGapSizedBox(),
               TextFormField(
+                enabled: !isFixed,
                 obscureText: hidePassword,
                 enableSuggestions: false,
                 autocorrect: false,
@@ -107,7 +108,9 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   ),
                 ),
                 validator: (value) {
-                  if (value!.isEmpty) {
+                  if (isFixed) {
+                    return null;
+                  } else if (value!.isEmpty) {
                     return "Vui lòng nhập tài khoản";
                   }
                   return null;
@@ -115,6 +118,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
               ),
               VerticalGapSizedBox(),
               TextFormField(
+                enabled: !isFixed,
                 obscureText: hidePassword,
                 enableSuggestions: false,
                 autocorrect: false,
@@ -140,7 +144,9 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   ),
                 ),
                 validator: (value) {
-                  if (value!.isEmpty) {
+                  if (isFixed) {
+                    return null;
+                  } else if (value!.isEmpty) {
                     return "Vui lòng nhập tài khoản";
                   } else if (value != widget.matKhauController.text) {
                     return "Mật khẩu vừa nhập không trùng khớp";
@@ -237,26 +243,33 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   onPressed: () async {
                     if (widget.formKey.currentState!.validate()) {
                       try {
-                        User? user = (await FirebaseAuth.instance
-                                .createUserWithEmailAndPassword(
-                          email: widget.emailController.text,
-                          password: widget.matKhauController.text,
-                        ))
-                            .user;
+                        if (isFixed) {
+                          await addUser(FirebaseAuth.instance.currentUser!.uid);
+                          if (context.mounted) {
+                            context.go("/");
+                          }
+                        } else {
+                          User? user = (await FirebaseAuth.instance
+                                  .createUserWithEmailAndPassword(
+                            email: widget.emailController.text,
+                            password: widget.matKhauController.text,
+                          ))
+                              .user;
 
-                        if (user != null && context.mounted) {
-                          FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: widget.emailController.text,
-                                  password: widget.matKhauController.text)
-                              .then(
-                            (value) async {
-                              await addUser(value.user!.uid);
-                              if (context.mounted) {
-                                context.go("/");
-                              }
-                            },
-                          );
+                          if (user != null && context.mounted) {
+                            FirebaseAuth.instance
+                                .signInWithEmailAndPassword(
+                                    email: widget.emailController.text,
+                                    password: widget.matKhauController.text)
+                                .then(
+                              (value) async {
+                                await addUser(value.user!.uid);
+                                if (context.mounted) {
+                                  context.go("/");
+                                }
+                              },
+                            );
+                          }
                         }
                       } on Exception catch (e) {
                         var snackBar = SnackBar(

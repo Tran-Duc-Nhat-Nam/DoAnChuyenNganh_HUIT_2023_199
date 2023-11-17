@@ -18,7 +18,7 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 148, 0, 211),
+        backgroundColor: Color.fromARGB(255, 30, 144, 255),
         actions: [
           Flexible(
             flex: 1,
@@ -70,7 +70,7 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
           ),
         ],
         currentIndex: selectedIndex,
-        selectedItemColor: Colors.purpleAccent,
+        selectedItemColor: Color.fromARGB(255, 30, 144, 255),
         onTap: (value) {
           setState(() {
             widget.page.goBranch(value);

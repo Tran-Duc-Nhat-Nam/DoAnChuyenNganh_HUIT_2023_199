@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app_dac_san/Model/nguoi_dung.dart';
+import 'package:app_dac_san/Screen/man_hinh_dang_ky.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -129,9 +130,8 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
               VerticalGapSizedBox(),
               VerticalGapSizedBox(),
               ElevatedButton(
-                  style: MaxWidthRoundButtonStyle(),
-                  onPressed: // () { DangNhapMySql(); },
-                      () async {
+                  style: RoundButtonStyle(),
+                  onPressed: () async {
                     if (widget.formKey.currentState!.validate()) {
                       try {
                         // DangNhapMySql();
@@ -159,7 +159,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                   child: const Text("Đăng nhập")),
               VerticalGapSizedBox(),
               OutlinedButton(
-                  style: MaxWidthRoundButtonStyle(),
+                  style: RoundButtonStyle(),
                   onPressed: () => context.go("/signup"),
                   child: const Text("Đăng ký")),
               VerticalGapSizedBox(),
@@ -169,13 +169,13 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                   IconButton(
                     style: RoundButtonStyle(),
                     onPressed: DangNhapGoogle,
-                    icon: Image.network("images/google.png"),
+                    icon: loadHinh("images/google.png"),
                   ),
                   HorizontalGapSizedBox(),
                   IconButton(
                     style: RoundButtonStyle(),
                     onPressed: DangNhapFacebook,
-                    icon: Image.network("images/facebook.png"),
+                    icon: loadHinh("images/facebook.png"),
                   ),
                 ],
               ),
@@ -225,13 +225,19 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
         }
 
         for (var nd in dsNguoiDung) {
-          if (nd.uid == user.uid) {
+          if (nd.email == user.email) {
             context.go("/");
             return;
           }
         }
 
-        context.go("/signup");
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ManHinhDangKy(
+                email: user.email,
+              ),
+            ));
       }
     }
   }

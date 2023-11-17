@@ -44,21 +44,58 @@ class _TrangDacSanState extends State<TrangDacSan> {
         // )
         CarouselSlider(
           options: CarouselOptions(
-            height: 250.0,
+            height: MediaQuery.of(context).size.height * 0.2,
             animateToClosest: true,
-            pageSnapping: false,
+            pageSnapping: true,
             viewportFraction: 1.0,
           ),
           items: [1, 2, 3, 4, 5].map((i) {
             return Builder(
               builder: (BuildContext context) {
-                return Container(
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Card(
+                    color: const Color.fromARGB(255, 0, 191, 255),
                     margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                    alignment: Alignment.center,
-                    // đổi cái child này thành hình ảnh
-                    child: Image.network(
-                      dsHinhAnh[i - 1].link!,
-                    ));
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        ListTile(
+                          leading: Image.network(dsHinhAnh[i - 1].link!),
+                          title: Text(dsDacSan[i - 1].tenDacSan!),
+                          subtitle: Text(dsDacSan[i - 1].thanhPhan!),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            TextButton(
+                              child: const Text(
+                                'Xem chi tiết',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () {/* ... */},
+                            ),
+                            const SizedBox(width: 8),
+                            TextButton(
+                              child: const Text(
+                                'Xem sản phẩm cùng xuất sứ',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () {/* ... */},
+                            ),
+                            const SizedBox(width: 8),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
               },
             );
           }).toList(),

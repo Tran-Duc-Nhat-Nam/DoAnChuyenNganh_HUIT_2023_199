@@ -31,8 +31,6 @@ dependencies:
   flutter:
     sdk: flutter
   dropdown_search: ^5.0.6
-
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
@@ -66,3 +64,5 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   uses-material-design: true
+  assets:
+    - images/
