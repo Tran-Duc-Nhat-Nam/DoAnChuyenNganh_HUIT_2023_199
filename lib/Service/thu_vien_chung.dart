@@ -37,3 +37,17 @@ ButtonStyle RoundButtonStyle() {
     ),
   );
 }
+
+InputDecoration RoundInputDecoration(String text) {
+  return InputDecoration(
+    filled: true,
+    fillColor: const Color.fromARGB(255, 16, 16, 16),
+    contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+    labelText: text,
+    border: const OutlineInputBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(35),
+      ),
+    ),
+  );
+}

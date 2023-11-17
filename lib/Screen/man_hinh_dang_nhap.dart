@@ -33,6 +33,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Form(
         key: widget.formKey,
         child: Padding(
@@ -40,28 +41,22 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.asset("images/adsvn-low-resolution-logo-transparent.png"),
               Container(
-                height: 150,
+                height: 125,
                 alignment: Alignment.center,
                 child: Text(
-                  "Đăng nhập",
-                  style: GoogleFonts.robotoFlex(
+                  "ĐĂNG NHẬP",
+                  style: GoogleFonts.mulish(
                     fontWeight: FontWeight.bold,
                     fontSize: 36,
-                    color: Colors.purpleAccent,
+                    color: Colors.lightBlueAccent,
                   ),
                 ),
               ),
               TextFormField(
                 controller: widget.emailController,
-                decoration: const InputDecoration(
-                  labelText: "Tài khoản",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(25),
-                    ),
-                  ),
-                ),
+                decoration: RoundInputDecoration("Tài khoản"),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Vui lòng nhập tài khoản";
@@ -75,26 +70,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                 enableSuggestions: false,
                 autocorrect: false,
                 controller: widget.passwordController,
-                decoration: InputDecoration(
-                  labelText: "Mật khẩu",
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(25),
-                    ),
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      // Based on passwordVisible state choose the icon
-                      hidePassword ? Icons.visibility : Icons.visibility_off,
-                      color: Theme.of(context).primaryColorDark,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        hidePassword = !hidePassword;
-                      });
-                    },
-                  ),
-                ),
+                decoration: RoundPasswordInputDecoration("Mật khẩu", context),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Vui lòng nhập mật khẩu";
@@ -130,7 +106,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
               VerticalGapSizedBox(),
               VerticalGapSizedBox(),
               ElevatedButton(
-                  style: RoundButtonStyle(),
+                  style: MaxWidthRoundButtonStyle(),
                   onPressed: () async {
                     if (widget.formKey.currentState!.validate()) {
                       try {
@@ -159,7 +135,14 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                   child: const Text("Đăng nhập")),
               VerticalGapSizedBox(),
               OutlinedButton(
-                  style: RoundButtonStyle(),
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: Size.fromHeight(35),
+                    padding: EdgeInsets.all(15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    side: BorderSide(width: 1, color: Colors.lightBlueAccent),
+                  ),
                   onPressed: () => context.go("/signup"),
                   child: const Text("Đăng ký")),
               VerticalGapSizedBox(),
@@ -182,6 +165,32 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  InputDecoration RoundPasswordInputDecoration(
+      String text, BuildContext context) {
+    return InputDecoration(
+      filled: true,
+      fillColor: const Color.fromARGB(255, 16, 16, 16),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+      labelText: text,
+      border: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(35),
+        ),
+      ),
+      suffixIcon: IconButton(
+        icon: Icon(
+          // Based on passwordVisible state choose the icon
+          hidePassword ? Icons.visibility : Icons.visibility_off,
+        ),
+        onPressed: () {
+          setState(() {
+            hidePassword = !hidePassword;
+          });
+        },
       ),
     );
   }
@@ -272,20 +281,21 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
 
   ButtonStyle MaxWidthRoundButtonStyle() {
     return ButtonStyle(
+      minimumSize: MaterialStateProperty.all(const Size.fromHeight(25)),
       textStyle: MaterialStateProperty.all(
         const TextStyle(
           fontWeight: FontWeight.bold,
         ),
       ),
       padding: MaterialStateProperty.all(const EdgeInsets.only(
-        top: 20,
-        bottom: 20,
+        top: 15,
+        bottom: 15,
         left: 35,
         right: 35,
       )),
       shape: MaterialStateProperty.all(
         RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(15.0),
         ),
       ),
     );

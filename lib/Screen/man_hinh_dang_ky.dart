@@ -8,6 +8,8 @@ import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
+import '../Service/thu_vien_chung.dart';
+
 class ManHinhDangKy extends StatefulWidget {
   ManHinhDangKy({
     super.key,
@@ -65,14 +67,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
               TextFormField(
                 readOnly: isFixed,
                 controller: widget.emailController,
-                decoration: const InputDecoration(
-                  labelText: "Email",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(25),
-                    ),
-                  ),
-                ),
+                decoration: RoundInputDecoration("Email"),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Vui lòng nhập email";
@@ -127,7 +122,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   labelText: "Nhập lại mật khẩu",
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
-                      Radius.circular(25),
+                      Radius.circular(35),
                     ),
                   ),
                   suffixIcon: IconButton(
@@ -157,14 +152,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
               VerticalGapSizedBox(),
               TextFormField(
                 controller: widget.hoTenController,
-                decoration: const InputDecoration(
-                  labelText: "Họ tên",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(25),
-                    ),
-                  ),
-                ),
+                decoration: RoundInputDecoration("Họ tên"),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Vui lòng nhập họ tên";
@@ -175,14 +163,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
               VerticalGapSizedBox(),
               TextFormField(
                 controller: widget.sdtController,
-                decoration: const InputDecoration(
-                  labelText: "Số điện thoại",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(25),
-                    ),
-                  ),
-                ),
+                decoration: RoundInputDecoration("Số điện thoại"),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Vui lòng nhập số điện thoại";
@@ -285,27 +266,6 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   child: const Text("Đăng ký")),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  ButtonStyle RoundButtonStyle() {
-    return ButtonStyle(
-      textStyle: MaterialStateProperty.all(
-        const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      padding: MaterialStateProperty.all(const EdgeInsets.only(
-        top: 20,
-        bottom: 20,
-        left: 30,
-        right: 30,
-      )),
-      shape: MaterialStateProperty.all(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25.0),
         ),
       ),
     );
