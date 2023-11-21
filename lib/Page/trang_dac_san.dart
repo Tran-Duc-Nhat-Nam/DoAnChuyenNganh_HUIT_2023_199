@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app_dac_san/Model/hinh_anh.dart';
+import 'package:app_dac_san/Page/trang_chi_tiet_dac_san.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -129,6 +130,14 @@ class _TrangDacSanState extends State<TrangDacSan> {
                   ),
                   title: Text(dacSan.tenDacSan.toString()),
                   subtitle: Text(getNameTinh(dacSan.xuatXu)),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TrangChiTietDacSan(Dacsan: dacSan),
+                        ),
+                      );
+                  },
                 );
               }
               return const SizedBox.shrink();
@@ -206,6 +215,15 @@ class _TrangDacSanState extends State<TrangDacSan> {
     }
     return name;
   }
+  String getMien(int? IdMien) {
+    String name = '404';
+    int index = dsVungMien.indexWhere((vungMien) => vungMien.idMien == IdMien);
+    if (index != -1) {
+      return dsVungMien[index].tenMien.toString();
+    }
+    return name;
+  }
+
 
   // Future<String> getURLImage(int? idImage) async {
   //   // con loi fix nay nha. Api get ve se duoc chuoi strring html
