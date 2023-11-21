@@ -66,3 +66,19 @@ flutter:
   uses-material-design: true
   assets:
     - images/
+  fonts:
+    - family: Segoe
+      fonts:
+        - asset: Assert/Fonts/Segoe UI.ttf
+    - family: RobotoBlack
+      fonts:
+        - asset: Assert/Fonts/RobotoBlack-Powx.ttf
+    - family: RobotoLight
+      fonts:
+          - asset: Assert/Fonts/Roboto/Roboto-Light.ttf
+    - family: Oswald
+      fonts:
+          - asset: Assert/Fonts/Oswald-VariableFont_wght.ttf
+    - family: FiraSans-ExtraBoldItalic
+      fonts:
+          - asset: Assert/Fonts/Fira_Sans/FiraSans-ExtraBoldItalic.ttf

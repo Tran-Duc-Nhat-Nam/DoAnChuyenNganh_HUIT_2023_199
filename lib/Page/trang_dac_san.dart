@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app_dac_san/Model/hinh_anh.dart';
+import 'package:app_dac_san/Page/trang_chi_tiet_dac_san.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -259,6 +260,15 @@ String getURLImage(int? idImage, List<HinhAnh> lst) {
 class DacSanList extends StatelessWidget {
   final List<DacSan> lstDacSan;
   final List<HinhAnh> dsHinhAnh;
+  String getMien(int? IdMien) {
+    String name = '404';
+    int index = dsVungMien.indexWhere((vungMien) => vungMien.idMien == IdMien);
+    if (index != -1) {
+      return dsVungMien[index].tenMien.toString();
+    }
+    return name;
+  }
+
 
   const DacSanList({super.key, required this.lstDacSan, required this.dsHinhAnh});
 
