@@ -19,23 +19,23 @@ class _ProductPageState extends State<ProductPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            DropdownSearch<String>(
-              mode: Mode.MENU,
-              showSelectedItems: true,
-              items: const [
-                'English',
-                'Spanish',
-                'French',
-              ],
-              // ignore: deprecated_member_use
-              label: "Select Language",
-              onChanged: (value) {
-                setState(() {
-                  selectedLanguage = value!;
-                });
-              },
-              selectedItem: selectedLanguage,
-            ),
+            // DropdownSearch<String>(
+            //   mode: Mode.MENU,
+            //   showSelectedItems: true,
+            //   items: const [
+            //     'English',
+            //     'Spanish',
+            //     'French',
+            //   ],
+            //   // ignore: deprecated_member_use
+            //   label: "Select Language",
+            //   onChanged: (value) {
+            //     setState(() {
+            //       selectedLanguage = value!;
+            //     });
+            //   },
+            //   selectedItem: selectedLanguage,
+            // ),
             SizedBox(height: 20),
             Text(
               'Selected Language: $selectedLanguage',

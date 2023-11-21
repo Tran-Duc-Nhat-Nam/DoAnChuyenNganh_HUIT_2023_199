@@ -319,7 +319,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
 
   Future<void> addUser(String uid) async {
     Map<String, dynamic> data = {
-      'uid': uid,
+      // 'uid': uid,
       'email': widget.emailController.text,
       'hoten': widget.hoTenController.text,
       'gioitinh': isNam ? "Nam" : "Nữ",
