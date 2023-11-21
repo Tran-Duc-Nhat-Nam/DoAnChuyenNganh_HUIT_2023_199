@@ -30,60 +30,61 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView (
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 300,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(7.0),
-                  color: Colors.green
-              ),
-              child: Image.network(
-                getURLImage(dacSan.avatar),
-                fit: BoxFit.cover, // Có thể điều chỉnh để tùy chỉnh cách hình ảnh phù hợp trong Container
-              ),
-            ),
-            SizedBox(height: 5),
-            Text(dacSan.tenDacSan ?? '',
-                style: const TextStyle(fontWeight: FontWeight.w900, color: Colors.blue, fontSize: 35, fontFamily: 'Times New Roman')),
-            SizedBox(height: 5),
-            Text(getMien(dacSan.idMien),
-                style: const TextStyle(fontWeight: FontWeight.w500, color: Color.fromARGB(225, 255 , 153 , 51) , fontSize: 24, fontFamily: 'Times New Roman')),
-            SizedBox(height: 28),
-            const Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Text('Nội dung',
-                      style: TextStyle(fontWeight: FontWeight.w600,decoration: TextDecoration.underline, color: Colors.blue, fontSize: 28)),
+      child: Container(
+        color: Color.fromARGB(225, 162, 235, 230),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Image.network(
+                  getURLImage(dacSan.avatar),
+                  width: 500.0, // Điều chỉnh kích thước ảnh theo ý của bạn
+                  height: 300,
+                  fit: BoxFit.cover, // Có thể điều chỉnh để tùy chỉnh cách hình ảnh phù hợp trong Container
                 ),
-
-              ],
-            ),
-            Card(
-                color: Color.fromARGB(225, 162, 235, 230),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                child: Container(
-                  padding: EdgeInsets.all(7.0),
-                  child: Text( dacSan.moTa ?? '',
-                      textAlign: TextAlign.justify,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontFamily: 'Times New Roman',
-                        wordSpacing: 7,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500
-                      )
+              ),
+              SizedBox(height: 5),
+              Text(dacSan.tenDacSan ?? '',
+                  style: const TextStyle(fontWeight: FontWeight.w900, color: Color.fromARGB(255,67, 168, 140), fontSize: 35, fontFamily: 'RobotoBlack')),
+              SizedBox(height: 5),
+              Text(getMien(dacSan.idMien),
+                  style: const TextStyle(fontWeight: FontWeight.w900, color: Color.fromARGB(225, 104, 143, 187) , fontSize: 24, fontFamily: 'ExtraBoldItalic')),
+              SizedBox(height: 28),
+              const Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Text('Nội dung',
+                        style: TextStyle(fontWeight: FontWeight.w600,decoration: TextDecoration.underline, color: Color.fromARGB(225, 100, 167, 130), fontSize: 28, fontFamily: "RobotoBlack")),
                   ),
-                )
-            ),
-            SizedBox(height: 5)
-          ],
+
+                ],
+              ),
+              Card(
+                  color: const Color.fromARGB(255,159, 205, 200),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text( dacSan.moTa ?? '',
+                        textAlign: TextAlign.justify,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'RobotoLight',
+                          wordSpacing: 1.3,
+                          letterSpacing: 1,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600
+                        )
+                    ),
+                  )
+              ),
+              SizedBox(height: 5)
+            ],
+          ),
         ),
       ),
     );
