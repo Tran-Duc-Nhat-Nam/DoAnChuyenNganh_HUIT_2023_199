@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../Model/dac_san.dart';
 import '../Model/hinh_anh.dart';
@@ -59,6 +60,24 @@ InputDecoration RoundInputDecoration(String text) {
       ),
     ),
   );
+}
+
+class LoadingScreen extends StatelessWidget {
+  const LoadingScreen({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: LoadingAnimationWidget.staggeredDotsWave(
+          color: Colors.cyanAccent,
+          size: 100,
+        ),
+      ),
+    );
+  }
 }
 
 Future<void> addUser(

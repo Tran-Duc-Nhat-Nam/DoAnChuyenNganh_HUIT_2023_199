@@ -1,9 +1,9 @@
 import 'package:async_builder/async_builder.dart';
+import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../Service/thu_vien_chung.dart';
 import '../main.dart';
@@ -42,14 +42,7 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
   Widget build(BuildContext context) {
     return AsyncBuilder(
       future: myFuture,
-      waiting: (context) => Scaffold(
-        body: Center(
-          child: LoadingAnimationWidget.staggeredDotsWave(
-            color: Colors.cyanAccent,
-            size: 100,
-          ),
-        ),
-      ),
+      waiting: (context) => LoadingScreen(),
       builder: (context, value) => PopScope(
         onPopInvoked: (popped) {
           showDialog(
@@ -97,70 +90,15 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
         },
         canPop: false,
         child: Scaffold(
-          appBar: AppBar(
+          appBar: EasySearchBar(
             backgroundColor: const Color.fromARGB(255, 30, 144, 255),
-            actions: [
-              Flexible(
-                flex: 1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const Flexible(
-                      flex: 1,
-                      child: Text("Đặc sản VN"),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: TextField(
-                          controller: TextEditingController(),
-                          decoration: InputDecoration(
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(width: 2, color: Colors.white60),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(35),
-                                ),
-                              ),
-                              focusColor:
-                                  const Color.fromARGB(255, 65, 105, 225),
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(width: 2, color: Colors.white60),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(35),
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: const Color.fromARGB(255, 0, 114, 225),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 25, vertical: 12),
-                              suffixIcon: IconButton(
-                                  onPressed: () {
-                                    var routeList = GoRouter.of(context)
-                                        .routerDelegate
-                                        .currentConfiguration
-                                        .matches;
-                                    for (var route in routeList) {
-                                      print(
-                                          "Location: ${route.matchedLocation}");
-                                      print("Page: ${route.pageKey}");
-                                    }
-                                  },
-                                  icon: const Icon(Icons.search_outlined))),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-            iconTheme: const IconThemeData(color: Colors.white),
-            flexibleSpace: Container(
-              padding: EdgeInsets.zero,
-              margin: EdgeInsets.zero,
+            foregroundColor: Colors.white,
+            titleTextStyle: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
             ),
+            title: const Text('App đặc sản VN'),
+            onSearch: (value) {},
           ),
           body: widget.page,
           bottomNavigationBar: BottomNavigationBar(
