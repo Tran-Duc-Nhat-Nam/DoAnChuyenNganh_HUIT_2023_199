@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 import '../Service/thu_vien_chung.dart';
@@ -57,6 +56,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Form(
         key: widget.formKey,
         child: Padding(
@@ -83,10 +83,13 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 autocorrect: false,
                 controller: widget.matKhauController,
                 decoration: InputDecoration(
+                  filled: true,
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                   labelText: "Mật khẩu",
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
-                      Radius.circular(25),
+                      Radius.circular(35),
                     ),
                   ),
                   suffixIcon: IconButton(
@@ -119,6 +122,9 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 autocorrect: false,
                 controller: widget.xacNhanMatKhauController,
                 decoration: InputDecoration(
+                  filled: true,
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                   labelText: "Nhập lại mật khẩu",
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
@@ -174,15 +180,13 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
               VerticalGapSizedBox(),
-              Flexible(
-                flex: 1,
-                child: DropdownMenu(
-                  dropdownMenuEntries: dsLabelTinhThanh,
-                  hintText: "Danh sách tỉnh thành",
-                  onSelected: (value) {
-                    tinhThanh = value!.ten;
-                  },
-                ),
+              DropdownMenu(
+                width: MediaQuery.of(context).size.width - 30,
+                dropdownMenuEntries: dsLabelTinhThanh,
+                hintText: "Danh sách tỉnh thành",
+                onSelected: (value) {
+                  tinhThanh = value!.ten;
+                },
               ),
               VerticalGapSizedBox(),
               Row(
@@ -225,7 +229,12 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                     if (widget.formKey.currentState!.validate()) {
                       try {
                         if (isFixed) {
-                          await addUser(FirebaseAuth.instance.currentUser!.uid);
+                          await addUser(
+                            widget.emailController.text,
+                            widget.hoTenController.text,
+                            isNam,
+                            tinhThanh!,
+                          );
                           if (context.mounted) {
                             context.go("/");
                           }
@@ -244,7 +253,12 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                                     password: widget.matKhauController.text)
                                 .then(
                               (value) async {
-                                await addUser(value.user!.uid);
+                                await addUser(
+                                  widget.emailController.text,
+                                  widget.hoTenController.text,
+                                  isNam,
+                                  tinhThanh!,
+                                );
                                 if (context.mounted) {
                                   context.go("/");
                                 }
@@ -315,18 +329,5 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
       dsTT.add(tinhThanh);
     }
     setState(() {});
-  }
-
-  Future<void> addUser(String uid) async {
-    Map<String, dynamic> data = {
-      'uid': uid,
-      'email': widget.emailController.text,
-      'hoten': widget.hoTenController.text,
-      'gioitinh': isNam ? "Nam" : "Nữ",
-      'diachi': tinhThanh,
-    };
-
-    var url = Uri.parse('https://cntt199.000webhostapp.com/registerUser.php');
-    await http.post(url, body: data);
   }
 }
