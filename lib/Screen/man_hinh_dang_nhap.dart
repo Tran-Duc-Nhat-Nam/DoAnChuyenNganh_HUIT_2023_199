@@ -81,7 +81,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                   if (widget.formKey.currentState!.validate()) {
                     try {
                       User? user = (await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
+                          .signInWithEmailAndPassword(
                         email: widget.emailController.text,
                         password: widget.passwordController.text,
                       ))
@@ -109,9 +109,9 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                   style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                     backgroundColor:
-                        MaterialStateProperty.all(Colors.lightBlue),
+                    MaterialStateProperty.all(Colors.lightBlue),
                     minimumSize:
-                        MaterialStateProperty.all(const Size.fromHeight(25)),
+                    MaterialStateProperty.all(const Size.fromHeight(25)),
                     textStyle: MaterialStateProperty.all(
                       const TextStyle(
                         fontWeight: FontWeight.bold,
@@ -134,7 +134,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                       try {
                         // DangNhapMySql();
                         User? user = (await FirebaseAuth.instance
-                                .signInWithEmailAndPassword(
+                            .signInWithEmailAndPassword(
                           email: widget.emailController.text,
                           password: widget.passwordController.text,
                         ))
@@ -231,7 +231,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
       final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
+      await googleUser?.authentication;
 
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
@@ -280,7 +280,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
 
     // Create a credential from the access token
     final OAuthCredential facebookAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.token);
+    FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
     // Once signed in, return the UserCredential
     await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);

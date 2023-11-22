@@ -19,7 +19,7 @@ class ManHinhDangKy extends StatefulWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController matKhauController = TextEditingController();
   final TextEditingController xacNhanMatKhauController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController hoTenController = TextEditingController();
   final TextEditingController sdtController = TextEditingController();
 
@@ -85,7 +85,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 decoration: InputDecoration(
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+                  const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                   labelText: "Mật khẩu",
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
@@ -124,7 +124,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 decoration: InputDecoration(
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+                  const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                   labelText: "Nhập lại mật khẩu",
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
@@ -240,7 +240,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                           }
                         } else {
                           User? user = (await FirebaseAuth.instance
-                                  .createUserWithEmailAndPassword(
+                              .createUserWithEmailAndPassword(
                             email: widget.emailController.text,
                             password: widget.matKhauController.text,
                           ))
@@ -249,10 +249,10 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                           if (user != null && context.mounted) {
                             FirebaseAuth.instance
                                 .signInWithEmailAndPassword(
-                                    email: widget.emailController.text,
-                                    password: widget.matKhauController.text)
+                                email: widget.emailController.text,
+                                password: widget.matKhauController.text)
                                 .then(
-                              (value) async {
+                                  (value) async {
                                 await addUser(
                                   widget.emailController.text,
                                   widget.hoTenController.text,
@@ -329,18 +329,5 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
       dsTT.add(tinhThanh);
     }
     setState(() {});
-  }
-
-  Future<void> addUser(String uid) async {
-    Map<String, dynamic> data = {
-      // 'uid': uid,
-      'email': widget.emailController.text,
-      'hoten': widget.hoTenController.text,
-      'gioitinh': isNam ? "Nam" : "Nữ",
-      'diachi': tinhThanh,
-    };
-
-    var url = Uri.parse('https://cntt199.000webhostapp.com/registerUser.php');
-    await http.post(url, body: data);
   }
 }
