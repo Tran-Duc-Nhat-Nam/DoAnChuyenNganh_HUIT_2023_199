@@ -1,3 +1,4 @@
+import 'package:app_dac_san/Page/trang_chi_tiet_dac_san.dart';
 import 'package:app_dac_san/Page/trang_dac_san.dart';
 import 'package:app_dac_san/Page/trang_nguoi_dung.dart';
 import 'package:app_dac_san/Screen/man_hinh_chinh.dart';
@@ -11,6 +12,8 @@ import 'package:go_router/go_router.dart';
 import '../main.dart';
 
 final rootNavKey = GlobalKey<NavigatorState>();
+final dacsanNavKey = GlobalKey<NavigatorState>();
+final nguoiDungNavKey = GlobalKey<NavigatorState>();
 
 final GoRouter router = GoRouter(
   initialLocation: "/",
@@ -34,35 +37,49 @@ final GoRouter router = GoRouter(
       },
       branches: [
         StatefulShellBranch(
+          navigatorKey: dacsanNavKey,
           routes: [
             GoRoute(
+              parentNavigatorKey: dacsanNavKey,
               path: '/dacsan',
               name: "Danh sách đặc sản",
               builder: (context, state) {
                 return const TrangDacSan();
               },
+              routes: [
+                GoRoute(
+                  path: ":id",
+                  builder: (context, state) {
+                    return TrangChiTietDacSan(
+                      maDS: int.parse(state.pathParameters['id']!),
+                    );
+                  },
+                ),
+              ],
             ),
           ],
         ),
-        StatefulShellBranch(routes: [
-          GoRoute(
-            path: '/nguoidung',
-            name: "Hồ sơ người dùng",
-            builder: (context, state) {
-              return TrangNguoiDung();
-            },
-          ),
-        ])
+        StatefulShellBranch(
+          navigatorKey: nguoiDungNavKey,
+          routes: [
+            GoRoute(
+              parentNavigatorKey: nguoiDungNavKey,
+              path: '/nguoidung',
+              name: "Hồ sơ người dùng",
+              builder: (context, state) {
+                return TrangNguoiDung();
+              },
+            ),
+          ],
+        )
       ],
     ),
     GoRoute(
       path: "/",
       builder: (context, state) {
         if (ref.getBool("lanDau") == null) {
-          print("Check");
           return const ManHinhGioiThieu();
         } else {
-          print("No Check");
           return ManHinhDangNhap();
         }
       },

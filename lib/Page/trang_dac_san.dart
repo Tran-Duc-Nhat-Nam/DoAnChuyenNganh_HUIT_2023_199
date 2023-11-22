@@ -1,6 +1,6 @@
-import 'package:app_dac_san/Page/trang_chi_tiet_dac_san.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../Model/dac_san.dart';
 import '../Model/vung_mien.dart';
@@ -24,116 +24,110 @@ class _TrangDacSanState extends State<TrangDacSan> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CarouselSlider(
-          options: CarouselOptions(
-            height: MediaQuery.of(context).size.height * 0.2,
-            animateToClosest: true,
-            pageSnapping: true,
-            viewportFraction: 1.0,
-          ),
-          items: [1, 2, 3, 4, 5].map((i) {
-            return Builder(
-              builder: (BuildContext context) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Card(
-                    color: const Color.fromARGB(255, 65, 105, 225),
-                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
+    return Scaffold(
+      body: Column(
+        children: [
+          CarouselSlider(
+            options: CarouselOptions(
+              height: MediaQuery.of(context).size.height * 0.2,
+              animateToClosest: true,
+              pageSnapping: true,
+              viewportFraction: 1.0,
+            ),
+            items: [1, 2, 3, 4, 5].map((i) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Card(
+                      color: const Color.fromARGB(255, 65, 105, 225),
+                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        ListTile(
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.network(
-                              dsHinhAnh[i - 1].link!,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          ListTile(
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: Image.network(
+                                dsHinhAnh[i - 1].link!,
+                              ),
                             ),
+                            title: Text(dsDacSan[i - 1].tenDacSan!),
+                            subtitle: Text(dsDacSan[i - 1].thanhPhan!),
                           ),
-                          title: Text(dsDacSan[i - 1].tenDacSan!),
-                          subtitle: Text(dsDacSan[i - 1].thanhPhan!),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            TextButton(
-                              child: const Text(
-                                'Xem chi tiết',
-                                style: TextStyle(color: Colors.white),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              TextButton(
+                                child: const Text(
+                                  'Xem chi tiết',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onPressed: () {/* ... */},
                               ),
-                              onPressed: () {/* ... */},
-                            ),
-                            const SizedBox(width: 8),
-                            TextButton(
-                              child: const Text(
-                                'Xem sản phẩm cùng xuất sứ',
-                                style: TextStyle(color: Colors.white),
+                              const SizedBox(width: 8),
+                              TextButton(
+                                child: const Text(
+                                  'Xem sản phẩm cùng xuất sứ',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onPressed: () {/* ... */},
                               ),
-                              onPressed: () {/* ... */},
-                            ),
-                            const SizedBox(width: 8),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
-          }).toList(),
-        ),
-        DropdownButton<int>(
-          value: selectedVungMien,
-          onChanged: (int? newValue) {
-            setState(() {
-              selectedVungMien = newValue!;
-            });
-          },
-          items: dsVungMien.map<DropdownMenuItem<int>>((VungMien value) {
-            return DropdownMenuItem<int>(
-              value: value.idMien,
-              child: Text(value.tenMien.toString()),
-            );
-          }).toList(),
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: dsDacSan.length,
-            itemBuilder: (context, index) {
-              DacSan dacSan = dsDacSan[index];
-              // if (selectedVungMien >= 0 || selectedVungMien == 'Tất cả' || selectedVungMien == dacSan.xuatXu) {
-              if (selectedVungMien == 2) {
-                return ListTile(
-                  leading: Image.network(
-                    getURLImage(dacSan.avatar),
-                    width: 100,
-                    height: 100,
-                  ),
-                  title: Text(dacSan.tenDacSan.toString()),
-                  subtitle: Text(getNameTinh(dacSan.xuatXu)),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            TrangChiTietDacSan(Dacsan: dacSan),
+                              const SizedBox(width: 8),
+                            ],
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                );
-              }
-              return const SizedBox.shrink();
-            },
+                    ),
+                  );
+                },
+              );
+            }).toList(),
           ),
-        ),
-      ],
+          DropdownButton<int>(
+            value: selectedVungMien,
+            onChanged: (int? newValue) {
+              setState(() {
+                selectedVungMien = newValue!;
+              });
+            },
+            items: dsVungMien.map<DropdownMenuItem<int>>((VungMien value) {
+              return DropdownMenuItem<int>(
+                value: value.idMien,
+                child: Text(value.tenMien.toString()),
+              );
+            }).toList(),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: dsDacSan.length,
+              itemBuilder: (context, index) {
+                DacSan dacSan = dsDacSan[index];
+                // if (selectedVungMien >= 0 || selectedVungMien == 'Tất cả' || selectedVungMien == dacSan.xuatXu) {
+                if (selectedVungMien == 2) {
+                  return ListTile(
+                    leading: Image.network(
+                      getURLImage(dacSan.avatar),
+                      width: 100,
+                      height: 100,
+                    ),
+                    title: Text(dacSan.tenDacSan.toString()),
+                    subtitle: Text(getNameTinh(dacSan.xuatXu)),
+                    onTap: () => context.go("/dacsan/$index"),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 

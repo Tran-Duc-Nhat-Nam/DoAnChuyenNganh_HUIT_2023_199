@@ -39,7 +39,9 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
             child: Column(
               children: [
                 TextFieldNguoiDung(
-                    controller: widget.uidController, text: "Id người dùng"),
+                  controller: widget.uidController,
+                  text: "Id người dùng",
+                ),
                 TextFieldNguoiDung(
                   controller: widget.emailController,
                   text: "Email",
