@@ -15,8 +15,8 @@ class _ManHinhGioiThieuState extends State<ManHinhGioiThieu> {
   @override
   Widget build(BuildContext context) {
     return IntroductionScreen(
-      next: const Text("Next"),
-      done: const Text("Done"),
+      next: const Text("Tiếp theo"),
+      done: const Text("Hoàn tất"),
       onDone: () async {
         await ref.setBool("lanDau", false);
         if (context.mounted) {
@@ -28,7 +28,7 @@ class _ManHinhGioiThieuState extends State<ManHinhGioiThieu> {
           title: "Chào mừng",
           body: "Chào mừng bạn đã tới với App đặc sản VN.",
           image: const Center(
-            child: Icon(Icons.waving_hand, size: 50.0),
+            child: Icon(Icons.waving_hand, size: 64.0),
           ),
         ),
         PageViewModel(
@@ -36,15 +36,15 @@ class _ManHinhGioiThieuState extends State<ManHinhGioiThieu> {
           body:
               "App đặc sản VN sẽ mang đến cho bạn thông tin đặc sản của 63 tỉnh thành Việt Nam.",
           image: const Center(
-            child: Icon(Icons.food_bank, size: 50.0),
+            child: Icon(Icons.food_bank, size: 64.0),
           ),
         ),
         PageViewModel(
-          title: "Hoàn thành",
+          title: "Đăng nhập",
           body:
               "Bây giờ bạn có thể bắt đầu sử dụng bằng cách đăng ký tài khoản mới hoặc đăng nhập vào ứng dụng.",
           image: const Center(
-            child: Icon(Icons.login, size: 50.0),
+            child: Icon(Icons.login, size: 64.0),
           ),
         ),
       ],

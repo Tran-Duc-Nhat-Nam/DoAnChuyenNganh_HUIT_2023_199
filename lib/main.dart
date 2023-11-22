@@ -4,7 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Model/dac_san.dart';
+import 'Model/hinh_anh.dart';
+import 'Model/nguoi_dung.dart';
+import 'Model/tinh_thanh.dart';
+import 'Model/vung_mien.dart';
+
 late final SharedPreferences ref;
+List<VungMien> dsVungMien = [];
+List<HinhAnh> dsHinhAnh = [];
+List<TinhThanh> dsTinhThanh = [];
+List<DacSan> dsDacSan = [];
+late NguoiDung nguoiDung;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,10 +45,6 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  void notifyParent() {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     Widget bodyWidget;
@@ -75,21 +82,20 @@ class _MainAppState extends State<MainApp> {
         scaffoldBackgroundColor: Colors.white,
         textTheme: TextTheme(
           displayLarge: const TextStyle(
-            fontSize: 50,
+            fontSize: 72,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: Colors.black,
           ),
           // ···
-          titleLarge: GoogleFonts.oswald(
-            fontSize: 25,
-            fontStyle: FontStyle.italic,
-            color: Colors.white,
+          titleLarge: GoogleFonts.robotoFlex(
+            fontSize: 30,
+            color: Colors.black,
           ),
-          bodyMedium: GoogleFonts.merriweather(
-            color: Colors.white,
+          bodyMedium: GoogleFonts.robotoFlex(
+            color: Colors.black,
           ),
-          displaySmall: GoogleFonts.pacifico(
-            color: Colors.white,
+          displaySmall: GoogleFonts.robotoFlex(
+            color: Colors.black,
           ),
         ),
       ),

@@ -106,7 +106,29 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
               VerticalGapSizedBox(),
               VerticalGapSizedBox(),
               ElevatedButton(
-                  style: MaxWidthRoundButtonStyle(),
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.lightBlue),
+                    minimumSize:
+                        MaterialStateProperty.all(const Size.fromHeight(25)),
+                    textStyle: MaterialStateProperty.all(
+                      const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    padding: MaterialStateProperty.all(const EdgeInsets.only(
+                      top: 15,
+                      bottom: 15,
+                      left: 35,
+                      right: 35,
+                    )),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                    ),
+                  ),
                   onPressed: () async {
                     if (widget.formKey.currentState!.validate()) {
                       try {
@@ -139,7 +161,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                     minimumSize: Size.fromHeight(35),
                     padding: EdgeInsets.all(15),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+                      borderRadius: BorderRadius.circular(18.0),
                     ),
                     side: BorderSide(width: 1, color: Colors.lightBlueAccent),
                   ),
@@ -150,13 +172,15 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
-                    style: RoundButtonStyle(),
+                    style: ButtonStyle(
+                        maximumSize: MaterialStateProperty.all(Size(56, 56))),
                     onPressed: DangNhapGoogle,
                     icon: loadHinh("images/google.png"),
                   ),
                   HorizontalGapSizedBox(),
                   IconButton(
-                    style: RoundButtonStyle(),
+                    style: ButtonStyle(
+                        maximumSize: MaterialStateProperty.all(Size(56, 56))),
                     onPressed: DangNhapFacebook,
                     icon: loadHinh("images/facebook.png"),
                   ),
@@ -173,8 +197,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
       String text, BuildContext context) {
     return InputDecoration(
       filled: true,
-      fillColor: const Color.fromARGB(255, 16, 16, 16),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
       labelText: text,
       border: const OutlineInputBorder(
         borderRadius: BorderRadius.all(
@@ -269,35 +292,13 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
 
   SizedBox HorizontalGapSizedBox() {
     return const SizedBox(
-      width: 15,
+      width: 25,
     );
   }
 
   SizedBox VerticalGapSizedBox() {
     return const SizedBox(
       height: 15,
-    );
-  }
-
-  ButtonStyle MaxWidthRoundButtonStyle() {
-    return ButtonStyle(
-      minimumSize: MaterialStateProperty.all(const Size.fromHeight(25)),
-      textStyle: MaterialStateProperty.all(
-        const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      padding: MaterialStateProperty.all(const EdgeInsets.only(
-        top: 15,
-        bottom: 15,
-        left: 35,
-        right: 35,
-      )),
-      shape: MaterialStateProperty.all(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-      ),
     );
   }
 }

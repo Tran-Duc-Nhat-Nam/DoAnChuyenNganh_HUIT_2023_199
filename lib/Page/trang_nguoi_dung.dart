@@ -1,13 +1,19 @@
+import 'package:app_dac_san/Model/nguoi_dung.dart';
+import 'package:app_dac_san/Service/thu_vien_chung.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../main.dart';
+
 class TrangNguoiDung extends StatefulWidget {
   TrangNguoiDung({
     super.key,
   });
+  NguoiDung? nguoiDung;
+  final TextEditingController uidController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController hoTenController = TextEditingController();
   final TextEditingController diaChiController = TextEditingController();
@@ -19,7 +25,11 @@ class TrangNguoiDung extends StatefulWidget {
 class _TrangNguoiDungState extends State<TrangNguoiDung> {
   @override
   Widget build(BuildContext context) {
-    widget.emailController.text = FirebaseAuth.instance.currentUser!.uid;
+    widget.uidController.text = FirebaseAuth.instance.currentUser!.uid;
+    widget.emailController.text = nguoiDung.email;
+    widget.hoTenController.text = nguoiDung.hoTen;
+    widget.diaChiController.text = nguoiDung.diaChi!;
+
     return Scaffold(
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -28,23 +38,9 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Row(
-                    children: [
-                      const Flexible(
-                        flex: 1,
-                        child: Text("ID người dùng:"),
-                      ),
-                      Flexible(
-                        flex: 2,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 15),
-                          child: Text(FirebaseAuth.instance.currentUser!.uid),
-                        ),
-                      ),
-                    ],
-                  ),
+                TextFieldNguoiDung(
+                  controller: widget.uidController,
+                  text: "Id người dùng",
                 ),
                 TextFieldNguoiDung(
                   controller: widget.emailController,
@@ -59,9 +55,18 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                   text: "Địa chỉ",
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MaterialButton(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: ElevatedButton(
                     child: const Text("Đăng xuất"),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(35),
+                      padding: const EdgeInsets.all(15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      side: const BorderSide(
+                          width: 1, color: Colors.lightBlueAccent),
+                    ),
                     onPressed: () async {
                       await FirebaseAuth.instance
                           .signOut()
@@ -69,6 +74,10 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                         await FacebookAuth.instance.logOut();
                         await GoogleSignIn().signOut().whenComplete(() {
                           if (context.mounted) {
+                            dsDacSan.clear();
+                            dsHinhAnh.clear();
+                            dsTinhThanh.clear();
+                            dsVungMien.clear();
                             context.go("/");
                           }
                         });
@@ -104,14 +113,7 @@ class TextFieldNguoiDung extends StatelessWidget {
       child: TextFormField(
         readOnly: isReadOnly,
         controller: controller,
-        decoration: InputDecoration(
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(25),
-            ),
-          ),
-          labelText: text,
-        ),
+        decoration: RoundInputDecoration(text),
       ),
     );
   }
