@@ -1,10 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../Model/dac_san.dart';
 import '../Model/hinh_anh.dart';
@@ -12,73 +8,6 @@ import '../Model/nguoi_dung.dart';
 import '../Model/tinh_thanh.dart';
 import '../Model/vung_mien.dart';
 import '../main.dart';
-
-void doiTenTab(String title, BuildContext context) {
-  SystemChrome.setApplicationSwitcherDescription(ApplicationSwitcherDescription(
-    label: "App đặc sản - $title",
-    primaryColor: Theme.of(context).primaryColor.value, // This line is required
-  ));
-}
-
-Widget loadHinh(String duongDan) {
-  if (kIsWeb) {
-    return Image.network(duongDan);
-  } else {
-    return Image.asset(duongDan);
-  }
-}
-
-ButtonStyle RoundButtonStyle() {
-  return ButtonStyle(
-    textStyle: MaterialStateProperty.all(
-      const TextStyle(
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    padding: MaterialStateProperty.all(const EdgeInsets.only(
-      top: 20,
-      bottom: 20,
-      left: 30,
-      right: 30,
-    )),
-    shape: MaterialStateProperty.all(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25.0),
-      ),
-    ),
-  );
-}
-
-InputDecoration RoundInputDecoration(String text) {
-  return InputDecoration(
-    filled: true,
-    contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
-    labelText: text,
-    border: const OutlineInputBorder(
-      borderRadius: BorderRadius.all(
-        Radius.circular(35),
-      ),
-    ),
-  );
-}
-
-class LoadingScreen extends StatelessWidget {
-  const LoadingScreen({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: LoadingAnimationWidget.staggeredDotsWave(
-          color: Colors.cyanAccent,
-          size: 100,
-        ),
-      ),
-    );
-  }
-}
 
 Future<void> addUser(
     String email, String hoTen, bool isNam, String diaChi) async {

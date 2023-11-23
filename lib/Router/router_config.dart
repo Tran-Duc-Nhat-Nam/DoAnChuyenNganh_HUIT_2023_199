@@ -26,12 +26,9 @@ final GoRouter router = GoRouter(
             page: child,
           );
         }
-
         if (ref.getBool("lanDau") == null || ref.getBool("LanDau")!) {
-          print("Check");
           return const ManHinhGioiThieu();
         } else {
-          print("No Check");
           return ManHinhDangNhap();
         }
       },

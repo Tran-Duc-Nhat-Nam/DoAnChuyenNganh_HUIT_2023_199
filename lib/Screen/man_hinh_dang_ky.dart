@@ -7,7 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 
-import '../Service/thu_vien_chung.dart';
+import '../Service/thu_vien_api.dart';
+import '../Service/thu_vien_style.dart';
 
 class ManHinhDangKy extends StatefulWidget {
   ManHinhDangKy({
@@ -19,7 +20,7 @@ class ManHinhDangKy extends StatefulWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController matKhauController = TextEditingController();
   final TextEditingController xacNhanMatKhauController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController hoTenController = TextEditingController();
   final TextEditingController sdtController = TextEditingController();
 
@@ -85,7 +86,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 decoration: InputDecoration(
                   filled: true,
                   contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                   labelText: "Mật khẩu",
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
@@ -124,7 +125,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 decoration: InputDecoration(
                   filled: true,
                   contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                   labelText: "Nhập lại mật khẩu",
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
@@ -240,7 +241,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                           }
                         } else {
                           User? user = (await FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
+                                  .createUserWithEmailAndPassword(
                             email: widget.emailController.text,
                             password: widget.matKhauController.text,
                           ))
@@ -249,10 +250,10 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                           if (user != null && context.mounted) {
                             FirebaseAuth.instance
                                 .signInWithEmailAndPassword(
-                                email: widget.emailController.text,
-                                password: widget.matKhauController.text)
+                                    email: widget.emailController.text,
+                                    password: widget.matKhauController.text)
                                 .then(
-                                  (value) async {
+                              (value) async {
                                 await addUser(
                                   widget.emailController.text,
                                   widget.hoTenController.text,

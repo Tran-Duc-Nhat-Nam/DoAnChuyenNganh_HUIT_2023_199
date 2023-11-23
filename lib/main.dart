@@ -47,7 +47,6 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
-    Widget bodyWidget;
     return MaterialApp.router(
       title: "App đặc sản",
       darkTheme: ThemeData(

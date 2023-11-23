@@ -12,7 +12,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart';
 
-import '../Service/thu_vien_chung.dart';
+import '../Service/thu_vien_style.dart';
+import '../Service/thu_vien_widget.dart';
 
 class ManHinhDangNhap extends StatefulWidget {
   ManHinhDangNhap({
@@ -81,7 +82,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                   if (widget.formKey.currentState!.validate()) {
                     try {
                       User? user = (await FirebaseAuth.instance
-                          .signInWithEmailAndPassword(
+                              .signInWithEmailAndPassword(
                         email: widget.emailController.text,
                         password: widget.passwordController.text,
                       ))
@@ -109,9 +110,9 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                   style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                     backgroundColor:
-                    MaterialStateProperty.all(Colors.lightBlue),
+                        MaterialStateProperty.all(Colors.lightBlue),
                     minimumSize:
-                    MaterialStateProperty.all(const Size.fromHeight(25)),
+                        MaterialStateProperty.all(const Size.fromHeight(25)),
                     textStyle: MaterialStateProperty.all(
                       const TextStyle(
                         fontWeight: FontWeight.bold,
@@ -134,7 +135,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                       try {
                         // DangNhapMySql();
                         User? user = (await FirebaseAuth.instance
-                            .signInWithEmailAndPassword(
+                                .signInWithEmailAndPassword(
                           email: widget.emailController.text,
                           password: widget.passwordController.text,
                         ))
@@ -158,12 +159,13 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
               VerticalGapSizedBox(),
               OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    minimumSize: Size.fromHeight(35),
-                    padding: EdgeInsets.all(15),
+                    minimumSize: const Size.fromHeight(35),
+                    padding: const EdgeInsets.all(15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                     ),
-                    side: BorderSide(width: 1, color: Colors.lightBlueAccent),
+                    side: const BorderSide(
+                        width: 1, color: Colors.lightBlueAccent),
                   ),
                   onPressed: () => context.go("/signup"),
                   child: const Text("Đăng ký")),
@@ -173,16 +175,18 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                 children: [
                   IconButton(
                     style: ButtonStyle(
-                        maximumSize: MaterialStateProperty.all(Size(56, 56))),
+                        maximumSize:
+                            MaterialStateProperty.all(const Size(56, 56))),
                     onPressed: DangNhapGoogle,
-                    icon: loadHinh("images/google.png"),
+                    icon: LoadHinh("images/google.png"),
                   ),
                   HorizontalGapSizedBox(),
                   IconButton(
                     style: ButtonStyle(
-                        maximumSize: MaterialStateProperty.all(Size(56, 56))),
+                        maximumSize:
+                            MaterialStateProperty.all(const Size(56, 56))),
                     onPressed: DangNhapFacebook,
-                    icon: loadHinh("images/facebook.png"),
+                    icon: LoadHinh("images/facebook.png"),
                   ),
                 ],
               ),
@@ -231,7 +235,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
       final GoogleSignInAuthentication? googleAuth =
-      await googleUser?.authentication;
+          await googleUser?.authentication;
 
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
@@ -280,7 +284,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
 
     // Create a credential from the access token
     final OAuthCredential facebookAuthCredential =
-    FacebookAuthProvider.credential(loginResult.accessToken!.token);
+        FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
     // Once signed in, return the UserCredential
     await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);

@@ -1,11 +1,11 @@
 import 'package:app_dac_san/Model/nguoi_dung.dart';
-import 'package:app_dac_san/Service/thu_vien_chung.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../Service/thu_vien_style.dart';
 import '../main.dart';
 
 class TrangNguoiDung extends StatefulWidget {
@@ -57,7 +57,6 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: ElevatedButton(
-                    child: const Text("Đăng xuất"),
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size.fromHeight(35),
                       padding: const EdgeInsets.all(15),
@@ -83,6 +82,7 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                         });
                       });
                     },
+                    child: const Text("Đăng xuất"),
                   ),
                 )
               ],
