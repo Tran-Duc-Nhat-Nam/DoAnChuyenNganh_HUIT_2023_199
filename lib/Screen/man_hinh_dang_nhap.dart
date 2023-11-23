@@ -248,33 +248,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
     var user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      List<NguoiDung> dsNguoiDung = [];
-
-      var reponse = await get(Uri.parse(
-          'https://cntt199.000webhostapp.com/getNguoiDung.php')); //https://cntt199.000webhostapp.com/getTinhThanh.php //https://provinces.open-api.vn/api/?depth=1
-      var result = json.decode(utf8.decode(reponse.bodyBytes));
-
-      if (context.mounted) {
-        for (var document in result) {
-          NguoiDung nguoiDung = NguoiDung.fromJson(document);
-          dsNguoiDung.add(nguoiDung);
-        }
-
-        for (var nd in dsNguoiDung) {
-          if (nd.email == user.email) {
-            context.go("/");
-            return;
-          }
-        }
-
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ManHinhDangKy(
-                email: user.email,
-              ),
-            ));
-      }
+      await DangKyThemThongTin(user);
     }
   }
 
@@ -289,8 +263,40 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
     // Once signed in, return the UserCredential
     await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
 
-    if (FirebaseAuth.instance.currentUser != null && context.mounted) {
-      context.go("/");
+    var user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      await DangKyThemThongTin(user);
+    }
+  }
+
+  Future<void> DangKyThemThongTin(User user) async {
+    List<NguoiDung> dsNguoiDung = [];
+
+    var reponse = await get(Uri.parse(
+        'https://cntt199.000webhostapp.com/getNguoiDung.php')); //https://cntt199.000webhostapp.com/getTinhThanh.php //https://provinces.open-api.vn/api/?depth=1
+    var result = json.decode(utf8.decode(reponse.bodyBytes));
+
+    if (context.mounted) {
+      for (var document in result) {
+        NguoiDung nguoiDung = NguoiDung.fromJson(document);
+        dsNguoiDung.add(nguoiDung);
+      }
+
+      for (var nd in dsNguoiDung) {
+        if (nd.email == user.email) {
+          context.go("/");
+          return;
+        }
+      }
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ManHinhDangKy(
+              email: user.email,
+            ),
+          ));
     }
   }
 

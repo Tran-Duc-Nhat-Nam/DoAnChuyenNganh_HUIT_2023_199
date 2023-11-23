@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../Model/dac_san.dart';
+import '../Service/thu_vien_widget.dart';
 import '../main.dart';
 
 class TrangDacSan extends StatefulWidget {
@@ -23,116 +25,128 @@ class _TrangDacSanState extends State<TrangDacSan> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            CarouselSlider(
-              options: CarouselOptions(
-                height: MediaQuery.of(context).size.height * 0.2 + 30,
-                animateToClosest: true,
-                pageSnapping: true,
-                enableInfiniteScroll: true,
-                viewportFraction: 1,
-              ),
-              items: [1, 2, 3, 4, 5].map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.2,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(25),
-                          child: Image.network(
-                            dsHinhAnh[i - 1].link!,
-                            height: MediaQuery.of(context).size.height * 0.15,
-                            fit: BoxFit.fitHeight,
+    return PopScope(
+      onPopInvoked: (popped) {
+        XacNhanThoat(context);
+      },
+      canPop: false,
+      child: Scaffold(
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              CarouselSlider(
+                options: CarouselOptions(
+                  height: MediaQuery.of(context).size.height * 0.2 + 30,
+                  animateToClosest: true,
+                  pageSnapping: true,
+                  enableInfiniteScroll: true,
+                  viewportFraction: 1,
+                ),
+                items: [1, 2, 3, 4, 5].map((i) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(25),
+                            child: CachedNetworkImage(
+                              height: MediaQuery.of(context).size.height * 0.15,
+                              fit: BoxFit.fitHeight,
+                              imageUrl: dsHinhAnh[i - 1].link!,
+                              progressIndicatorBuilder:
+                                  (context, url, downloadProgress) =>
+                                      LinearProgressIndicator(
+                                          value: downloadProgress.progress),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              }).toList(),
-            ),
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
 
-            const Row(
-              children: <Widget>[
-                Text("Miền Bắc",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.blue)),
-                Spacer(), // use Spacer
-                Text("Xem thêm",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.blue)),
-              ],
-            ),
-            DacSanList(lstDacSan: dsDacSan),
+              const Row(
+                children: <Widget>[
+                  Text("Miền Bắc",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.blue)),
+                  Spacer(), // use Spacer
+                  Text("Xem thêm",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.blue)),
+                ],
+              ),
+              DacSanList(lstDacSan: dsDacSan),
 
-            const Row(
-              children: <Widget>[
-                Text("Miền Trung",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.blue)),
-                Spacer(), // use Spacer
-                Text("Xem thêm",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.blue)),
-              ],
-            ),
-            DacSanList(lstDacSan: dsDacSan),
+              const Row(
+                children: <Widget>[
+                  Text("Miền Trung",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.blue)),
+                  Spacer(), // use Spacer
+                  Text("Xem thêm",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.blue)),
+                ],
+              ),
+              DacSanList(lstDacSan: dsDacSan),
 
-            const Row(
-              children: <Widget>[
-                Text("Miền Nam",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.blue)),
-                Spacer(), // use Spacer
-                Text("Xem thêm",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.blue)),
-              ],
-            ),
-            DacSanList(lstDacSan: dsDacSan)
-            // DropdownButton<int>(
-            //   value: selectedVungMien,
-            //   onChanged: (int? newValue) {
-            //     setState(() {
-            //       selectedVungMien = newValue!;
-            //     });
-            //   },
-            //   items: dsVungMien.map<DropdownMenuItem<int>>((VungMien value) {
-            //     return DropdownMenuItem<int>(
-            //       value: value.idMien,
-            //       child: Text(value.tenMien.toString()),
-            //     );
-            //   }).toList(),
-            // ),
-            // Expanded(
-            //   child: ListView.builder(
-            //     itemCount: dsDacSan.length,
-            //     itemBuilder: (context, index) {
-            //       DacSan dacSan = dsDacSan[index];
-            //       // if (selectedVungMien >= 0 || selectedVungMien == 'Tất cả' || selectedVungMien == dacSan.xuatXu) {
-            //       if (selectedVungMien == 2) {
-            //         return ListTile(
-            //           leading: Image.network(
-            //             getURLImage(dacSan.avatar, dsHinhAnh),
-            //             width: 100,
-            //             height: 100,
-            //           ),
-            //           title: Text(dacSan.tenDacSan.toString()),
-            //           subtitle: Text(getNameTinh(dacSan.xuatXu)),
-            //           onTap: () => context.go("/dacsan/$index"),
-            //         );
-            //       }
-            //       return const SizedBox.shrink();
-            //     },
-            //   ),
-            // ),
-          ],
+              const Row(
+                children: <Widget>[
+                  Text("Miền Nam",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.blue)),
+                  Spacer(), // use Spacer
+                  Text("Xem thêm",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.blue)),
+                ],
+              ),
+              DacSanList(lstDacSan: dsDacSan)
+              // DropdownButton<int>(
+              //   value: selectedVungMien,
+              //   onChanged: (int? newValue) {
+              //     setState(() {
+              //       selectedVungMien = newValue!;
+              //     });
+              //   },
+              //   items: dsVungMien.map<DropdownMenuItem<int>>((VungMien value) {
+              //     return DropdownMenuItem<int>(
+              //       value: value.idMien,
+              //       child: Text(value.tenMien.toString()),
+              //     );
+              //   }).toList(),
+              // ),
+              // Expanded(
+              //   child: ListView.builder(
+              //     itemCount: dsDacSan.length,
+              //     itemBuilder: (context, index) {
+              //       DacSan dacSan = dsDacSan[index];
+              //       // if (selectedVungMien >= 0 || selectedVungMien == 'Tất cả' || selectedVungMien == dacSan.xuatXu) {
+              //       if (selectedVungMien == 2) {
+              //         return ListTile(
+              //           leading: Image.network(
+              //             getURLImage(dacSan.avatar, dsHinhAnh),
+              //             width: 100,
+              //             height: 100,
+              //           ),
+              //           title: Text(dacSan.tenDacSan.toString()),
+              //           subtitle: Text(getNameTinh(dacSan.xuatXu)),
+              //           onTap: () => context.go("/dacsan/$index"),
+              //         );
+              //       }
+              //       return const SizedBox.shrink();
+              //     },
+              //   ),
+              // ),
+            ],
+          ),
         ),
       ),
     );
@@ -196,8 +210,14 @@ class DacSanList extends StatelessWidget {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: Image.network(
-                            getURLImage(dsDacSan[index].avatar),
+                          child: CachedNetworkImage(
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) =>
+                                    LinearProgressIndicator(
+                                        value: downloadProgress.progress),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                            imageUrl: getURLImage(dsDacSan[index].avatar),
                             fit: BoxFit.cover,
                             height: 150,
                           ),

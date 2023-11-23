@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../Service/thu_vien_style.dart';
+import '../Service/thu_vien_widget.dart';
 import '../main.dart';
 
 class TrangNguoiDung extends StatefulWidget {
@@ -23,69 +24,105 @@ class TrangNguoiDung extends StatefulWidget {
 }
 
 class _TrangNguoiDungState extends State<TrangNguoiDung> {
+  bool isReadOnly = true;
+
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     widget.uidController.text = FirebaseAuth.instance.currentUser!.uid;
     widget.emailController.text = nguoiDung.email;
     widget.hoTenController.text = nguoiDung.hoTen;
     widget.diaChiController.text = nguoiDung.diaChi!;
+    super.initState();
+  }
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Form(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                TextFieldNguoiDung(
-                  controller: widget.uidController,
-                  text: "Id người dùng",
-                ),
-                TextFieldNguoiDung(
-                  controller: widget.emailController,
-                  text: "Email",
-                ),
-                TextFieldNguoiDung(
-                  controller: widget.hoTenController,
-                  text: "Họ tên",
-                ),
-                TextFieldNguoiDung(
-                  controller: widget.diaChiController,
-                  text: "Địa chỉ",
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: ElevatedButton(
-                    style: OutlinedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(35),
-                      padding: const EdgeInsets.all(15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                      ),
-                      side: const BorderSide(
-                          width: 1, color: Colors.lightBlueAccent),
-                    ),
-                    onPressed: () async {
-                      await FirebaseAuth.instance
-                          .signOut()
-                          .whenComplete(() async {
-                        await FacebookAuth.instance.logOut();
-                        await GoogleSignIn().signOut().whenComplete(() {
-                          if (context.mounted) {
-                            dsDacSan.clear();
-                            dsHinhAnh.clear();
-                            dsTinhThanh.clear();
-                            dsVungMien.clear();
-                            context.go("/");
-                          }
-                        });
-                      });
-                    },
-                    child: const Text("Đăng xuất"),
+  @override
+  Widget build(BuildContext context) {
+    return PopScope(
+      onPopInvoked: (popped) {
+        XacNhanThoat(context);
+      },
+      canPop: false,
+      child: Scaffold(
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Form(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  TextFieldNguoiDung(
+                    controller: widget.uidController,
+                    text: "Id người dùng",
+                    isReadOnly: isReadOnly,
                   ),
-                )
-              ],
+                  TextFieldNguoiDung(
+                    controller: widget.emailController,
+                    text: "Email",
+                    isReadOnly: isReadOnly,
+                  ),
+                  TextFieldNguoiDung(
+                    controller: widget.hoTenController,
+                    text: "Họ tên",
+                    isReadOnly: isReadOnly,
+                  ),
+                  TextFieldNguoiDung(
+                    controller: widget.diaChiController,
+                    text: "Địa chỉ",
+                    isReadOnly: isReadOnly,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    child: ElevatedButton(
+                      style: OutlinedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(35),
+                        padding: const EdgeInsets.all(15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        side: const BorderSide(
+                            width: 1, color: Colors.lightBlueAccent),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          isReadOnly = false;
+                        });
+                      },
+                      child: const Text("Cập nhật thông tin"),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: ElevatedButton(
+                      style: OutlinedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(35),
+                        padding: const EdgeInsets.all(15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        side:
+                            const BorderSide(width: 1, color: Colors.redAccent),
+                      ),
+                      onPressed: () async {
+                        await FirebaseAuth.instance
+                            .signOut()
+                            .whenComplete(() async {
+                          await FacebookAuth.instance.logOut();
+                          await GoogleSignIn().signOut().whenComplete(() {
+                            if (context.mounted) {
+                              dsDacSan.clear();
+                              dsHinhAnh.clear();
+                              dsTinhThanh.clear();
+                              dsVungMien.clear();
+                              context.go("/");
+                            }
+                          });
+                        });
+                      },
+                      child: const Text("Đăng xuất"),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

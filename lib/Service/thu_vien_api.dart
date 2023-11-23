@@ -65,6 +65,18 @@ Future<void> getDacSan() async {
   }
 }
 
+Future<List<String>> getTenDacSanTheoTen(String ten) async {
+  List<String> kq = [];
+
+  for (var dacSan in dsDacSan) {
+    if (dacSan.tenDacSan!.contains(ten)) {
+      kq.add(dacSan.tenDacSan!);
+    }
+  }
+
+  return kq;
+}
+
 Future<void> getHinhAnh() async {
   var reponse =
       await get(Uri.parse('https://cntt199.000webhostapp.com/getHinhAnh.php'));
