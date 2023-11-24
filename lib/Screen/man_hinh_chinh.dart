@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../Service/thu_vien_api.dart';
 import '../Service/thu_vien_widget.dart';
+import '../Widget/thong_bao_xac_nhan_thoat.dart';
 import '../main.dart';
 
 class ManHinhChinh extends StatefulWidget {
@@ -45,7 +46,7 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
       waiting: (context) => LoadingScreen(),
       builder: (context, value) => PopScope(
         onPopInvoked: (popped) {
-          XacNhanThoat(context);
+          ThongBaoXacNhanThoat(context);
         },
         canPop: false,
         child: Scaffold(
@@ -66,8 +67,14 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
         fontWeight: FontWeight.bold,
       ),
       title: const Text('App đặc sản VN'),
-      onSearch: (value) {},
-      asyncSuggestions: (value) => getTenDacSanTheoTen(value),
+      onSearch: (data) {},
+      onSuggestionTap: (data) {
+        int? id = getDacSanTheoTen(data);
+        if (id != null) {
+          context.go("/dacsan/$id");
+        }
+      },
+      asyncSuggestions: (data) => getTenDacSanTheoTen(data),
     );
   }
 

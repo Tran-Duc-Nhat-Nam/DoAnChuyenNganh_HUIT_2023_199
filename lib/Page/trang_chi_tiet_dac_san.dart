@@ -27,28 +27,28 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
             ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: Image.network(
-                getURLImage(dsDacSan[widget.maDS].avatar),
+                getURLImage(dsDacSan[widget.maDS - 1].avatar),
                 width: 500.0, // Điều chỉnh kích thước ảnh theo ý của bạn
                 height: 300,
                 fit: BoxFit
                     .cover, // Có thể điều chỉnh để tùy chỉnh cách hình ảnh phù hợp trong Container
               ),
             ),
-            SizedBox(height: 5),
-            Text(dsDacSan[widget.maDS].tenDacSan ?? '',
+            const SizedBox(height: 5),
+            Text(dsDacSan[widget.maDS - 1].tenDacSan ?? '',
                 style: const TextStyle(
                     fontWeight: FontWeight.w900,
                     color: Color.fromARGB(255, 67, 168, 140),
                     fontSize: 35,
                     fontFamily: 'RobotoBlack')),
-            SizedBox(height: 5),
-            Text(getMien(dsDacSan[widget.maDS].idMien),
+            const SizedBox(height: 5),
+            Text(getMien(dsDacSan[widget.maDS - 1].idMien),
                 style: const TextStyle(
                     fontWeight: FontWeight.w900,
                     color: Color.fromARGB(225, 104, 143, 187),
                     fontSize: 24,
                     fontFamily: 'ExtraBoldItalic')),
-            SizedBox(height: 28),
+            const SizedBox(height: 28),
             const Row(
               children: [
                 Expanded(
@@ -68,8 +68,8 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5)),
                 child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(dsDacSan[widget.maDS].moTa ?? '',
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(dsDacSan[widget.maDS - 1].moTa ?? '',
                       textAlign: TextAlign.justify,
                       style: const TextStyle(
                           fontSize: 18,
@@ -79,7 +79,7 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
                           color: Colors.black,
                           fontWeight: FontWeight.w600)),
                 )),
-            SizedBox(height: 5)
+            const SizedBox(height: 5)
           ],
         ),
       ),

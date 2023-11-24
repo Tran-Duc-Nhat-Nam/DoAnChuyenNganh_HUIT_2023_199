@@ -9,6 +9,7 @@ import 'package:http/http.dart';
 
 import '../Service/thu_vien_api.dart';
 import '../Service/thu_vien_style.dart';
+import '../Widget/VerticalGapSizedBox.dart';
 
 class ManHinhDangKy extends StatefulWidget {
   ManHinhDangKy({
@@ -297,12 +298,6 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
   SizedBox HorizontalGapSizedBox() {
     return const SizedBox(
       width: 15,
-    );
-  }
-
-  SizedBox VerticalGapSizedBox() {
-    return const SizedBox(
-      height: 15,
     );
   }
 

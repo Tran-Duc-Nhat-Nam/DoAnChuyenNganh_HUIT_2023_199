@@ -1,10 +1,11 @@
+import 'package:app_dac_san/Model/tinh_thanh.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../Model/dac_san.dart';
-import '../Service/thu_vien_widget.dart';
+import '../Widget/thong_bao_xac_nhan_thoat.dart';
 import '../main.dart';
 
 class TrangDacSan extends StatefulWidget {
@@ -27,7 +28,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
   Widget build(BuildContext context) {
     return PopScope(
       onPopInvoked: (popped) {
-        XacNhanThoat(context);
+        ThongBaoXacNhanThoat(context);
       },
       canPop: false,
       child: Scaffold(
@@ -153,22 +154,15 @@ class _TrangDacSanState extends State<TrangDacSan> {
   }
 }
 
-String getNameTinh(int? idTinh) {
-  String name = '404';
-  int index = dsTinhThanh.indexWhere((tinhThanh) => tinhThanh.maTT == idTinh);
-  if (index != -1) {
-    return dsTinhThanh[index].ten.toString();
-  }
-  return name;
-}
+String? getTenTinh(int? idTinh) {
+  Iterable<TinhThanh> tt =
+      dsTinhThanh.where((element) => element.maTT == idTinh);
 
-String getMien(int? IdMien) {
-  String name = '404';
-  int index = dsVungMien.indexWhere((vungMien) => vungMien.idMien == IdMien);
-  if (index != -1) {
-    return dsVungMien[index].tenMien.toString();
+  if (tt.isNotEmpty) {
+    return tt.first.ten;
+  } else {
+    return "Không xác định";
   }
-  return name;
 }
 
 String getURLImage(int? idImage) {
@@ -227,7 +221,7 @@ class DacSanList extends StatelessWidget {
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.blue)),
-                        Text('Xuất xứ: ${dsDacSan[index].xuatXu}',
+                        Text('Xuất xứ: ${getTenTinh(dsDacSan[index].xuatXu)}',
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.blue)),

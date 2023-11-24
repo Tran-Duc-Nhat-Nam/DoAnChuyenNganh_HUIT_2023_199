@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../Service/thu_vien_style.dart';
-import '../Service/thu_vien_widget.dart';
+import '../Widget/thong_bao_xac_nhan_thoat.dart';
 import '../main.dart';
 
 class TrangNguoiDung extends StatefulWidget {
@@ -43,7 +43,7 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
   Widget build(BuildContext context) {
     return PopScope(
       onPopInvoked: (popped) {
-        XacNhanThoat(context);
+        ThongBaoXacNhanThoat(context);
       },
       canPop: false,
       child: Scaffold(

@@ -14,6 +14,8 @@ import 'package:http/http.dart';
 
 import '../Service/thu_vien_style.dart';
 import '../Service/thu_vien_widget.dart';
+import '../Widget/HorizontalGapSizedBox.dart';
+import '../Widget/VerticalGapSizedBox.dart';
 
 class ManHinhDangNhap extends StatefulWidget {
   ManHinhDangNhap({
@@ -299,17 +301,5 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
             ),
           ));
     }
-  }
-
-  SizedBox HorizontalGapSizedBox() {
-    return const SizedBox(
-      width: 25,
-    );
-  }
-
-  SizedBox VerticalGapSizedBox() {
-    return const SizedBox(
-      height: 15,
-    );
   }
 }

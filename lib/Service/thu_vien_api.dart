@@ -82,14 +82,23 @@ Future<void> getDacSan() async {
 
 Future<List<String>> getTenDacSanTheoTen(String ten) async {
   List<String> kq = [];
-
   for (var dacSan in dsDacSan) {
-    if (dacSan.tenDacSan!.contains(ten)) {
+    if (dacSan.tenDacSan!.toLowerCase().contains(ten.toLowerCase())) {
       kq.add(dacSan.tenDacSan!);
     }
   }
 
   return kq;
+}
+
+int? getDacSanTheoTen(String ten) {
+  for (var dacSan in dsDacSan) {
+    if (dacSan.tenDacSan! == ten) {
+      return dacSan.idDacSan;
+    }
+  }
+
+  return null;
 }
 
 Future<void> getHinhAnh() async {
