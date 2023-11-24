@@ -13,8 +13,10 @@ import '../Service/thu_vien_style.dart';
 class ManHinhDangKy extends StatefulWidget {
   ManHinhDangKy({
     super.key,
+    this.uid,
     this.email,
   });
+  String? uid;
   String? email;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
@@ -33,15 +35,19 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
   bool isNam = true;
   bool hidePassword = true;
   String? tinhThanh;
-  bool isFixed = false;
+  bool isPasswordReadOnly = false;
+  bool isEmailReadOnly = false;
 
   @override
   void initState() {
     xemTinhThanh();
 
+    if (widget.uid != null) {
+      isPasswordReadOnly = true;
+    }
     if (widget.email != null) {
       widget.emailController.text = widget.email!;
-      isFixed = true;
+      isEmailReadOnly = true;
     }
 
     super.initState();
@@ -66,7 +72,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
-                readOnly: isFixed,
+                enabled: !isEmailReadOnly,
                 controller: widget.emailController,
                 decoration: RoundInputDecoration("Email"),
                 validator: (value) {
@@ -78,7 +84,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
               ),
               VerticalGapSizedBox(),
               TextFormField(
-                enabled: !isFixed,
+                enabled: !isPasswordReadOnly,
                 obscureText: hidePassword,
                 enableSuggestions: false,
                 autocorrect: false,
@@ -107,7 +113,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   ),
                 ),
                 validator: (value) {
-                  if (isFixed) {
+                  if (isPasswordReadOnly) {
                     return null;
                   } else if (value!.isEmpty) {
                     return "Vui lòng nhập tài khoản";
@@ -117,7 +123,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
               ),
               VerticalGapSizedBox(),
               TextFormField(
-                enabled: !isFixed,
+                enabled: !isPasswordReadOnly,
                 obscureText: hidePassword,
                 enableSuggestions: false,
                 autocorrect: false,
@@ -146,7 +152,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   ),
                 ),
                 validator: (value) {
-                  if (isFixed) {
+                  if (isPasswordReadOnly) {
                     return null;
                   } else if (value!.isEmpty) {
                     return "Vui lòng nhập tài khoản";
@@ -229,8 +235,9 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   onPressed: () async {
                     if (widget.formKey.currentState!.validate()) {
                       try {
-                        if (isFixed) {
+                        if (isPasswordReadOnly) {
                           await addUser(
+                            FirebaseAuth.instance.currentUser!.uid,
                             widget.emailController.text,
                             widget.hoTenController.text,
                             isNam,
@@ -255,6 +262,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                                 .then(
                               (value) async {
                                 await addUser(
+                                  user.uid,
                                   widget.emailController.text,
                                   widget.hoTenController.text,
                                   isNam,

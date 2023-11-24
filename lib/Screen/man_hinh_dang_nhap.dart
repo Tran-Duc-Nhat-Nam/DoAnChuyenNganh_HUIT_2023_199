@@ -284,7 +284,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
       }
 
       for (var nd in dsNguoiDung) {
-        if (nd.email == user.email) {
+        if (nd.uid == user.uid) {
           context.go("/");
           return;
         }
@@ -294,6 +294,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
           context,
           MaterialPageRoute(
             builder: (context) => ManHinhDangKy(
+              uid: user.uid,
               email: user.email,
             ),
           ));

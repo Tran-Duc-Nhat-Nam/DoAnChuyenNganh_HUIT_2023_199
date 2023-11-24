@@ -1,4 +1,5 @@
 import 'package:app_dac_san/Model/nguoi_dung.dart';
+import 'package:app_dac_san/Service/thu_vien_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -25,6 +26,8 @@ class TrangNguoiDung extends StatefulWidget {
 
 class _TrangNguoiDungState extends State<TrangNguoiDung> {
   bool isReadOnly = true;
+  String updateText = "Cập nhật thông tin";
+  bool isNam = true;
 
   @override
   void initState() {
@@ -32,6 +35,7 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
     widget.emailController.text = nguoiDung.email;
     widget.hoTenController.text = nguoiDung.hoTen;
     widget.diaChiController.text = nguoiDung.diaChi!;
+    isNam = nguoiDung.gioiTinh == "Nam";
     super.initState();
   }
 
@@ -70,6 +74,41 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                     text: "Địa chỉ",
                     isReadOnly: isReadOnly,
                   ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Flexible(
+                        child: ListTile(
+                          enabled: !isReadOnly,
+                          title: const Text("Nam"),
+                          leading: Radio(
+                            value: true,
+                            groupValue: isNam,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                isNam = value!;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                      Flexible(
+                        child: ListTile(
+                          enabled: !isReadOnly,
+                          title: const Text("Nữ"),
+                          leading: Radio(
+                            value: false,
+                            groupValue: isNam,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                isNam = value!;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: ElevatedButton(
@@ -84,42 +123,51 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                       ),
                       onPressed: () {
                         setState(() {
-                          isReadOnly = false;
+                          if (isReadOnly) {
+                            isReadOnly = false;
+                            updateText = "Lưu thông tin";
+                          } else {
+                            isReadOnly = true;
+                            updateUser(
+                              widget.uidController.text,
+                              widget.emailController.text,
+                              widget.hoTenController.text,
+                              isNam,
+                              widget.diaChiController.text,
+                            );
+                            updateText = "Cập nhật thông tin";
+                          }
                         });
                       },
-                      child: const Text("Cập nhật thông tin"),
+                      child: Text(updateText),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: ElevatedButton(
-                      style: OutlinedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(35),
-                        padding: const EdgeInsets.all(15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        ),
-                        side:
-                            const BorderSide(width: 1, color: Colors.redAccent),
+                  ElevatedButton(
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(35),
+                      padding: const EdgeInsets.all(15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
                       ),
-                      onPressed: () async {
-                        await FirebaseAuth.instance
-                            .signOut()
-                            .whenComplete(() async {
-                          await FacebookAuth.instance.logOut();
-                          await GoogleSignIn().signOut().whenComplete(() {
-                            if (context.mounted) {
-                              dsDacSan.clear();
-                              dsHinhAnh.clear();
-                              dsTinhThanh.clear();
-                              dsVungMien.clear();
-                              context.go("/");
-                            }
-                          });
-                        });
-                      },
-                      child: const Text("Đăng xuất"),
+                      side: const BorderSide(width: 1, color: Colors.redAccent),
                     ),
+                    onPressed: () async {
+                      await FirebaseAuth.instance
+                          .signOut()
+                          .whenComplete(() async {
+                        await FacebookAuth.instance.logOut();
+                        await GoogleSignIn().signOut().whenComplete(() {
+                          if (context.mounted) {
+                            dsDacSan.clear();
+                            dsHinhAnh.clear();
+                            dsTinhThanh.clear();
+                            dsVungMien.clear();
+                            context.go("/");
+                          }
+                        });
+                      });
+                    },
+                    child: const Text("Đăng xuất"),
                   ),
                 ],
               ),

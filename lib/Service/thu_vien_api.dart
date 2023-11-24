@@ -10,8 +10,9 @@ import '../Model/vung_mien.dart';
 import '../main.dart';
 
 Future<void> addUser(
-    String email, String hoTen, bool isNam, String diaChi) async {
+    String uid, String email, String hoTen, bool isNam, String diaChi) async {
   Map<String, dynamic> data = {
+    'uid': uid,
     'email': email,
     'hoten': hoTen,
     'gioitinh': isNam ? "Nam" : "Nữ",
@@ -22,7 +23,21 @@ Future<void> addUser(
   await post(url, body: data);
 }
 
-Future<NguoiDung?> getUser(String email) async {
+Future<void> updateUser(
+    String uid, String email, String hoTen, bool isNam, String diaChi) async {
+  Map<String, dynamic> data = {
+    'uid': uid,
+    'email': email,
+    'hoten': hoTen,
+    'gioitinh': isNam ? "Nam" : "Nữ",
+    'diachi': diaChi,
+  };
+
+  var url = Uri.parse('https://cntt199.000webhostapp.com/updateUser.php');
+  await post(url, body: data);
+}
+
+Future<NguoiDung?> getUser(String uid) async {
   List<NguoiDung> dsNguoiDung = [];
 
   var reponse = await get(
@@ -35,7 +50,7 @@ Future<NguoiDung?> getUser(String email) async {
   }
 
   for (var nd in dsNguoiDung) {
-    if (nd.email == email) {
+    if (nd.uid == uid) {
       return nd;
     }
   }
