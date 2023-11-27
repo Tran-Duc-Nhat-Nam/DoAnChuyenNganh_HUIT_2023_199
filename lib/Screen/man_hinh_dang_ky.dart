@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app_dac_san/Model/tinh_thanh.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -56,10 +57,10 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
 
   @override
   Widget build(BuildContext context) {
-    final List<DropdownMenuEntry<TinhThanh>> dsLabelTinhThanh = [];
+    final List<String> dsLabelTinhThanh = [];
     for (var tinhThanh in dsTT) {
       dsLabelTinhThanh.add(
-        DropdownMenuEntry<TinhThanh>(label: tinhThanh.ten!, value: tinhThanh),
+        tinhThanh.ten!,
       );
     }
 
@@ -188,12 +189,37 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
               VerticalGapSizedBox(),
-              DropdownMenu(
-                width: MediaQuery.of(context).size.width - 30,
-                dropdownMenuEntries: dsLabelTinhThanh,
-                hintText: "Danh sách tỉnh thành",
-                onSelected: (value) {
-                  tinhThanh = value!.ten;
+              DropdownSearch<TinhThanh>(
+                // width: MediaQuery.of(context).size.width - 30,
+                // dropdownMenuEntries: dsLabelTinhThanh,
+                // hintText: "Danh sách tỉnh thành",
+                // onSelected: (value) {
+                //   tinhThanh = value!.ten;
+                // },
+                popupProps: const PopupProps.menu(
+                  title: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    child: Center(
+                      child: Text(
+                        "Danh sách tỉnh thành",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ),
+                  showSelectedItems: true,
+                ),
+                compareFn: (item1, item2) {
+                  return item1 == item2;
+                },
+                onChanged: (value) {
+                  if (value != null) {
+                    tinhThanh = value!.ten!;
+                  }
+                },
+                selectedItem: dsTT[0],
+                items: dsTT,
+                itemAsString: (value) {
+                  return value.ten!;
                 },
               ),
               VerticalGapSizedBox(),

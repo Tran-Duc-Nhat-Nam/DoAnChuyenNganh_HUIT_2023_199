@@ -1,11 +1,13 @@
 import 'package:app_dac_san/Model/nguoi_dung.dart';
 import 'package:app_dac_san/Service/thu_vien_api.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../Model/tinh_thanh.dart';
 import '../Service/thu_vien_style.dart';
 import '../Widget/thong_bao_xac_nhan_thoat.dart';
 import '../main.dart';
@@ -57,22 +59,60 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                   TextFieldNguoiDung(
                     controller: widget.uidController,
                     text: "Id người dùng",
-                    isReadOnly: isReadOnly,
+                    isReadOnly: true,
                   ),
                   TextFieldNguoiDung(
                     controller: widget.emailController,
                     text: "Email",
-                    isReadOnly: isReadOnly,
+                    isReadOnly: true,
                   ),
                   TextFieldNguoiDung(
                     controller: widget.hoTenController,
                     text: "Họ tên",
                     isReadOnly: isReadOnly,
                   ),
-                  TextFieldNguoiDung(
-                    controller: widget.diaChiController,
-                    text: "Địa chỉ",
-                    isReadOnly: isReadOnly,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: DropdownSearch<TinhThanh>(
+                      enabled: !isReadOnly,
+                      popupProps: const PopupProps.menu(
+                        title: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          child: Center(
+                            child: Text(
+                              "Danh sách tỉnh thành",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ),
+                        showSelectedItems: true,
+                      ),
+                      dropdownDecoratorProps: DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          contentPadding: const EdgeInsetsDirectional.only(
+                            start: 25,
+                            top: 15,
+                            bottom: 15,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(35),
+                          ),
+                        ),
+                      ),
+                      compareFn: (item1, item2) {
+                        return item1 == item2;
+                      },
+                      onChanged: (value) {
+                        if (value != null) {
+                          widget.diaChiController.text = value!.ten!;
+                        }
+                      },
+                      selectedItem: dsTinhThanh[0],
+                      items: dsTinhThanh,
+                      itemAsString: (value) {
+                        return value.ten!;
+                      },
+                    ),
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.min,
@@ -110,7 +150,7 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     child: ElevatedButton(
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size.fromHeight(35),
@@ -194,7 +234,7 @@ class TextFieldNguoiDung extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 15),
+      padding: const EdgeInsets.only(top: 20),
       child: TextFormField(
         readOnly: isReadOnly,
         controller: controller,

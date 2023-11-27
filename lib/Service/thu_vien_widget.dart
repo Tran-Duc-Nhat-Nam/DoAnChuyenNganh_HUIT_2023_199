@@ -12,6 +12,7 @@ Widget LoadHinh(String duongDan) {
 
 Widget LoadingScreen() {
   return Scaffold(
+    resizeToAvoidBottomInset: false,
     body: Center(
       child: LoadingAnimationWidget.staggeredDotsWave(
         color: Colors.cyanAccent,

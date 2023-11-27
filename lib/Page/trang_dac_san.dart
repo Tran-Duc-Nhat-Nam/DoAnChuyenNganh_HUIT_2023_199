@@ -44,19 +44,19 @@ class _TrangDacSanState extends State<TrangDacSan> {
                   enableInfiniteScroll: true,
                   viewportFraction: 1,
                 ),
-                items: [1, 2, 3, 4, 5].map((i) {
+                items: dsDacSan.map((i) {
                   return Builder(
                     builder: (BuildContext context) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Container(
+                        child: SizedBox(
                           height: MediaQuery.of(context).size.height * 0.2,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(25),
                             child: CachedNetworkImage(
                               height: MediaQuery.of(context).size.height * 0.15,
                               fit: BoxFit.fitHeight,
-                              imageUrl: dsHinhAnh[i - 1].link!,
+                              imageUrl: getURLImage(i.avatar),
                               progressIndicatorBuilder:
                                   (context, url, downloadProgress) =>
                                       LinearProgressIndicator(
@@ -71,44 +71,11 @@ class _TrangDacSanState extends State<TrangDacSan> {
                   );
                 }).toList(),
               ),
-
-              const Row(
-                children: <Widget>[
-                  Text("Miền Bắc",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.blue)),
-                  Spacer(), // use Spacer
-                  Text("Xem thêm",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.blue)),
-                ],
-              ),
+              headerVungMien("Miền Bắc"),
               DacSanList(lstDacSan: dsDacSan),
-
-              const Row(
-                children: <Widget>[
-                  Text("Miền Trung",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.blue)),
-                  Spacer(), // use Spacer
-                  Text("Xem thêm",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.blue)),
-                ],
-              ),
+              headerVungMien("Miền Trung"),
               DacSanList(lstDacSan: dsDacSan),
-
-              const Row(
-                children: <Widget>[
-                  Text("Miền Nam",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.blue)),
-                  Spacer(), // use Spacer
-                  Text("Xem thêm",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.blue)),
-                ],
-              ),
+              headerVungMien("Miền Nam"),
               DacSanList(lstDacSan: dsDacSan)
               // DropdownButton<int>(
               //   value: selectedVungMien,
@@ -152,6 +119,23 @@ class _TrangDacSanState extends State<TrangDacSan> {
       ),
     );
   }
+
+  Padding headerVungMien(String mien) {
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: Row(
+        children: <Widget>[
+          Text(mien,
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+          Spacer(), // use Spacer
+          Text("Xem thêm",
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+        ],
+      ),
+    );
+  }
 }
 
 String? getTenTinh(int? idTinh) {
@@ -191,7 +175,7 @@ class DacSanList extends StatelessWidget {
             itemCount: lstDacSan.length,
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
-                onTap: () => context.go("/dacsan/$index"),
+                onTap: () => context.go("/dacsan/${index + 1}"),
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
