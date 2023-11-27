@@ -112,6 +112,17 @@ Future<void> getHinhAnh() async {
   }
 }
 
+String? getTenTinh(int? idTinh) {
+  Iterable<TinhThanh> tt =
+      dsTinhThanh.where((element) => element.maTT == idTinh);
+
+  if (tt.isNotEmpty) {
+    return tt.first.ten;
+  } else {
+    return "Không xác định";
+  }
+}
+
 Future<void> getTinhThanh() async {
   var reponse = await get(
       Uri.parse('https://cntt199.000webhostapp.com/getTinhThanh.php'));
@@ -121,4 +132,14 @@ Future<void> getTinhThanh() async {
     TinhThanh tinhThanh = TinhThanh.fromJson(document);
     dsTinhThanh.add(tinhThanh);
   }
+}
+
+String getURLImage(int? idImage) {
+  String url = 'http://www.clker.com/cliparts/2/l/m/p/B/b/error-md.png';
+  int index = dsHinhAnh
+      .indexWhere((hinhAnh) => hinhAnh.idAnh.toString() == idImage.toString());
+  if (index != -1) {
+    return dsHinhAnh[index].link.toString();
+  }
+  return url;
 }

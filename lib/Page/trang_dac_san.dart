@@ -1,10 +1,10 @@
-import 'package:app_dac_san/Model/tinh_thanh.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../Model/dac_san.dart';
+import '../Service/thu_vien_api.dart';
+import '../Service/thu_vien_widget.dart';
 import '../Widget/thong_bao_xac_nhan_thoat.dart';
 import '../main.dart';
 
@@ -53,17 +53,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
                           height: MediaQuery.of(context).size.height * 0.2,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(25),
-                            child: CachedNetworkImage(
-                              height: MediaQuery.of(context).size.height * 0.15,
-                              fit: BoxFit.fitHeight,
-                              imageUrl: getURLImage(i.avatar),
-                              progressIndicatorBuilder:
-                                  (context, url, downloadProgress) =>
-                                      LinearProgressIndicator(
-                                          value: downloadProgress.progress),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
-                            ),
+                            child: cachedImage(i.avatar!),
                           ),
                         ),
                       );
@@ -129,34 +119,21 @@ class _TrangDacSanState extends State<TrangDacSan> {
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
           Spacer(), // use Spacer
-          Text("Xem thêm",
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+          TextButton(
+            onPressed: () {
+              context.goNamed(
+                "timKiem",
+                queryParameters: {"ten": "Mì"},
+              );
+            },
+            child: Text("Xem thêm",
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+          ),
         ],
       ),
     );
   }
-}
-
-String? getTenTinh(int? idTinh) {
-  Iterable<TinhThanh> tt =
-      dsTinhThanh.where((element) => element.maTT == idTinh);
-
-  if (tt.isNotEmpty) {
-    return tt.first.ten;
-  } else {
-    return "Không xác định";
-  }
-}
-
-String getURLImage(int? idImage) {
-  String url = 'http://www.clker.com/cliparts/2/l/m/p/B/b/error-md.png';
-  int index = dsHinhAnh
-      .indexWhere((hinhAnh) => hinhAnh.idAnh.toString() == idImage.toString());
-  if (index != -1) {
-    return dsHinhAnh[index].link.toString();
-  }
-  return url;
 }
 
 class DacSanList extends StatelessWidget {
@@ -175,7 +152,7 @@ class DacSanList extends StatelessWidget {
             itemCount: lstDacSan.length,
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
-                onTap: () => context.go("/dacsan/${index + 1}"),
+                onTap: () => context.go("/dacsan/chitiet/${index + 1}"),
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -188,17 +165,7 @@ class DacSanList extends StatelessWidget {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: CachedNetworkImage(
-                            progressIndicatorBuilder:
-                                (context, url, downloadProgress) =>
-                                    LinearProgressIndicator(
-                                        value: downloadProgress.progress),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                            imageUrl: getURLImage(dsDacSan[index].avatar),
-                            fit: BoxFit.cover,
-                            height: 150,
-                          ),
+                          child: cachedImage(dsDacSan[index].avatar!),
                         ),
                         const SizedBox(height: 10),
                         Text(dsDacSan[index].tenDacSan!,

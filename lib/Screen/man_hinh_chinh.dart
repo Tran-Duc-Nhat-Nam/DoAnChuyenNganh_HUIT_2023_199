@@ -1,8 +1,8 @@
 import 'package:async_builder/async_builder.dart';
-import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
 
 import '../Service/thu_vien_api.dart';
 import '../Service/thu_vien_widget.dart';
@@ -50,7 +50,10 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
         },
         canPop: false,
         child: Scaffold(
-          appBar: buildEasySearchBar(),
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(60),
+            child: buildEasySearchBar(),
+          ),
           body: widget.page,
           bottomNavigationBar: buildBottomNavigationBar(),
         ),
@@ -58,23 +61,55 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
     );
   }
 
-  EasySearchBar buildEasySearchBar() {
-    return EasySearchBar(
-      backgroundColor: const Color.fromARGB(255, 30, 144, 255),
-      foregroundColor: Colors.white,
-      titleTextStyle: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-      ),
-      title: const Text('App đặc sản VN'),
-      onSearch: (data) {},
-      onSuggestionTap: (data) {
-        int? id = getDacSanTheoTen(data);
-        if (id != null) {
-          context.go("/dacsan/$id");
-        }
+  FloatingSearchBar buildEasySearchBar() {
+    return FloatingSearchBar(
+      hint: 'Tìm kiếm đặc sản...',
+      scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
+      transitionDuration: const Duration(milliseconds: 800),
+      transitionCurve: Curves.easeInOut,
+      physics: const BouncingScrollPhysics(),
+      height: 50,
+      openAxisAlignment: 0.0,
+      debounceDelay: const Duration(milliseconds: 500),
+      onQueryChanged: (query) {
+        // Call your model, bloc, controller here.
       },
-      asyncSuggestions: (data) => getTenDacSanTheoTen(data),
+      // Specify a custom transition to be used for
+      // animating between opened and closed stated.
+      transition: CircularFloatingSearchBarTransition(),
+      actions: [
+        FloatingSearchBarAction(
+          showIfOpened: false,
+          child: CircularButton(
+            icon: const Icon(Icons.place),
+            onPressed: () {},
+          ),
+        ),
+        FloatingSearchBarAction.searchToClear(
+          showIfClosed: false,
+        ),
+      ],
+      onSubmitted: (query) {
+        context.goNamed(
+          "timKiem",
+          queryParameters: {"ten": query},
+        );
+      },
+      builder: (BuildContext context, Animation<double> transition) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Material(
+            color: Colors.white,
+            elevation: 4.0,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: Colors.accents.map((color) {
+                return Container(height: 112, color: color);
+              }).toList(),
+            ),
+          ),
+        );
+      },
     );
   }
 

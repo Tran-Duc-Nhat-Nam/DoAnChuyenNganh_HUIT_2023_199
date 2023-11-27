@@ -1,5 +1,6 @@
 import 'package:app_dac_san/Page/trang_chi_tiet_dac_san.dart';
 import 'package:app_dac_san/Page/trang_dac_san.dart';
+import 'package:app_dac_san/Page/trang_danh_sach_dac_san.dart';
 import 'package:app_dac_san/Page/trang_nguoi_dung.dart';
 import 'package:app_dac_san/Screen/man_hinh_chinh.dart';
 import 'package:app_dac_san/Screen/man_hinh_dang_ky.dart';
@@ -45,10 +46,29 @@ final GoRouter router = GoRouter(
               },
               routes: [
                 GoRoute(
-                  path: ":id",
+                  path: "chitiet/:id",
                   builder: (context, state) {
                     return TrangChiTietDacSan(
                       maDS: int.parse(state.pathParameters['id']!),
+                    );
+                  },
+                ),
+                GoRoute(
+                  path: "timkiem",
+                  name: "timKiem",
+                  builder: (context, state) {
+                    int? xs = -1;
+
+                    try {
+                      xs = int.tryParse(state.pathParameters['xuatSu']!);
+                    } catch (e) {
+                      xs = null;
+                    }
+
+                    return TrangDanhSachDacSan(
+                      ten: state.uri.queryParameters['ten'],
+                      thanhPhan: state.uri.queryParameters['thanhPhan'],
+                      xuatSu: xs,
                     );
                   },
                 ),
