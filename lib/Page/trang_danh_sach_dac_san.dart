@@ -8,11 +8,11 @@ import '../Service/thu_vien_api.dart';
 
 class TrangDanhSachDacSan extends StatefulWidget {
   const TrangDanhSachDacSan({
-    Key? key,
+    super.key,
     this.ten,
     this.xuatSu,
     this.thanhPhan,
-  }) : super(key: key);
+  });
   final String? ten;
   final String? thanhPhan;
   final int? xuatSu;
@@ -49,42 +49,54 @@ class _TrangDanhSachDacSanState extends State<TrangDanhSachDacSan> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: dsDacSanDaLoc.length,
-      itemBuilder: (context, index) {
-        return InkWell(
-          onTap: () => context.go("/dacsan/chitiet/${index + 1}"),
-          child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: 20,
-            ),
-            shape: LinearBorder.bottom(
-              side: BorderSide(
-                color: Theme.of(context).primaryColor,
+    return PopScope(
+      onPopInvoked: (didPop) {
+        context.go("/dacsan");
+      },
+      canPop: false,
+      child: ListView.builder(
+        itemCount: dsDacSanDaLoc.length,
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: () => context.go("/dacsan/chitiet/${index + 1}"),
+            child: ListTile(
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 15,
               ),
-            ),
-            title: Text(dsDacSanDaLoc[index].tenDacSan!),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Thành phần: ${dsDacSanDaLoc[index].thanhPhan!}"),
-                Text('Xuất xứ: ${getTenTinh(dsDacSanDaLoc[index].xuatXu)}'),
-              ],
-            ),
-            leading: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: SizedBox(
-                  width: 100,
-                  height: 75,
-                  child: cachedImage(dsDacSanDaLoc[index].avatar!),
+              shape: LinearBorder.bottom(
+                side: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              title: Text(
+                dsDacSanDaLoc[index].tenDacSan!,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Thành phần: ${dsDacSanDaLoc[index].thanhPhan!}"),
+                  Text('Xuất xứ: ${getTenTinh(dsDacSanDaLoc[index].xuatXu)}'),
+                ],
+              ),
+              leading: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: SizedBox(
+                    width: 80,
+                    height: 80,
+                    child: cachedImage(dsDacSanDaLoc[index].avatar!),
+                  ),
                 ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

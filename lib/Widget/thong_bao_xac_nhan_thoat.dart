@@ -30,7 +30,7 @@ Future<dynamic> ThongBaoXacNhanThoat(BuildContext context) {
         actions: [
           TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(dialogContext);
               },
               child: const Text("Không")),
           TextButton(

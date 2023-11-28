@@ -5,7 +5,7 @@ import 'package:introduction_screen/introduction_screen.dart';
 import '../main.dart';
 
 class ManHinhGioiThieu extends StatefulWidget {
-  const ManHinhGioiThieu({Key? key}) : super(key: key);
+  const ManHinhGioiThieu({super.key});
 
   @override
   _ManHinhGioiThieuState createState() => _ManHinhGioiThieuState();

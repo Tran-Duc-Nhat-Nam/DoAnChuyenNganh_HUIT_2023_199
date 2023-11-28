@@ -9,7 +9,7 @@ import '../Model/vung_mien.dart';
 
 class TrangChiTietDacSan extends StatefulWidget {
   final int maDS;
-  const TrangChiTietDacSan({Key? key, required this.maDS}) : super(key: key);
+  const TrangChiTietDacSan({super.key, required this.maDS});
 
   @override
   _TrangChiTietDacSanState createState() => _TrangChiTietDacSanState();

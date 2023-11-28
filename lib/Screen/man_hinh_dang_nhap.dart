@@ -275,9 +275,9 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
   Future<void> DangKyThemThongTin(User user) async {
     List<NguoiDung> dsNguoiDung = [];
 
-    var reponse = await get(Uri.parse(
+    var response = await get(Uri.parse(
         'https://cntt199.000webhostapp.com/getNguoiDung.php')); //https://cntt199.000webhostapp.com/getTinhThanh.php //https://provinces.open-api.vn/api/?depth=1
-    var result = json.decode(utf8.decode(reponse.bodyBytes));
+    var result = json.decode(utf8.decode(response.bodyBytes));
 
     if (context.mounted) {
       for (var document in result) {

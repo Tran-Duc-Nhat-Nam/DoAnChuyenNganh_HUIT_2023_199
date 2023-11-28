@@ -104,7 +104,7 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                       },
                       onChanged: (value) {
                         if (value != null) {
-                          widget.diaChiController.text = value!.ten!;
+                          widget.diaChiController.text = value.ten!;
                         }
                       },
                       selectedItem: dsTinhThanh[0],

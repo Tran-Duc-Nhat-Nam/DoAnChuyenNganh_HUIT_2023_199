@@ -216,7 +216,6 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                     tinhThanh = value!.ten!;
                   }
                 },
-                selectedItem: dsTT[0],
                 items: dsTT,
                 itemAsString: (value) {
                   return value.ten!;

@@ -49,10 +49,12 @@ class _TrangDacSanState extends State<TrangDacSan> {
                     builder: (BuildContext context) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: SizedBox(
+                        child: Container(
+                          color: Theme.of(context).cardColor,
                           height: MediaQuery.of(context).size.height * 0.2,
+                          width: MediaQuery.of(context).size.width * 0.8,
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(25),
+                            borderRadius: BorderRadius.circular(15),
                             child: cachedImage(i.avatar!),
                           ),
                         ),
@@ -112,13 +114,13 @@ class _TrangDacSanState extends State<TrangDacSan> {
 
   Padding headerVungMien(String mien) {
     return Padding(
-      padding: EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10.0),
       child: Row(
         children: <Widget>[
           Text(mien,
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
-          Spacer(), // use Spacer
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold, color: Colors.lightBlue)),
+          const Spacer(), // use Spacer
           TextButton(
             onPressed: () {
               context.goNamed(
@@ -126,9 +128,9 @@ class _TrangDacSanState extends State<TrangDacSan> {
                 queryParameters: {"ten": "Mì"},
               );
             },
-            child: Text("Xem thêm",
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+            child: const Text("Xem thêm",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.lightBlue)),
           ),
         ],
       ),
@@ -171,11 +173,10 @@ class DacSanList extends StatelessWidget {
                         Text(dsDacSan[index].tenDacSan!,
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.blue)),
+                                color: Colors.lightBlueAccent)),
                         Text('Xuất xứ: ${getTenTinh(dsDacSan[index].xuatXu)}',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue)),
+                            style:
+                                const TextStyle(color: Colors.lightBlueAccent)),
                       ],
                     ),
                   ),
