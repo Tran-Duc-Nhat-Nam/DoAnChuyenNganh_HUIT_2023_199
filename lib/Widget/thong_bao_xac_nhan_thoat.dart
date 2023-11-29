@@ -6,9 +6,10 @@ Future<dynamic> ThongBaoXacNhanThoat(BuildContext context) {
     context: context,
     builder: (BuildContext dialogContext) {
       return AlertDialog(
-        titleTextStyle: const TextStyle(
+        titleTextStyle: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 16,
+          color: Theme.of(context).textTheme.titleLarge!.color,
         ),
         titlePadding: const EdgeInsets.only(
           left: 25,

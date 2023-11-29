@@ -44,24 +44,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
                   enableInfiniteScroll: true,
                   viewportFraction: 1,
                 ),
-                items: dsDacSan.map((i) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Container(
-                          color: Theme.of(context).cardColor,
-                          height: MediaQuery.of(context).size.height * 0.2,
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: cachedImage(i.avatar!),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }).toList(),
+                items: buildBanner(5),
               ),
               headerVungMien("Miền Bắc"),
               DacSanList(lstDacSan: dsDacSan),
@@ -112,6 +95,33 @@ class _TrangDacSanState extends State<TrangDacSan> {
     );
   }
 
+  List<Widget> buildBanner(int limit) {
+    List<Widget> dsWidget = [];
+    for (int i = 0; i < dsDacSan.length && i < limit; i++) {
+      Widget temp = Builder(
+        builder: (BuildContext context) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            child: Container(
+              color: Theme.of(context).splashColor,
+              height: MediaQuery.of(context).size.height * 0.2,
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.15,
+                  vertical: 10),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: cachedImage(dsDacSan[i].avatar!),
+              ),
+            ),
+          );
+        },
+      );
+      dsWidget.add(temp);
+    }
+    return dsWidget;
+  }
+
   Padding headerVungMien(String mien) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -149,40 +159,45 @@ class DacSanList extends StatelessWidget {
       children: [
         SizedBox(
           height: 250,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: lstDacSan.length,
-            itemBuilder: (BuildContext context, int index) {
-              return InkWell(
-                onTap: () => context.go("/dacsan/chitiet/${index + 1}"),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Container(
-                    width: 250,
-                    padding: const EdgeInsets.all(8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: cachedImage(dsDacSan[index].avatar!),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(dsDacSan[index].tenDacSan!,
-                            style: const TextStyle(
+          child: Container(
+            color: Color.fromARGB(75, 0, 191, 255),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: lstDacSan.length,
+              itemBuilder: (BuildContext context, int index) {
+                return InkWell(
+                  onTap: () => context.go("/dacsan/chitiet/${index + 1}"),
+                  child: Card(
+                    margin: EdgeInsets.all(10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Container(
+                      width: 250,
+                      padding: const EdgeInsets.all(8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: cachedImage(dsDacSan[index].avatar!),
+                          ),
+                          const SizedBox(height: 15),
+                          Text(dsDacSan[index].tenDacSan!,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.lightBlueAccent)),
-                        Text('Xuất xứ: ${getTenTinh(dsDacSan[index].xuatXu)}',
-                            style:
-                                const TextStyle(color: Colors.lightBlueAccent)),
-                      ],
+                                fontSize: 15,
+                              )),
+                          Text(
+                            'Xuất xứ: ${getTenTinh(dsDacSan[index].xuatXu)}',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ],

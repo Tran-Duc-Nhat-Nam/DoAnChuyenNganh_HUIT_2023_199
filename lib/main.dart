@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:app_dac_san/Router/router_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -97,6 +99,14 @@ class _MainAppState extends State<MainApp> {
             color: Colors.black,
           ),
         ),
+      ),
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        dragDevices: {
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.touch,
+          PointerDeviceKind.stylus,
+          PointerDeviceKind.unknown
+        },
       ),
       routerConfig: router,
       debugShowCheckedModeBanner: false,

@@ -47,6 +47,7 @@ final GoRouter router = GoRouter(
               routes: [
                 GoRoute(
                   path: "chitiet/:id",
+                  name: "Chi tiết đặc sản",
                   builder: (context, state) {
                     return TrangChiTietDacSan(
                       maDS: int.parse(state.pathParameters['id']!),

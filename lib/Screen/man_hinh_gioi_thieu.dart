@@ -15,7 +15,9 @@ class _ManHinhGioiThieuState extends State<ManHinhGioiThieu> {
   @override
   Widget build(BuildContext context) {
     return IntroductionScreen(
+      back: const Text("Quay lại"),
       next: const Text("Tiếp theo"),
+      skip: const Text("Bỏ qua"),
       done: const Text("Hoàn tất"),
       onDone: () async {
         await ref.setBool("lanDau", false);

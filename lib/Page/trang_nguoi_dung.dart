@@ -52,27 +52,46 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Form(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  TextFieldNguoiDung(
-                    controller: widget.uidController,
-                    text: "Id người dùng",
-                    isReadOnly: true,
+            child: Column(
+              children: [
+                ListTile(
+                  shape: LinearBorder.bottom(
+                    side: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
-                  TextFieldNguoiDung(
-                    controller: widget.emailController,
-                    text: "Email",
-                    isReadOnly: true,
+                  title: const Text(
+                    "Thông tin người dùng",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ),
-                  TextFieldNguoiDung(
-                    controller: widget.hoTenController,
-                    text: "Họ tên",
-                    isReadOnly: isReadOnly,
+                ),
+                TextFieldNguoiDung(
+                  controller: widget.uidController,
+                  text: "Id người dùng",
+                  isReadOnly: true,
+                ),
+                TextFieldNguoiDung(
+                  controller: widget.emailController,
+                  text: "Email",
+                  isReadOnly: true,
+                ),
+                TextFieldNguoiDung(
+                  controller: widget.hoTenController,
+                  text: "Họ tên",
+                  isReadOnly: isReadOnly,
+                ),
+                ListTile(
+                  shape: LinearBorder.bottom(
+                    side: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
+                  title: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                     child: DropdownSearch<TinhThanh>(
                       enabled: !isReadOnly,
                       popupProps: const PopupProps.menu(
@@ -114,75 +133,92 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                       },
                     ),
                   ),
-                  Row(
+                ),
+                ListTile(
+                  shape: LinearBorder.bottom(
+                    side: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  title: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Flexible(
                         child: ListTile(
-                          enabled: !isReadOnly,
                           title: const Text("Nam"),
                           leading: Radio(
                             value: true,
                             groupValue: isNam,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                isNam = value!;
-                              });
-                            },
+                            onChanged: isReadOnly
+                                ? null
+                                : (bool? value) {
+                                    setState(() {
+                                      isNam = value!;
+                                    });
+                                  },
                           ),
                         ),
                       ),
                       Flexible(
                         child: ListTile(
-                          enabled: !isReadOnly,
                           title: const Text("Nữ"),
                           leading: Radio(
                             value: false,
                             groupValue: isNam,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                isNam = value!;
-                              });
-                            },
+                            onChanged: isReadOnly
+                                ? null
+                                : (bool? value) {
+                                    setState(() {
+                                      isNam = value!;
+                                    });
+                                  },
                           ),
                         ),
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: ElevatedButton(
-                      style: OutlinedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(35),
-                        padding: const EdgeInsets.all(15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        ),
-                        side: const BorderSide(
-                            width: 1, color: Colors.lightBlueAccent),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          if (isReadOnly) {
-                            isReadOnly = false;
-                            updateText = "Lưu thông tin";
-                          } else {
-                            isReadOnly = true;
-                            updateUser(
-                              widget.uidController.text,
-                              widget.emailController.text,
-                              widget.hoTenController.text,
-                              isNam,
-                              widget.diaChiController.text,
-                            );
-                            updateText = "Cập nhật thông tin";
-                          }
-                        });
-                      },
-                      child: Text(updateText),
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 25,
                   ),
-                  ElevatedButton(
+                  child: ElevatedButton(
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(50),
+                      padding: const EdgeInsets.all(15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      side: const BorderSide(
+                          width: 1, color: Colors.lightBlueAccent),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        if (isReadOnly) {
+                          isReadOnly = false;
+                          updateText = "Lưu thông tin";
+                        } else {
+                          isReadOnly = true;
+                          updateUser(
+                            widget.uidController.text,
+                            widget.emailController.text,
+                            widget.hoTenController.text,
+                            isNam,
+                            widget.diaChiController.text,
+                          );
+                          updateText = "Cập nhật thông tin";
+                        }
+                      });
+                    },
+                    child: Text(updateText),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 25,
+                  ),
+                  child: ElevatedButton(
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size.fromHeight(35),
                       padding: const EdgeInsets.all(15),
@@ -209,8 +245,8 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                     },
                     child: const Text("Đăng xuất"),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -233,12 +269,19 @@ class TextFieldNguoiDung extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20),
-      child: TextFormField(
-        readOnly: isReadOnly,
-        controller: controller,
-        decoration: RoundInputDecoration(text),
+    return ListTile(
+      title: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: TextFormField(
+          readOnly: isReadOnly,
+          controller: controller,
+          decoration: RoundInputDecoration(text),
+        ),
+      ),
+      shape: LinearBorder.bottom(
+        side: BorderSide(
+          color: Theme.of(context).primaryColor,
+        ),
       ),
     );
   }

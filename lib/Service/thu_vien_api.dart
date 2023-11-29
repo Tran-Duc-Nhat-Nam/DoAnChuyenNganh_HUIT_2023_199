@@ -80,11 +80,11 @@ Future<void> getDacSan() async {
   }
 }
 
-Future<List<String>> getTenDacSanTheoTen(String ten) async {
-  List<String> kq = [];
+List<DacSan> getDanhSachDacSanTheoTen(String ten) {
+  List<DacSan> kq = [];
   for (var dacSan in dsDacSan) {
     if (dacSan.tenDacSan!.toLowerCase().contains(ten.toLowerCase())) {
-      kq.add(dacSan.tenDacSan!);
+      kq.add(dacSan);
     }
   }
 
