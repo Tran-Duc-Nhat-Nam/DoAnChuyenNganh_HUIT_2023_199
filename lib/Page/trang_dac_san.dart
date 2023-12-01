@@ -1,3 +1,5 @@
+import 'package:app_dac_san/Model/loai_dac_san.dart';
+import 'package:app_dac_san/Model/vung_mien.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -16,8 +18,14 @@ class TrangDacSan extends StatefulWidget {
 }
 
 class _TrangDacSanState extends State<TrangDacSan> {
-  var urlImage = "";
-  int selectedVungMien = 1;
+  String selectedChip = dsLoaiDacSan[0].tenLoai;
+  List<DacSan> lstDacSan = dsDacSan;
+
+  void selectChip(LoaiDacSan chip) {
+    setState(() {
+      selectedChip = chip.tenLoai;
+    });
+  }
 
   @override
   void initState() {
@@ -46,12 +54,19 @@ class _TrangDacSanState extends State<TrangDacSan> {
                 ),
                 items: buildBanner(5),
               ),
-              headerVungMien("Miền Bắc"),
-              DacSanList(lstDacSan: dsDacSan),
-              headerVungMien("Miền Trung"),
-              DacSanList(lstDacSan: dsDacSan),
-              headerVungMien("Miền Nam"),
-              DacSanList(lstDacSan: dsDacSan)
+              headerLoaiDacSan(),
+              headerVungMien(dsVungMien[0]),
+              DacSanList(
+                  lstDacSan:
+                      lstDacSan.where((dacSan) => dacSan.idMien == 1).toList()),
+              headerVungMien(dsVungMien[1]),
+              DacSanList(
+                  lstDacSan:
+                      lstDacSan.where((dacSan) => dacSan.idMien == 2).toList()),
+              headerVungMien(dsVungMien[2]),
+              DacSanList(
+                  lstDacSan:
+                      lstDacSan.where((dacSan) => dacSan.idMien == 3).toList())
               // DropdownButton<int>(
               //   value: selectedVungMien,
               //   onChanged: (int? newValue) {
@@ -122,21 +137,70 @@ class _TrangDacSanState extends State<TrangDacSan> {
     return dsWidget;
   }
 
-  Padding headerVungMien(String mien) {
+  Padding headerLoaiDacSan() {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          const Text("Loại đặc sản: ",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, color: Colors.lightBlue)),
+          const SizedBox(width: 30.0),
+          Wrap(
+            spacing: 20.0,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: dsLoaiDacSan.map((loaiDacSan) {
+              bool isSelected = loaiDacSan.tenLoai == selectedChip;
+              return AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                decoration: BoxDecoration(
+                  color: isSelected ? Colors.blue : Colors.grey,
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                child: FilterChip(
+                  label: Text(
+                    loaiDacSan.tenLoai,
+                    style: TextStyle(
+                      color: isSelected ? Colors.white : Colors.black,
+                    ),
+                  ),
+                  selected: isSelected,
+                  onSelected: (selected) {
+                    selectChip(loaiDacSan);
+                    lstDacSan = dsDacSan
+                        .where(
+                            (dacSan) => dacSan.loaiDacSan == loaiDacSan.idLoai)
+                        .toList();
+                  },
+                  selectedColor: Colors.blue,
+                  checkmarkColor: Colors.white,
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Padding headerVungMien(VungMien vungMien) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Row(
         children: <Widget>[
-          Text(mien,
+          Text(vungMien.tenMien!,
               style: const TextStyle(
                   fontWeight: FontWeight.bold, color: Colors.lightBlue)),
           const Spacer(), // use Spacer
           TextButton(
             onPressed: () {
-              context.goNamed(
-                "timKiem",
-                queryParameters: {"ten": "Mì"},
-              );
+              // context.goNamed(
+              //   "timKiem",
+              //   queryParameters: {"ten": "Mì"},
+              // );
+              context.go("/dacsan/vungmien/${vungMien.idMien}");
             },
             child: const Text("Xem thêm",
                 style: TextStyle(
@@ -160,7 +224,7 @@ class DacSanList extends StatelessWidget {
         SizedBox(
           height: 250,
           child: Container(
-            color: Color.fromARGB(75, 0, 191, 255),
+            color: const Color.fromARGB(75, 0, 191, 255),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: lstDacSan.length,
@@ -168,7 +232,7 @@ class DacSanList extends StatelessWidget {
                 return InkWell(
                   onTap: () => context.go("/dacsan/chitiet/${index + 1}"),
                   child: Card(
-                    margin: EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(10),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

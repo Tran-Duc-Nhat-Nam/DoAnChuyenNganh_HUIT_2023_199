@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 
 import '../Model/dac_san.dart';
 import '../Model/hinh_anh.dart';
+import '../Model/loai_dac_san.dart';
 import '../Model/nguoi_dung.dart';
 import '../Model/tinh_thanh.dart';
 import '../Model/vung_mien.dart';
@@ -66,6 +67,17 @@ Future<void> getVungMien() async {
   for (var document in result) {
     VungMien vungMien = VungMien.fromJson(document);
     dsVungMien.add(vungMien);
+  }
+}
+
+Future<void> getLoaiDacSan() async {
+  var reponse = await get(
+      Uri.parse('https://cntt199.000webhostapp.com/getLoaiDacSan.php'));
+  var result = json.decode(utf8.decode(reponse.bodyBytes));
+
+  for (var document in result) {
+    LoaiDacSan loaiDacSan = LoaiDacSan.fromJson(document);
+    dsLoaiDacSan.add(loaiDacSan);
   }
 }
 
