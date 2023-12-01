@@ -58,7 +58,7 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
               height: 230,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: getHinhAnh(dsDacSan[widget.maDS - 1].idDacSan ?? 0).length,
+                itemCount: getHinhAnhDS(dsDacSan[widget.maDS - 1].idDacSan ?? 0).length,
                 // itemCount: 10,
                 itemBuilder: (context,index) {
                   return Container(
@@ -72,13 +72,13 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                              builder: (context) => xemHinh(getHinhAnh(dsDacSan[widget.maDS - 1].idDacSan ?? 0)[index])),
+                              builder: (context) => xemHinh(getHinhAnhDS(dsDacSan[widget.maDS - 1].idDacSan ?? 0)[index])),
                           );
                         },
                         child: Hero(
                           tag: 'hinhDS',
                           child: Image.network(
-                            getURLImage(getHinhAnh(dsDacSan[widget.maDS - 1].idDacSan ?? 0)[index]),
+                            getHinhAnhDS(dsDacSan[widget.maDS - 1].idDacSan ?? 0)[index],
                             fit: BoxFit.cover,
                             width: double.infinity, // Đặt chiều rộng mong muốn
                             height: double.infinity
@@ -133,11 +133,11 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
 
 
 
-  List<int> getHinhAnh(int idDacSan) {
-    List<int> ds = [];
+  List<String> getHinhAnhDS(int idDacSan) {
+    List<String> ds = [];
     for(var ha in dsHinhAnh) {
       if (ha.idDacSan == idDacSan)
-        ds.add(ha.idDacSan ?? 1);
+        ds.add(getURLImage(ha.idAnh));
     }
     return ds;
   }

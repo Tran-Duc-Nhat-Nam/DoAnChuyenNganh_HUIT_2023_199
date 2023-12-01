@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 
 class xemHinh extends StatelessWidget{
-  final int link;
+  final String link;
   xemHinh(this.link);
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class xemHinh extends StatelessWidget{
                 child: Hero(
                     tag: 'hinhDS',
                     child: Image.network(
-                        getURLImage(link),
+                        link as String,
                         fit: BoxFit.cover,
                         width: double.infinity, // Đặt chiều rộng mong muốn
                         height: 300
