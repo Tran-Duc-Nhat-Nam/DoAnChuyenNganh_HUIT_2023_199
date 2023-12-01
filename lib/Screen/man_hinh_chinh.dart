@@ -32,6 +32,7 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
         await getTinhThanh();
         await getHinhAnh();
         await getVungMien();
+        await getLoaiDacSan();
         await getDacSan();
         nguoiDung = (await getUser(FirebaseAuth.instance.currentUser!.uid))!;
         return "";
@@ -72,22 +73,28 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Flexible(
-                flex: 1,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 20,
-                  ),
-                  child: Text(
-                    "ADSVN",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.white,
+              TextButton(
+                onPressed: () {
+                  context.go("/dacsan");
+                },
+                child: const Flexible(
+                  flex: 1,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: 20,
+                    ),
+                    child: Text(
+                      "ADSVN",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
               ),
+
               Flexible(
                 flex: 3,
                 child: Padding(

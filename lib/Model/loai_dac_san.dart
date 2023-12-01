@@ -1,5 +1,5 @@
 class LoaiDacSan {
-  String idLoai;
+  int idLoai;
   String tenLoai;
 
   LoaiDacSan({

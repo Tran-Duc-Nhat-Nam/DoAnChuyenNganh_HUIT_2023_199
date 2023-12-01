@@ -7,6 +7,7 @@ class DacSan
   String? thanhPhan;
   int? xuatXu;
   int? idMien;
+  int? loaiDacSan;
 
   DacSan({
     this.idDacSan,
@@ -16,6 +17,7 @@ class DacSan
     this.thanhPhan,
     this.xuatXu,
     this.idMien,
+    this.loaiDacSan,
   });
 
   factory DacSan.fromJson(Map<String, dynamic> json) {
@@ -27,6 +29,7 @@ class DacSan
       thanhPhan: json['thanhphan'],
       xuatXu: json['xuatxu'],
       idMien: json['idmien'],
+      loaiDacSan: json['loaidacsan'],
     );
   }
 }
