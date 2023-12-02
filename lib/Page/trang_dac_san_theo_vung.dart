@@ -1,15 +1,9 @@
-import 'dart:convert';
-
-import 'package:app_dac_san/Model/hinh_anh.dart';
 import 'package:app_dac_san/Model/loai_dac_san.dart';
 import 'package:app_dac_san/main.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart';
 
 import '../Model/dac_san.dart';
-import '../Model/vung_mien.dart';
 import '../Service/thu_vien_api.dart';
 import '../Service/thu_vien_widget.dart';
 
@@ -106,47 +100,48 @@ class _TrangDacSanTheoVungState extends State<TrangDacSanTheoVung> {
   Padding headerLoaiDacSan() {
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          const Text("Loại đặc sản: ",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.lightBlue)),
-          const SizedBox(width: 30.0),
-          Wrap(
-            spacing: 20.0,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: dsLoaiDacSan.map((loaiDacSan) {
-              bool isSelected = loaiDacSan.tenLoai == selectedChip;
-              return AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-                decoration: BoxDecoration(
-                  color: isSelected ? Colors.blue : Colors.grey,
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                child: FilterChip(
-                  label: Text(
-                    loaiDacSan.tenLoai,
-                    style: TextStyle(
-                      color: isSelected ? Colors.white : Colors.black,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            const Text("Loại đặc sản: ",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.lightBlue)),
+            const SizedBox(width: 30.0),
+            Wrap(
+              spacing: 20.0,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: dsLoaiDacSan.map((loaiDacSan) {
+                bool isSelected = loaiDacSan.tenLoai == selectedChip;
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  child: FilterChip(
+                    label: Text(
+                      loaiDacSan.tenLoai,
+                      style: TextStyle(
+                        color: isSelected
+                            ? Colors.white
+                            : Theme.of(context).disabledColor,
+                      ),
                     ),
+                    selected: isSelected,
+                    onSelected: (selected) {
+                      selectChip(loaiDacSan);
+                      lstDacSan = dsDacSan
+                          .where((dacSan) =>
+                              dacSan.loaiDacSan == loaiDacSan.idLoai)
+                          .toList();
+                    },
+                    selectedColor: Colors.blue,
+                    checkmarkColor: Colors.white,
                   ),
-                  selected: isSelected,
-                  onSelected: (selected) {
-                    selectChip(loaiDacSan);
-                    filteredDacSan = lstDacSan
-                        .where(
-                            (dacSan) => dacSan.loaiDacSan == loaiDacSan.idLoai)
-                        .toList();
-                  },
-                  selectedColor: Colors.blue,
-                  checkmarkColor: Colors.white,
-                ),
-              );
-            }).toList(),
-          ),
-        ],
+                );
+              }).toList(),
+            ),
+          ],
+        ),
       ),
     );
   }

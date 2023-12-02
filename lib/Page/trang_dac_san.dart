@@ -55,58 +55,33 @@ class _TrangDacSanState extends State<TrangDacSan> {
                 items: buildBanner(5),
               ),
               headerLoaiDacSan(),
-              headerVungMien(dsVungMien[0]),
-              DacSanList(
-                  lstDacSan:
-                      lstDacSan.where((dacSan) => dacSan.idMien == 1).toList()),
-              headerVungMien(dsVungMien[1]),
-              DacSanList(
-                  lstDacSan:
-                      lstDacSan.where((dacSan) => dacSan.idMien == 2).toList()),
-              headerVungMien(dsVungMien[2]),
-              DacSanList(
-                  lstDacSan:
-                      lstDacSan.where((dacSan) => dacSan.idMien == 3).toList())
-              // DropdownButton<int>(
-              //   value: selectedVungMien,
-              //   onChanged: (int? newValue) {
-              //     setState(() {
-              //       selectedVungMien = newValue!;
-              //     });
-              //   },
-              //   items: dsVungMien.map<DropdownMenuItem<int>>((VungMien value) {
-              //     return DropdownMenuItem<int>(
-              //       value: value.idMien,
-              //       child: Text(value.tenMien.toString()),
-              //     );
-              //   }).toList(),
-              // ),
-              // Expanded(
-              //   child: ListView.builder(
-              //     itemCount: dsDacSan.length,
-              //     itemBuilder: (context, index) {
-              //       DacSan dacSan = dsDacSan[index];
-              //       // if (selectedVungMien >= 0 || selectedVungMien == 'Tất cả' || selectedVungMien == dacSan.xuatXu) {
-              //       if (selectedVungMien == 2) {
-              //         return ListTile(
-              //           leading: Image.network(
-              //             getURLImage(dacSan.avatar, dsHinhAnh),
-              //             width: 100,
-              //             height: 100,
-              //           ),
-              //           title: Text(dacSan.tenDacSan.toString()),
-              //           subtitle: Text(getNameTinh(dacSan.xuatXu)),
-              //           onTap: () => context.go("/dacsan/$index"),
-              //         );
-              //       }
-              //       return const SizedBox.shrink();
-              //     },
-              //   ),
-              // ),
+              Column(
+                children: buildDanhSachDacSan(),
+              )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  List<Widget> buildDanhSachDacSan() {
+    List<Widget> dsWidget = [];
+    dsWidget = dsVungMien.map((vungMien) {
+      return buildRowDacSan(vungMien);
+    }).toList();
+    return dsWidget;
+  }
+
+  Column buildRowDacSan(VungMien vungMien) {
+    return Column(
+      children: [
+        headerVungMien(vungMien),
+        DacSanList(
+            lstDacSan: lstDacSan
+                .where((dacSan) => dacSan.idMien == vungMien.idMien)
+                .toList()),
+      ],
     );
   }
 
@@ -140,47 +115,48 @@ class _TrangDacSanState extends State<TrangDacSan> {
   Padding headerLoaiDacSan() {
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          const Text("Loại đặc sản: ",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.lightBlue)),
-          const SizedBox(width: 30.0),
-          Wrap(
-            spacing: 20.0,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: dsLoaiDacSan.map((loaiDacSan) {
-              bool isSelected = loaiDacSan.tenLoai == selectedChip;
-              return AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-                decoration: BoxDecoration(
-                  color: isSelected ? Colors.blue : Colors.grey,
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                child: FilterChip(
-                  label: Text(
-                    loaiDacSan.tenLoai,
-                    style: TextStyle(
-                      color: isSelected ? Colors.white : Colors.black,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            const Text("Loại đặc sản: ",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.lightBlue)),
+            const SizedBox(width: 30.0),
+            Wrap(
+              spacing: 20.0,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: dsLoaiDacSan.map((loaiDacSan) {
+                bool isSelected = loaiDacSan.tenLoai == selectedChip;
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  child: FilterChip(
+                    label: Text(
+                      loaiDacSan.tenLoai,
+                      style: TextStyle(
+                        color: isSelected
+                            ? Colors.white
+                            : Theme.of(context).disabledColor,
+                      ),
                     ),
+                    selected: isSelected,
+                    onSelected: (selected) {
+                      selectChip(loaiDacSan);
+                      lstDacSan = dsDacSan
+                          .where((dacSan) =>
+                              dacSan.loaiDacSan == loaiDacSan.idLoai)
+                          .toList();
+                    },
+                    selectedColor: Colors.blue,
+                    checkmarkColor: Colors.white,
                   ),
-                  selected: isSelected,
-                  onSelected: (selected) {
-                    selectChip(loaiDacSan);
-                    lstDacSan = dsDacSan
-                        .where(
-                            (dacSan) => dacSan.loaiDacSan == loaiDacSan.idLoai)
-                        .toList();
-                  },
-                  selectedColor: Colors.blue,
-                  checkmarkColor: Colors.white,
-                ),
-              );
-            }).toList(),
-          ),
-        ],
+                );
+              }).toList(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -242,18 +218,20 @@ class DacSanList extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: cachedImage(dsDacSan[index].avatar!),
+                          Center(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: cachedImage(lstDacSan[index].avatar!),
+                            ),
                           ),
                           const SizedBox(height: 15),
-                          Text(dsDacSan[index].tenDacSan!,
+                          Text(lstDacSan[index].tenDacSan!,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
                               )),
                           Text(
-                            'Xuất xứ: ${getTenTinh(dsDacSan[index].xuatXu)}',
+                            'Xuất xứ: ${getTenTinh(lstDacSan[index].xuatXu)}',
                           ),
                         ],
                       ),
