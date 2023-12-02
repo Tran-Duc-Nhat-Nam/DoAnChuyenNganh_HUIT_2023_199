@@ -1,9 +1,9 @@
 import 'package:async_builder/async_builder.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Model/dac_san.dart';
 import '../Service/thu_vien_api.dart';
 import '../Service/thu_vien_widget.dart';
 import '../Widget/thong_bao_xac_nhan_thoat.dart';
@@ -95,7 +95,6 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
                   ),
                 ),
               ),
-
               Flexible(
                 flex: 3,
                 child: Padding(
@@ -111,34 +110,69 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
     );
   }
 
-  SearchAnchor buildSearchAnchor() {
-    return SearchAnchor(
-        builder: (BuildContext context, SearchController controller) {
-      return IconButton(
-        icon: const Icon(Icons.search),
-        onPressed: () {
-          setState(() {
-            controller.openView();
-          });
+  Widget buildSearchAnchor() {
+    return TypeAheadField(
+      textFieldConfiguration: TextFieldConfiguration(
+        style: const TextStyle(color: Colors.white),
+        textAlignVertical: TextAlignVertical.center,
+        decoration: InputDecoration(
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(width: 2, color: Colors.white70),
+              borderRadius: BorderRadius.all(
+                Radius.circular(35),
+              ),
+            ),
+            focusColor: const Color.fromARGB(255, 65, 105, 225),
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(width: 2, color: Colors.white60),
+              borderRadius: BorderRadius.all(
+                Radius.circular(35),
+              ),
+            ),
+            filled: true,
+            fillColor: const Color.fromARGB(255, 0, 114, 225),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 25),
+            suffixIcon: IconButton(
+              onPressed: () {
+                var routeList = GoRouter.of(context)
+                    .routerDelegate
+                    .currentConfiguration
+                    .matches;
+                for (var route in routeList) {
+                  print("Location: ${route.matchedLocation}");
+                  print("Page: ${route.pageKey}");
+                }
+              },
+              icon: const Icon(Icons.search_outlined),
+            ),
+            suffixIconColor: Colors.white),
+        onSubmitted: (value) {
+          context.goNamed(
+            "timKiem",
+            queryParameters: {"ten": value},
+          );
         },
-      );
-    }, suggestionsBuilder: (BuildContext context, SearchController controller) {
-      List<DacSan> dsDacSanDaLoc = dsDacSan;
-      if (controller.text.isNotEmpty) {
-        dsDacSanDaLoc = getDanhSachDacSanTheoTen(controller.text);
-      }
-      return List<ListTile>.generate(dsDacSanDaLoc.length, (int index) {
+      ),
+      suggestionsBoxDecoration:
+          SuggestionsBoxDecoration(borderRadius: BorderRadius.circular(15)),
+      suggestionsCallback: (String pattern) {
+        return dsDacSan.where((element) =>
+            element.tenDacSan!.toLowerCase().contains(pattern.toLowerCase()));
+      },
+      itemBuilder: (BuildContext context, item) {
         return ListTile(
-          title: Text(dsDacSanDaLoc[index].tenDacSan!),
-          onTap: () {
-            setState(() {
-              controller.closeView(dsDacSanDaLoc[index].tenDacSan!);
-              context.go("/dacsan/chitiet/${dsDacSanDaLoc[index].idDacSan!}");
-            });
-          },
+          title: Text(item.tenDacSan!),
         );
-      });
-    });
+      },
+      onSuggestionSelected: (item) {
+        context.go("/dacsan/chitiet/${item.idDacSan!}");
+      },
+      noItemsFoundBuilder: (context) {
+        return const ListTile(
+          title: Text("Không tìm thấy đặc sản"),
+        );
+      },
+    );
   }
 
   BottomNavigationBar buildBottomNavigationBar() {
