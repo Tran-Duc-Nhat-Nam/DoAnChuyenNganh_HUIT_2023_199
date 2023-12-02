@@ -50,7 +50,7 @@ class _TrangDacSanTheoVungState extends State<TrangDacSanTheoVung> {
                 final dacSan = filteredDacSan[index];
 
                 return InkWell(
-                  onTap: () => context.go("/dacsan/chitiet/${index + 1}"),
+                  onTap: () => context.go("/dacsan/chitiet/${dacSan.idDacSan}"),
                   child: SizedBox(
                     child: Card(
                       color: Colors.blue[50],
@@ -59,7 +59,7 @@ class _TrangDacSanTheoVungState extends State<TrangDacSanTheoVung> {
                       ),
                       child: ListTile(
                         contentPadding: const EdgeInsets.symmetric(
-                          vertical: -10,
+                          vertical: 10,
                         ),
                         title: Text(
                           dacSan.tenDacSan!,
@@ -70,7 +70,8 @@ class _TrangDacSanTheoVungState extends State<TrangDacSanTheoVung> {
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Thành phần: ${dacSan.thanhPhan!}"),
+                            Text("Thành phần: ${dacSan.thanhPhan!}",
+                                maxLines: 1, overflow: TextOverflow.ellipsis),
                             Text('Xuất xứ: ${getTenTinh(dacSan.xuatXu)}'),
                           ],
                         ),
@@ -129,9 +130,9 @@ class _TrangDacSanTheoVungState extends State<TrangDacSanTheoVung> {
                     selected: isSelected,
                     onSelected: (selected) {
                       selectChip(loaiDacSan);
-                      lstDacSan = dsDacSan
+                      filteredDacSan = lstDacSan
                           .where((dacSan) =>
-                              dacSan.loaiDacSan == loaiDacSan.idLoai)
+                      dacSan.loaiDacSan == loaiDacSan.idLoai)
                           .toList();
                     },
                     selectedColor: Colors.blue,

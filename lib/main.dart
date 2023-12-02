@@ -18,6 +18,9 @@ List<VungMien> dsVungMien = [];
 List<HinhAnh> dsHinhAnh = [];
 List<TinhThanh> dsTinhThanh = [];
 List<DacSan> dsDacSan = [];
+List<DacSan> dsDacSanMienBac = [];
+List<DacSan> dsDacSanMienTrung = [];
+List<DacSan> dsDacSanMienNam = [];
 List<LoaiDacSan> dsLoaiDacSan = [];
 late NguoiDung nguoiDung;
 

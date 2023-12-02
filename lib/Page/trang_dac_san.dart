@@ -206,7 +206,7 @@ class DacSanList extends StatelessWidget {
               itemCount: lstDacSan.length,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
-                  onTap: () => context.go("/dacsan/chitiet/${index + 1}"),
+                  onTap: () => context.go("/dacsan/chitiet/${lstDacSan[index].idDacSan}"),
                   child: Card(
                     margin: const EdgeInsets.all(10),
                     shape: RoundedRectangleBorder(

@@ -122,6 +122,38 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
                           color: Colors.black,
                           fontWeight: FontWeight.w900)),
                 )),
+            const SizedBox(height: 20),
+            const Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Text('Nguyên liệu',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline,
+                          color: Color.fromARGB(225, 104, 163, 187),
+                          fontSize: 28,
+                          fontFamily: "RobotoBlack")),
+                ),
+              ],
+            ),
+            Card(
+                color: const Color.fromARGB(255, 242, 242, 242),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SelectableText(dsDacSan[widget.maDS - 1].thanhPhan ?? '',
+                      textDirection: TextDirection.ltr,
+                      textAlign: TextAlign.justify,
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'RobotoLight',
+                          wordSpacing: 1.3,
+                          letterSpacing: 0.1,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w900)),
+                )),
             const SizedBox(height: 5),
 
           ],

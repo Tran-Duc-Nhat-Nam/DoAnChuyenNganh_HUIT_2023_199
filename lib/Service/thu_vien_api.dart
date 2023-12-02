@@ -92,6 +92,12 @@ Future<void> getDacSan() async {
   }
 }
 
+Future<void> getDacSanVungMien() async {
+  dsDacSanMienBac = dsDacSan.where((dacSan) => dacSan.idMien == 1).toList();
+  dsDacSanMienTrung = dsDacSan.where((dacSan) => dacSan.idMien == 2).toList();
+  dsDacSanMienNam = dsDacSan.where((dacSan) => dacSan.idMien == 3).toList();
+}
+
 List<DacSan> getDanhSachDacSanTheoTen(String ten) {
   List<DacSan> kq = [];
   for (var dacSan in dsDacSan) {

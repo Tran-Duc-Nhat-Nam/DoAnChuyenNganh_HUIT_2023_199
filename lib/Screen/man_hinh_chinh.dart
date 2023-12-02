@@ -34,6 +34,7 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
         await getVungMien();
         await getLoaiDacSan();
         await getDacSan();
+        await getDacSanVungMien();
         nguoiDung = (await getUser(FirebaseAuth.instance.currentUser!.uid))!;
         return "";
       },
