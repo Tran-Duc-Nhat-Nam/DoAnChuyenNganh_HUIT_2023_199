@@ -53,7 +53,9 @@ class _TrangDacSanTheoVungState extends State<TrangDacSanTheoVung> {
                   onTap: () => context.go("/dacsan/chitiet/${dacSan.idDacSan}"),
                   child: SizedBox(
                     child: Card(
-                      color: Colors.blue[50],
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.blue[50]
+                          : Colors.lightBlue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
@@ -132,7 +134,7 @@ class _TrangDacSanTheoVungState extends State<TrangDacSanTheoVung> {
                       selectChip(loaiDacSan);
                       filteredDacSan = lstDacSan
                           .where((dacSan) =>
-                      dacSan.loaiDacSan == loaiDacSan.idLoai)
+                              dacSan.loaiDacSan == loaiDacSan.idLoai)
                           .toList();
                     },
                     selectedColor: Colors.blue,

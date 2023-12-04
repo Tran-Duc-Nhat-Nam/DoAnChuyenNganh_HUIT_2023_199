@@ -135,7 +135,6 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                   onPressed: () async {
                     if (widget.formKey.currentState!.validate()) {
                       try {
-                        // DangNhapMySql();
                         User? user = (await FirebaseAuth.instance
                                 .signInWithEmailAndPassword(
                           email: widget.emailController.text,

@@ -15,6 +15,7 @@ class ManHinhChinh extends StatefulWidget {
     required this.page,
   });
   final StatefulNavigationShell page;
+  final TextEditingController controller = TextEditingController();
 
   @override
   State<ManHinhChinh> createState() => _ManHinhChinhState();
@@ -64,41 +65,34 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
   AppBar buildAppBar() {
     return AppBar(
       backgroundColor: const Color.fromARGB(255, 30, 144, 255),
-      flexibleSpace: Container(
-        padding: EdgeInsets.zero,
-        margin: EdgeInsets.zero,
-      ),
       actions: [
         Flexible(
           flex: 1,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TextButton(
-                onPressed: () {
-                  context.go("/dacsan");
-                },
-                child: const Flexible(
-                  flex: 1,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: 20,
-                    ),
-                    child: Text(
-                      "ADSVN",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
+              const Padding(
+                padding: EdgeInsets.only(
+                  left: 20,
+                ),
+                child: Text(
+                  "ADSVN",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.white,
                   ),
                 ),
               ),
               Flexible(
                 flex: 3,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(
+                    top: 10,
+                    bottom: 10,
+                    left: 20,
+                    right: 20,
+                  ),
                   child: buildSearchAnchor(),
                 ),
               ),
@@ -115,6 +109,7 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
       textFieldConfiguration: TextFieldConfiguration(
         style: const TextStyle(color: Colors.white),
         textAlignVertical: TextAlignVertical.center,
+        controller: widget.controller,
         decoration: InputDecoration(
             focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(width: 2, color: Colors.white70),
@@ -134,13 +129,11 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
             contentPadding: const EdgeInsets.symmetric(horizontal: 25),
             suffixIcon: IconButton(
               onPressed: () {
-                var routeList = GoRouter.of(context)
-                    .routerDelegate
-                    .currentConfiguration
-                    .matches;
-                for (var route in routeList) {
-                  print("Location: ${route.matchedLocation}");
-                  print("Page: ${route.pageKey}");
+                if (widget.controller.text.isNotEmpty) {
+                  context.goNamed(
+                    "timKiem",
+                    queryParameters: {"ten": widget.controller.text},
+                  );
                 }
               },
               icon: const Icon(Icons.search_outlined),

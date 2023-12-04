@@ -118,7 +118,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   if (isPasswordReadOnly) {
                     return null;
                   } else if (value!.isEmpty) {
-                    return "Vui lòng nhập tài khoản";
+                    return "Vui lòng nhập mật khẩu";
                   }
                   return null;
                 },
@@ -157,7 +157,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   if (isPasswordReadOnly) {
                     return null;
                   } else if (value!.isEmpty) {
-                    return "Vui lòng nhập tài khoản";
+                    return "Vui lòng nhập mật khẩu";
                   } else if (value != widget.matKhauController.text) {
                     return "Mật khẩu vừa nhập không trùng khớp";
                   }
@@ -190,12 +190,6 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
               ),
               VerticalGapSizedBox(),
               DropdownSearch<TinhThanh>(
-                // width: MediaQuery.of(context).size.width - 30,
-                // dropdownMenuEntries: dsLabelTinhThanh,
-                // hintText: "Danh sách tỉnh thành",
-                // onSelected: (value) {
-                //   tinhThanh = value!.ten;
-                // },
                 popupProps: const PopupProps.menu(
                   title: Padding(
                     padding: EdgeInsets.symmetric(vertical: 15),
@@ -262,16 +256,20 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                     if (widget.formKey.currentState!.validate()) {
                       try {
                         if (isPasswordReadOnly) {
-                          await addUser(
-                            FirebaseAuth.instance.currentUser!.uid,
-                            widget.emailController.text,
-                            widget.hoTenController.text,
-                            isNam,
-                            tinhThanh!,
-                          );
-                          if (context.mounted) {
-                            context.go("/");
-                          }
+                          await FirebaseAuth.instance.currentUser!
+                              .updateEmail(widget.emailController.text)
+                              .whenComplete(() async {
+                            await addUser(
+                              FirebaseAuth.instance.currentUser!.uid,
+                              widget.emailController.text,
+                              widget.hoTenController.text,
+                              isNam,
+                              tinhThanh!,
+                            );
+                            if (context.mounted) {
+                              context.go("/");
+                            }
+                          });
                         } else {
                           User? user = (await FirebaseAuth.instance
                                   .createUserWithEmailAndPassword(

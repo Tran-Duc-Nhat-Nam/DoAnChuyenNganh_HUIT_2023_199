@@ -215,6 +215,29 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                   ),
                 ),
                 Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 20,
+                    left: 25,
+                    right: 25,
+                  ),
+                  child: ElevatedButton(
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(50),
+                      padding: const EdgeInsets.all(15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      side: const BorderSide(
+                          width: 1, color: Colors.lightBlueAccent),
+                    ),
+                    onPressed: () {
+                      context.go(
+                          "/doimatkhau/${FirebaseAuth.instance.currentUser!.uid}");
+                    },
+                    child: const Text("Cập nhật mât khẩu"),
+                  ),
+                ),
+                Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 25,
                   ),

@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
+import '../Page/trang_doi_mat_khau.dart';
 import '../main.dart';
 
 final rootNavKey = GlobalKey<NavigatorState>();
@@ -96,6 +97,14 @@ final GoRouter router = GoRouter(
               name: "Hồ sơ người dùng",
               builder: (context, state) {
                 return TrangNguoiDung();
+              },
+            ),
+            GoRoute(
+              path: "/doimatkhau/:id",
+              builder: (context, state) {
+                return TrangDoiMatKhau(
+                  uid: state.pathParameters['id'],
+                );
               },
             ),
           ],
