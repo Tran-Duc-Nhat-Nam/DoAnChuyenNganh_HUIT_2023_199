@@ -230,10 +230,12 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                       side: const BorderSide(
                           width: 1, color: Colors.lightBlueAccent),
                     ),
-                    onPressed: () {
-                      context.go(
-                          "/doimatkhau/${FirebaseAuth.instance.currentUser!.uid}");
-                    },
+                    onPressed: isReadOnly
+                        ? null
+                        : () {
+                            context.go(
+                                "/doimatkhau/${FirebaseAuth.instance.currentUser!.uid}");
+                          },
                     child: const Text("Cập nhật mât khẩu"),
                   ),
                 ),

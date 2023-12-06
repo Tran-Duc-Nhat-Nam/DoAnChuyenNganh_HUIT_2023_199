@@ -4,6 +4,7 @@ import 'package:app_dac_san/Page/trang_dac_san_theo_vung.dart';
 import 'package:app_dac_san/Page/trang_danh_sach_dac_san.dart';
 import 'package:app_dac_san/Page/trang_nguoi_dung.dart';
 import 'package:app_dac_san/Screen/man_hinh_chinh.dart';
+import 'package:app_dac_san/Screen/man_hinh_cho_xac_nhan.dart';
 import 'package:app_dac_san/Screen/man_hinh_dang_ky.dart';
 import 'package:app_dac_san/Screen/man_hinh_dang_nhap.dart';
 import 'package:app_dac_san/Screen/man_hinh_gioi_thieu.dart';
@@ -24,10 +25,15 @@ final GoRouter router = GoRouter(
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (context, state, child) {
-        if (FirebaseAuth.instance.currentUser != null) {
-          return ManHinhChinh(
-            page: child,
-          );
+        User? user = FirebaseAuth.instance.currentUser;
+        if (user != null) {
+          if (user.emailVerified) {
+            return ManHinhChinh(
+              page: child,
+            );
+          } else {
+            return ManHinhChoXacNhan(user: user);
+          }
         }
         if (ref.getBool("lanDau") == null || ref.getBool("LanDau")!) {
           return const ManHinhGioiThieu();

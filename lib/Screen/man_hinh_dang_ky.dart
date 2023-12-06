@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:app_dac_san/Model/tinh_thanh.dart';
+import 'package:app_dac_san/Screen/man_hinh_cho_xac_nhan.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -190,6 +192,12 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
               ),
               VerticalGapSizedBox(),
               DropdownSearch<TinhThanh>(
+                validator: (value) {
+                  if (value == null) {
+                    return "Vui lòng chọn tỉnh thành";
+                  }
+                  return null;
+                },
                 popupProps: const PopupProps.menu(
                   title: Padding(
                     padding: EdgeInsets.symmetric(vertical: 15),
@@ -278,25 +286,28 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                           ))
                               .user;
 
-                          if (user != null && context.mounted) {
-                            FirebaseAuth.instance
-                                .signInWithEmailAndPassword(
-                                    email: widget.emailController.text,
-                                    password: widget.matKhauController.text)
-                                .then(
-                              (value) async {
-                                await addUser(
-                                  user.uid,
-                                  widget.emailController.text,
-                                  widget.hoTenController.text,
-                                  isNam,
-                                  tinhThanh!,
-                                );
-                                if (context.mounted) {
-                                  context.go("/");
-                                }
-                              },
+                          if (user != null) {
+                            user.sendEmailVerification();
+                            FirebaseAuth.instance.signInWithEmailAndPassword(
+                              email: widget.emailController.text,
+                              password: widget.matKhauController.text,
                             );
+                            await addUser(
+                              user.uid,
+                              widget.emailController.text,
+                              widget.hoTenController.text,
+                              isNam,
+                              tinhThanh!,
+                            );
+                            if (context.mounted) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ManHinhChoXacNhan(
+                                      user: user,
+                                    ),
+                                  ));
+                            }
                           }
                         }
                       } on Exception catch (e) {

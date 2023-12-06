@@ -106,61 +106,69 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
 
   Widget buildSearchAnchor() {
     return TypeAheadField(
-      textFieldConfiguration: TextFieldConfiguration(
-        style: const TextStyle(color: Colors.white),
-        textAlignVertical: TextAlignVertical.center,
-        controller: widget.controller,
-        decoration: InputDecoration(
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(width: 2, color: Colors.white70),
-              borderRadius: BorderRadius.all(
-                Radius.circular(35),
+      builder: (context, controller, focusNode) {
+        return TextField(
+          style: const TextStyle(color: Colors.white),
+          textAlignVertical: TextAlignVertical.center,
+          controller: widget.controller,
+          decoration: InputDecoration(
+              focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(width: 2, color: Colors.white70),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(35),
+                ),
               ),
-            ),
-            focusColor: const Color.fromARGB(255, 65, 105, 225),
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(width: 2, color: Colors.white60),
-              borderRadius: BorderRadius.all(
-                Radius.circular(35),
+              focusColor: const Color.fromARGB(255, 65, 105, 225),
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(width: 2, color: Colors.white60),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(35),
+                ),
               ),
-            ),
-            filled: true,
-            fillColor: const Color.fromARGB(255, 0, 114, 225),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 25),
-            suffixIcon: IconButton(
-              onPressed: () {
-                if (widget.controller.text.isNotEmpty) {
-                  context.goNamed(
-                    "timKiem",
-                    queryParameters: {"ten": widget.controller.text},
-                  );
-                }
-              },
-              icon: const Icon(Icons.search_outlined),
-            ),
-            suffixIconColor: Colors.white),
-        onSubmitted: (value) {
-          context.goNamed(
-            "timKiem",
-            queryParameters: {"ten": value},
-          );
-        },
-      ),
-      suggestionsBoxDecoration:
-          SuggestionsBoxDecoration(borderRadius: BorderRadius.circular(15)),
+              filled: true,
+              fillColor: const Color.fromARGB(255, 0, 114, 225),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 25),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  if (widget.controller.text.isNotEmpty) {
+                    context.goNamed(
+                      "timKiem",
+                      queryParameters: {"ten": widget.controller.text},
+                    );
+                  }
+                },
+                icon: const Icon(Icons.search_outlined),
+              ),
+              suffixIconColor: Colors.white),
+          onSubmitted: (value) {
+            context.goNamed(
+              "timKiem",
+              queryParameters: {"ten": value},
+            );
+          },
+        );
+      },
+      decorationBuilder: (context, child) {
+        return Material(
+          borderRadius: BorderRadius.circular(15),
+        );
+      },
       suggestionsCallback: (String pattern) {
-        return dsDacSan.where((element) =>
-            element.tenDacSan!.toLowerCase().contains(pattern.toLowerCase()));
+        return dsDacSan
+            .where((element) => element.tenDacSan!
+                .toLowerCase()
+                .contains(pattern.toLowerCase()))
+            .toList();
       },
       itemBuilder: (BuildContext context, item) {
         return ListTile(
           title: Text(item.tenDacSan!),
         );
       },
-      onSuggestionSelected: (item) {
+      onSelected: (item) {
         context.go("/dacsan/chitiet/${item.idDacSan!}");
       },
-      noItemsFoundBuilder: (context) {
+      emptyBuilder: (context) {
         return const ListTile(
           title: Text("Không tìm thấy đặc sản"),
         );
