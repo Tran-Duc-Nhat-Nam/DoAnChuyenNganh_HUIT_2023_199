@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:app_dac_san/Model/nguoi_dung.dart';
 import 'package:app_dac_san/Screen/man_hinh_dang_ky.dart';
+import 'package:app_dac_san/Service/thu_vien_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -133,6 +134,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                     ),
                   ),
                   onPressed: () async {
+                    deleteUser("1234"); // uid = 1234
                     if (widget.formKey.currentState!.validate()) {
                       try {
                         User? user = (await FirebaseAuth.instance

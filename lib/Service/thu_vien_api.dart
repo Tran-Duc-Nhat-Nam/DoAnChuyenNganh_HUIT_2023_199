@@ -24,6 +24,15 @@ Future<void> addUser(
   await post(url, body: data);
 }
 
+Future<void> deleteUser(String uid) async {
+  Map<String, dynamic> data = {
+    'uid': uid,
+  };
+
+  var url = Uri.parse('https://cntt199.000webhostapp.com/deleteUser.php');
+  await post(url, body: data);
+}
+
 Future<void> updateUser(
     String uid, String email, String hoTen, bool isNam, String diaChi) async {
   Map<String, dynamic> data = {
