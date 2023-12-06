@@ -230,7 +230,7 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                       side: const BorderSide(
                           width: 1, color: Colors.lightBlueAccent),
                     ),
-                    onPressed: isReadOnly
+                    onPressed: !isReadOnly
                         ? null
                         : () {
                             context.go(

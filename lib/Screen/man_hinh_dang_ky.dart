@@ -106,7 +106,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      hidePassword ? Icons.visibility : Icons.visibility_off,
+                      hidePassword ? Icons.visibility_off : Icons.visibility,
                       color: Theme.of(context).primaryColorDark,
                     ),
                     onPressed: () {
@@ -145,7 +145,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      hidePassword ? Icons.visibility : Icons.visibility_off,
+                      hidePassword ? Icons.visibility_off : Icons.visibility,
                       color: Theme.of(context).primaryColorDark,
                     ),
                     onPressed: () {

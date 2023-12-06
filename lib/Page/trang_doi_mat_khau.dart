@@ -64,7 +64,7 @@ class _TrangDoiMatKhauState extends State<TrangDoiMatKhau> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      hidePassword ? Icons.visibility : Icons.visibility_off,
+                      hidePassword ? Icons.visibility_off : Icons.visibility,
                       color: Theme.of(context).primaryColorDark,
                     ),
                     onPressed: () {
@@ -100,7 +100,7 @@ class _TrangDoiMatKhauState extends State<TrangDoiMatKhau> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      hidePassword ? Icons.visibility : Icons.visibility_off,
+                      hidePassword ? Icons.visibility_off : Icons.visibility,
                       color: Theme.of(context).primaryColorDark,
                     ),
                     onPressed: () {
@@ -138,7 +138,7 @@ class _TrangDoiMatKhauState extends State<TrangDoiMatKhau> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      hidePassword ? Icons.visibility : Icons.visibility_off,
+                      hidePassword ? Icons.visibility_off : Icons.visibility,
                       color: Theme.of(context).primaryColorDark,
                     ),
                     onPressed: () {
@@ -150,7 +150,7 @@ class _TrangDoiMatKhauState extends State<TrangDoiMatKhau> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Vui lòng nhập mật khẩu";
+                    return "Vui lòng nhập mật khẩu mới";
                   } else if (value != widget.matKhauMoiController.text) {
                     return "Mật khẩu vừa nhập không trùng khớp";
                   }
@@ -166,7 +166,14 @@ class _TrangDoiMatKhauState extends State<TrangDoiMatKhau> {
                         User? user = FirebaseAuth.instance.currentUser;
 
                         if (user != null) {
-                          doiMatKhau(user, context);
+                          await user.reauthenticateWithCredential(
+                              EmailAuthProvider.credential(
+                            email: widget.emailController.text,
+                            password: widget.matKhauCuController.text,
+                          ));
+                          if (context.mounted) {
+                            doiMatKhau(user, context);
+                          }
                         } else {
                           user = (await FirebaseAuth.instance
                                   .signInWithEmailAndPassword(
@@ -190,7 +197,7 @@ class _TrangDoiMatKhauState extends State<TrangDoiMatKhau> {
                       }
                     }
                   },
-                  child: const Text("Đăng ký")),
+                  child: const Text("Đổi mật khẩu")),
             ],
           ),
         ),

@@ -34,16 +34,19 @@ class _ManHinhChoXacNhanState extends State<ManHinhChoXacNhan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            const Text(
-              "Vui lòng xác nhận email để đăng nhập vào ứng dụng",
-              textAlign: TextAlign.center,
-            ),
-            LoadingAnimationWidget.discreteCircle(
-                color: Colors.cyan, size: 100),
-          ],
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Vui lòng xác nhận email để đăng nhập vào ứng dụng",
+                textAlign: TextAlign.center,
+              ),
+              LoadingAnimationWidget.discreteCircle(
+                  color: Colors.cyan, size: 100),
+            ],
+          ),
         ),
       ),
     );
