@@ -1,4 +1,3 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 class ProductPage extends StatefulWidget {
@@ -13,7 +12,7 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Product Page'),
+        title: const Text('Product Page'),
       ),
       body: Center(
         child: Column(
@@ -36,10 +35,10 @@ class _ProductPageState extends State<ProductPage> {
             //   },
             //   selectedItem: selectedLanguage,
             // ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               'Selected Language: $selectedLanguage',
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
             // TODO: Display products based on selected language
           ],

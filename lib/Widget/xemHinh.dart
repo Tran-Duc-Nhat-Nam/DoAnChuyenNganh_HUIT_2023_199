@@ -1,10 +1,6 @@
-import 'package:app_dac_san/Service/thu_vien_api.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
-
-class xemHinh extends StatelessWidget{
+class xemHinh extends StatelessWidget {
   final String link;
   xemHinh(this.link);
   @override
@@ -20,18 +16,16 @@ class xemHinh extends StatelessWidget{
               maxScale: 5.0, // Giới hạn tốc độ zoom-in
               minScale: 0.5, // Giới hạn tốc độ zoom-out
               child: Container(
-                color: Color.fromARGB(225, 104, 163, 187),
+                color: const Color.fromARGB(225, 104, 163, 187),
                 width: double.infinity,
                 height: 300,
                 alignment: Alignment.center,
                 child: Hero(
                     tag: 'hinhDS',
-                    child: Image.network(
-                        link as String,
+                    child: Image.network(link,
                         fit: BoxFit.cover,
                         width: double.infinity, // Đặt chiều rộng mong muốn
-                        height: 300
-                    )),
+                        height: 300)),
               ),
             ),
           );
@@ -39,5 +33,4 @@ class xemHinh extends StatelessWidget{
       ),
     );
   }
-
 }

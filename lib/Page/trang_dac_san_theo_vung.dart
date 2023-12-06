@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:app_dac_san/Model/loai_dac_san.dart';
 import 'package:app_dac_san/main.dart';
 import 'package:flutter/material.dart';

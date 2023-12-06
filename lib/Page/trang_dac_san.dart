@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:app_dac_san/Model/loai_dac_san.dart';
 import 'package:app_dac_san/Model/vung_mien.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -206,7 +208,8 @@ class DacSanList extends StatelessWidget {
               itemCount: lstDacSan.length,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
-                  onTap: () => context.go("/dacsan/chitiet/${lstDacSan[index].idDacSan}"),
+                  onTap: () => context
+                      .go("/dacsan/chitiet/${lstDacSan[index].idDacSan}"),
                   child: Card(
                     margin: const EdgeInsets.all(10),
                     shape: RoundedRectangleBorder(

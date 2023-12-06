@@ -1,16 +1,13 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 
-import 'package:app_dac_san/Model/hinh_anh.dart';
-import 'package:app_dac_san/Service/thu_vien_widget.dart';
 import 'package:app_dac_san/main.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import '../Service/thu_vien_api.dart';
 
 import '../Model/vung_mien.dart';
 import '../Widget/xemHinh.dart';
-
-
 
 class TrangChiTietDacSan extends StatefulWidget {
   final int maDS;
@@ -33,7 +30,8 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
               borderRadius: BorderRadius.circular(10.0),
               child: Image.network(
                 getURLImage(dsDacSan[widget.maDS - 1].avatar),
-                width: double.infinity, // Điều chỉnh kích thước ảnh theo ý của bạn
+                width:
+                    double.infinity, // Điều chỉnh kích thước ảnh theo ý của bạn
                 height: 300,
                 fit: BoxFit
                     .cover, // Có thể điều chỉnh để tùy chỉnh cách hình ảnh phù hợp trong Container
@@ -57,38 +55,43 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
             Container(
               height: 230,
               child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: getHinhAnhDS(dsDacSan[widget.maDS - 1].idDacSan ?? 0).length,
-                // itemCount: 10,
-                itemBuilder: (context,index) {
-                  return Container(
-                    width: 320,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(left: 8, right: 8),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15.0),
-                      child: GestureDetector(
-                        onTap: (){
-                          Navigator.push(
+                  scrollDirection: Axis.horizontal,
+                  itemCount:
+                      getHinhAnhDS(dsDacSan[widget.maDS - 1].idDacSan ?? 0)
+                          .length,
+                  // itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: 320,
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.only(left: 8, right: 8),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                              builder: (context) => xemHinh(getHinhAnhDS(dsDacSan[widget.maDS - 1].idDacSan ?? 0)[index])),
-                          );
-                        },
-                        child: Hero(
-                          tag: 'hinhDS',
-                          child: Image.network(
-                            getHinhAnhDS(dsDacSan[widget.maDS - 1].idDacSan ?? 0)[index],
-                            fit: BoxFit.cover,
-                            width: double.infinity, // Đặt chiều rộng mong muốn
-                            height: double.infinity
+                                  builder: (context) => xemHinh(getHinhAnhDS(
+                                      dsDacSan[widget.maDS - 1].idDacSan ??
+                                          0)[index])),
+                            );
+                          },
+                          child: Hero(
+                            tag: 'hinhDS',
+                            child: Image.network(
+                                getHinhAnhDS(
+                                    dsDacSan[widget.maDS - 1].idDacSan ??
+                                        0)[index],
+                                fit: BoxFit.cover,
+                                width:
+                                    double.infinity, // Đặt chiều rộng mong muốn
+                                height: double.infinity),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                }
-              ),
+                    );
+                  }),
             ),
             const SizedBox(height: 20),
             const Row(
@@ -143,7 +146,8 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
                     borderRadius: BorderRadius.circular(5)),
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
-                  child: SelectableText(dsDacSan[widget.maDS - 1].thanhPhan ?? '',
+                  child: SelectableText(
+                      dsDacSan[widget.maDS - 1].thanhPhan ?? '',
                       textDirection: TextDirection.ltr,
                       textAlign: TextAlign.justify,
                       style: const TextStyle(
@@ -155,21 +159,18 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
                           fontWeight: FontWeight.w900)),
                 )),
             const SizedBox(height: 5),
-
           ],
         ),
       ),
     );
   }
 
-
-
-
   List<String> getHinhAnhDS(int idDacSan) {
     List<String> ds = [];
-    for(var ha in dsHinhAnh) {
-      if (ha.idDacSan == idDacSan)
+    for (var ha in dsHinhAnh) {
+      if (ha.idDacSan == idDacSan) {
         ds.add(getURLImage(ha.idAnh));
+      }
     }
     return ds;
   }
