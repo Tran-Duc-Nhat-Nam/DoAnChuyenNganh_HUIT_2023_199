@@ -2,16 +2,11 @@
 
 import 'package:app_dac_san/Service/thu_vien_api.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 Widget LoadHinh(String duongDan) {
-  if (kIsWeb) {
-    return Image.network(duongDan);
-  } else {
-    return Image.asset(duongDan);
-  }
+  return Image.asset(duongDan);
 }
 
 Widget LoadingScreen() {

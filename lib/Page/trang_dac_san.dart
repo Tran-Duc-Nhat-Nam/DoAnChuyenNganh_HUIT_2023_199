@@ -93,17 +93,31 @@ class _TrangDacSanState extends State<TrangDacSan> {
       Widget temp = Builder(
         builder: (BuildContext context) {
           return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15),
+            padding: const EdgeInsets.only(
+              bottom: 15,
+              top: 10,
+            ),
             child: Container(
-              color: Theme.of(context).splashColor,
+              decoration: const BoxDecoration(
+                border: Border.symmetric(
+                  horizontal: BorderSide(
+                    color: Color.fromARGB(155, 211, 211, 211),
+                  ),
+                ),
+              ),
               height: MediaQuery.of(context).size.height * 0.2,
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.15,
+                  horizontal: MediaQuery.of(context).size.width * 0.1,
                   vertical: 10),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: cachedImage(dsDacSan[i].avatar!),
+              child: InkWell(
+                onTap: () {
+                  context.push("/dacsan/chitiet/${dsDacSan[i].idDacSan}");
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: cachedImage(dsDacSan[i].avatar!),
+                ),
               ),
             ),
           );
@@ -116,49 +130,61 @@ class _TrangDacSanState extends State<TrangDacSan> {
 
   Padding headerLoaiDacSan() {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            const Text("Loại đặc sản: ",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.lightBlue)),
-            const SizedBox(width: 30.0),
-            Wrap(
-              spacing: 20.0,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: dsLoaiDacSan.map((loaiDacSan) {
-                bool isSelected = loaiDacSan.tenLoai == selectedChip;
-                return AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                  child: FilterChip(
-                    label: Text(
-                      loaiDacSan.tenLoai,
-                      style: TextStyle(
-                        color: isSelected
-                            ? Colors.white
-                            : Theme.of(context).disabledColor,
-                      ),
+      padding: const EdgeInsets.only(
+        top: 10.0,
+        bottom: 10.0,
+        left: 15.0,
+        right: 0,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            "Loại đặc sản: ",
+            style:
+                TextStyle(fontWeight: FontWeight.bold, color: Colors.lightBlue),
+            maxLines: 1,
+          ),
+          const SizedBox(width: 10.0),
+          Flexible(
+            flex: 4,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: dsLoaiDacSan.map((loaiDacSan) {
+                  bool isSelected = loaiDacSan.tenLoai == selectedChip;
+                  return AnimatedContainer(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 15,
                     ),
-                    selected: isSelected,
-                    onSelected: (selected) {
-                      selectChip(loaiDacSan);
-                      lstDacSan = dsDacSan
-                          .where((dacSan) =>
-                              dacSan.loaiDacSan == loaiDacSan.idLoai)
-                          .toList();
-                    },
-                    selectedColor: Colors.blue,
-                    checkmarkColor: Colors.white,
-                  ),
-                );
-              }).toList(),
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    child: FilterChip(
+                      label: Text(
+                        loaiDacSan.tenLoai,
+                        style: TextStyle(
+                          color: isSelected
+                              ? Colors.white
+                              : Theme.of(context).disabledColor,
+                        ),
+                      ),
+                      selected: isSelected,
+                      onSelected: (selected) {
+                        selectChip(loaiDacSan);
+                        lstDacSan = dsDacSan
+                            .where((dacSan) =>
+                                dacSan.loaiDacSan == loaiDacSan.idLoai)
+                            .toList();
+                      },
+                      selectedColor: Colors.blue,
+                      checkmarkColor: Colors.white,
+                    ),
+                  );
+                }).toList(),
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -170,7 +196,9 @@ class _TrangDacSanState extends State<TrangDacSan> {
         children: <Widget>[
           Text(vungMien.tenMien!,
               style: const TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.lightBlue)),
+                fontWeight: FontWeight.bold,
+                color: Colors.lightBlue,
+              )),
           const Spacer(), // use Spacer
           TextButton(
             onPressed: () {
@@ -202,7 +230,9 @@ class DacSanList extends StatelessWidget {
         SizedBox(
           height: 250,
           child: Container(
-            color: const Color.fromARGB(75, 0, 191, 255),
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.lightBlue.shade100
+                : const Color.fromARGB(155, 135, 206, 250),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: lstDacSan.length,

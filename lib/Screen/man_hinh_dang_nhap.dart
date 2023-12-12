@@ -46,7 +46,8 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("images/adsvn-low-resolution-logo-transparent.png"),
+              Image.asset(
+                  "assets/images/adsvn-low-resolution-logo-transparent.png"),
               Container(
                 height: 125,
                 alignment: Alignment.center,
@@ -181,7 +182,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                         maximumSize:
                             MaterialStateProperty.all(const Size(56, 56))),
                     onPressed: DangNhapGoogle,
-                    icon: LoadHinh("images/google.png"),
+                    icon: LoadHinh("assets/images/google.png"),
                   ),
                   HorizontalGapSizedBox(),
                   IconButton(
@@ -189,7 +190,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                         maximumSize:
                             MaterialStateProperty.all(const Size(56, 56))),
                     onPressed: DangNhapFacebook,
-                    icon: LoadHinh("images/facebook.png"),
+                    icon: LoadHinh("assets/images/facebook.png"),
                   ),
                 ],
               ),
@@ -256,15 +257,24 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
   }
 
   void DangNhapFacebook() async {
-    // Trigger the sign-in flow
-    final LoginResult loginResult = await FacebookAuth.instance.login();
+    if (kIsWeb) {
+      FacebookAuthProvider facebookProvider = FacebookAuthProvider();
 
-    // Create a credential from the access token
-    final OAuthCredential facebookAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.token);
+      facebookProvider.addScope('email');
+      facebookProvider.setCustomParameters({
+        'display': 'popup',
+      });
 
-    // Once signed in, return the UserCredential
-    await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+      // Once signed in, return the UserCredential
+      await FirebaseAuth.instance.signInWithPopup(facebookProvider);
+    } else {
+      final LoginResult loginResult = await FacebookAuth.instance.login();
+
+      final OAuthCredential facebookAuthCredential =
+          FacebookAuthProvider.credential(loginResult.accessToken!.token);
+
+      await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+    }
 
     var user = FirebaseAuth.instance.currentUser;
 
