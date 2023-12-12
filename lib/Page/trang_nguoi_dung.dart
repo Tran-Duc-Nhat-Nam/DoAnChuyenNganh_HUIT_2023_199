@@ -56,8 +56,8 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
               children: [
                 ListTile(
                   shape: LinearBorder.bottom(
-                    side: BorderSide(
-                      color: Theme.of(context).primaryColor,
+                    side: const BorderSide(
+                      color: Color.fromARGB(155, 211, 211, 211),
                     ),
                   ),
                   title: const Text(
@@ -86,8 +86,8 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                 ),
                 ListTile(
                   shape: LinearBorder.bottom(
-                    side: BorderSide(
-                      color: Theme.of(context).primaryColor,
+                    side: const BorderSide(
+                      color: Color.fromARGB(155, 211, 211, 211),
                     ),
                   ),
                   title: Padding(
@@ -136,8 +136,8 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                 ),
                 ListTile(
                   shape: LinearBorder.bottom(
-                    side: BorderSide(
-                      color: Theme.of(context).primaryColor,
+                    side: const BorderSide(
+                      color: Color.fromARGB(155, 211, 211, 211),
                     ),
                   ),
                   title: Row(
@@ -179,16 +179,18 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 20,
-                    horizontal: 25,
+                  padding: const EdgeInsets.only(
+                    top: 25,
+                    bottom: 15,
+                    left: 25,
+                    right: 25,
                   ),
                   child: ElevatedButton(
                     style: OutlinedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(50),
-                      padding: const EdgeInsets.all(15),
+                      minimumSize: const Size.fromHeight(35),
+                      padding: const EdgeInsets.all(12),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                       side: const BorderSide(
                           width: 1, color: Colors.lightBlueAccent),
@@ -216,16 +218,16 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                    bottom: 20,
+                    bottom: 15,
                     left: 25,
                     right: 25,
                   ),
                   child: ElevatedButton(
                     style: OutlinedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(50),
-                      padding: const EdgeInsets.all(15),
+                      minimumSize: const Size.fromHeight(35),
+                      padding: const EdgeInsets.all(12),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                       side: const BorderSide(
                           width: 1, color: Colors.lightBlueAccent),
@@ -246,9 +248,9 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                   child: ElevatedButton(
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size.fromHeight(35),
-                      padding: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(12),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                       side: const BorderSide(width: 1, color: Colors.redAccent),
                     ),
@@ -304,8 +306,8 @@ class TextFieldNguoiDung extends StatelessWidget {
         ),
       ),
       shape: LinearBorder.bottom(
-        side: BorderSide(
-          color: Theme.of(context).primaryColor,
+        side: const BorderSide(
+          color: Color.fromARGB(155, 211, 211, 211),
         ),
       ),
     );
