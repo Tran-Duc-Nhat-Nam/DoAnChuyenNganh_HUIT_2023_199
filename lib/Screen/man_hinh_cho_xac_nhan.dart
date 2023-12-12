@@ -47,6 +47,34 @@ class _ManHinhChoXacNhanState extends State<ManHinhChoXacNhan> {
               ),
               LoadingAnimationWidget.discreteCircle(
                   color: Colors.cyan, size: 100),
+              ElevatedButton(
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                  backgroundColor: MaterialStateProperty.all(Colors.lightBlue),
+                  minimumSize:
+                      MaterialStateProperty.all(const Size.fromHeight(25)),
+                  textStyle: MaterialStateProperty.all(
+                    const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  padding: MaterialStateProperty.all(const EdgeInsets.only(
+                    top: 15,
+                    bottom: 15,
+                    left: 35,
+                    right: 35,
+                  )),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  FirebaseAuth.instance.currentUser!.sendEmailVerification();
+                },
+                child: const Text("Gửi lại thư xác nhận"),
+              )
             ],
           ),
         ),

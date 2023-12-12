@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:app_dac_san/main.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 
 import '../Model/vung_mien.dart';
@@ -22,37 +23,69 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
-              child: Image.network(
-                getURLImage(dsDacSan[widget.maDS - 1].avatar),
-                width:
-                    double.infinity, // Điều chỉnh kích thước ảnh theo ý của bạn
-                height: 300,
-                fit: BoxFit
-                    .cover, // Có thể điều chỉnh để tùy chỉnh cách hình ảnh phù hợp trong Container
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Image.network(
+                    getURLImage(dsDacSan[widget.maDS - 1].avatar),
+                    width: double.infinity,
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
               ),
             ),
-            const SizedBox(height: 5),
-            Text(dsDacSan[widget.maDS - 1].tenDacSan ?? '',
-                style: const TextStyle(
-                    fontWeight: FontWeight.w900,
-                    color: Color.fromARGB(255, 104, 143, 187),
-                    fontSize: 35,
-                    fontFamily: 'RobotoBlack')),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 15,
+              ),
+              child: Text(dsDacSan[widget.maDS - 1].tenDacSan ?? '',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w900,
+                      color: Colors.teal,
+                      fontSize: 35,
+                      fontFamily: 'RobotoBlack')),
+            ),
             // const SizedBox(height: 0),
-            Text(getMien(dsDacSan[widget.maDS - 1].idMien),
-                style: const TextStyle(
-                    fontWeight: FontWeight.w900,
-                    color: Color.fromARGB(225, 230, 155, 44),
-                    fontSize: 24,
-                    fontFamily: 'ExtraBoldItalic')),
+            TextButton(
+              style: const ButtonStyle(
+                padding: MaterialStatePropertyAll(
+                  EdgeInsetsDirectional.symmetric(
+                    horizontal: 15,
+                    vertical: 0,
+                  ),
+                ),
+              ),
+              onPressed: () {
+                context.push(
+                    "/dacsan/vungmien/${dsDacSan[widget.maDS - 1].idMien}");
+              },
+              child: Text(
+                  "Đặc sản ${getMien(dsDacSan[widget.maDS - 1].idMien)}",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w900,
+                      color: Colors.amber,
+                      fontSize: 24,
+                      fontFamily: 'ExtraBoldItalic')),
+            ),
             const SizedBox(height: 20),
             Container(
+              decoration: const BoxDecoration(
+                border: Border.symmetric(
+                  horizontal: BorderSide(
+                    color: Color.fromARGB(255, 211, 211, 211),
+                  ),
+                ),
+              ),
+              padding: const EdgeInsets.symmetric(
+                vertical: 15,
+              ),
               height: 230,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -78,7 +111,7 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
                             );
                           },
                           child: Hero(
-                            tag: 'hinhDS',
+                            tag: 'hinhDS$index',
                             child: Image.network(
                                 getHinhAnhDS(
                                     dsDacSan[widget.maDS - 1].idDacSan ??
@@ -93,20 +126,17 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
                     );
                   }),
             ),
-            const SizedBox(height: 20),
-            const Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Text('Nội dung',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.underline,
-                          color: Color.fromARGB(225, 104, 163, 187),
-                          fontSize: 28,
-                          fontFamily: "RobotoBlack")),
-                ),
-              ],
+            const SizedBox(height: 25),
+            const Padding(
+              padding: EdgeInsets.only(
+                left: 15,
+              ),
+              child: Text('Nội dung',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.teal,
+                      fontSize: 28,
+                      fontFamily: "RobotoBlack")),
             ),
             Card(
                 color: const Color.fromARGB(255, 242, 242, 242),
@@ -125,26 +155,24 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
                           color: Colors.black,
                           fontWeight: FontWeight.w900)),
                 )),
-            const SizedBox(height: 20),
-            const Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Text('Nguyên liệu',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.underline,
-                          color: Color.fromARGB(225, 104, 163, 187),
-                          fontSize: 28,
-                          fontFamily: "RobotoBlack")),
-                ),
-              ],
+            const SizedBox(height: 25),
+            const Padding(
+              padding: EdgeInsets.only(
+                left: 15,
+              ),
+              child: Text('Nguyên liệu',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.teal,
+                      fontSize: 28,
+                      fontFamily: "RobotoBlack")),
             ),
             Card(
                 color: const Color.fromARGB(255, 242, 242, 242),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5)),
                 child: Container(
+                  width: double.infinity,
                   padding: const EdgeInsets.all(8.0),
                   child: SelectableText(
                       dsDacSan[widget.maDS - 1].thanhPhan ?? '',
