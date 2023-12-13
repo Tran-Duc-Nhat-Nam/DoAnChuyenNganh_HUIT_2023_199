@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:app_dac_san/Model/loai_dac_san.dart';
+import 'package:app_dac_san/Service/thu_vien_api.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -40,6 +41,8 @@ Future<void> main() async {
           measurementId: "G-ES189ZW8QH"));
 
   ref = await SharedPreferences.getInstance();
+
+  deleteUser("NzUeEuQvJiY9e6SOET96Jajv0Ur2");
 
   runApp(const MainApp());
 }
