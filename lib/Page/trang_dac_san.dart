@@ -139,7 +139,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text(
+          const Text(
             "Loại đặc sản: ",
             style:
                 TextStyle(fontWeight: FontWeight.bold, color: Colors.lightBlue),
@@ -154,7 +154,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
                 children: dsLoaiDacSan.map((loaiDacSan) {
                   bool isSelected = loaiDacSan.tenLoai == selectedChip;
                   return AnimatedContainer(
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 15,
                     ),
                     duration: const Duration(milliseconds: 300),
