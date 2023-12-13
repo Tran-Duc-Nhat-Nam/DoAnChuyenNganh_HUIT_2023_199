@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:app_dac_san/Model/loai_dac_san.dart';
+import 'package:app_dac_san/Model/noi_bat.dart';
 import 'package:app_dac_san/Service/thu_vien_api.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ List<DacSan> dsDacSanMienBac = [];
 List<DacSan> dsDacSanMienTrung = [];
 List<DacSan> dsDacSanMienNam = [];
 List<LoaiDacSan> dsLoaiDacSan = [];
+List<NoiBat> dsDacSanNoiBat = [];
 late NguoiDung nguoiDung;
 
 Future<void> main() async {
