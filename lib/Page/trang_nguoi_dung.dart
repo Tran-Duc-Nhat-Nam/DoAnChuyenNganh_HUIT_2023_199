@@ -96,7 +96,7 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                       enabled: !isReadOnly,
                       popupProps: const PopupProps.menu(
                         title: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 15),
+                          padding: EdgeInsets.symmetric(vertical: 10),
                           child: Center(
                             child: Text(
                               "Danh sách tỉnh thành",

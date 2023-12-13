@@ -56,7 +56,7 @@ class _TrangDoiMatKhauState extends State<TrangDoiMatKhau> {
                 decoration: InputDecoration(
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                   labelText: "Mật khẩu hiện tại",
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
@@ -66,7 +66,7 @@ class _TrangDoiMatKhauState extends State<TrangDoiMatKhau> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      hidePassword ? Icons.visibility_off : Icons.visibility,
+                      hidePassword ? Icons.visibility : Icons.visibility_off,
                       color: Theme.of(context).primaryColorDark,
                     ),
                     onPressed: () {
@@ -92,7 +92,7 @@ class _TrangDoiMatKhauState extends State<TrangDoiMatKhau> {
                 decoration: InputDecoration(
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                   labelText: "Mật khẩu mới",
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
@@ -102,7 +102,7 @@ class _TrangDoiMatKhauState extends State<TrangDoiMatKhau> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      hidePassword ? Icons.visibility_off : Icons.visibility,
+                      hidePassword ? Icons.visibility : Icons.visibility_off,
                       color: Theme.of(context).primaryColorDark,
                     ),
                     onPressed: () {
@@ -130,7 +130,7 @@ class _TrangDoiMatKhauState extends State<TrangDoiMatKhau> {
                 decoration: InputDecoration(
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                   labelText: "Nhập lại mật khẩu",
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
@@ -140,7 +140,7 @@ class _TrangDoiMatKhauState extends State<TrangDoiMatKhau> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      hidePassword ? Icons.visibility_off : Icons.visibility,
+                      hidePassword ? Icons.visibility : Icons.visibility_off,
                       color: Theme.of(context).primaryColorDark,
                     ),
                     onPressed: () {

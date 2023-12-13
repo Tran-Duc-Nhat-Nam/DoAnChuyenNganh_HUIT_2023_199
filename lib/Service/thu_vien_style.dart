@@ -15,7 +15,7 @@ ButtonStyle RoundButtonStyle() {
     )),
     shape: MaterialStateProperty.all(
       RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25.0),
+        borderRadius: BorderRadius.circular(20.0),
       ),
     ),
   );
@@ -24,7 +24,7 @@ ButtonStyle RoundButtonStyle() {
 InputDecoration RoundInputDecoration(String text) {
   return InputDecoration(
     filled: true,
-    contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+    contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
     labelText: text,
     border: const OutlineInputBorder(
       borderRadius: BorderRadius.all(

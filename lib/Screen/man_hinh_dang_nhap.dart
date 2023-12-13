@@ -96,13 +96,10 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                       if (user != null && context.mounted) {
                         context.go("/dacsan");
                       }
-                    } on Exception catch (e) {
-                      var snackBar = SnackBar(
-                        content: Text(e.toString()),
-                      );
-
+                    } on FirebaseAuthException catch (e) {
                       if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(snackBarFirebaseAuth(e));
                       }
                     }
                   }
@@ -148,13 +145,10 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                         if (user != null && context.mounted) {
                           context.go("/");
                         }
-                      } on Exception catch (e) {
-                        var snackBar = SnackBar(
-                          content: Text(e.toString()),
-                        );
-
+                      } on FirebaseAuthException catch (e) {
                         if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(snackBarFirebaseAuth(e));
                         }
                       }
                     }
@@ -215,7 +209,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
       suffixIcon: IconButton(
         icon: Icon(
           // Based on passwordVisible state choose the icon
-          hidePassword ? Icons.visibility_off : Icons.visibility,
+          hidePassword ? Icons.visibility : Icons.visibility_off,
         ),
         onPressed: () {
           setState(() {
@@ -253,6 +247,14 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
 
     if (user != null) {
       await DangKyThemThongTin(user);
+    } else {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Đăng nhập thất bại"),
+          ),
+        );
+      }
     }
   }
 
@@ -265,7 +267,6 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
         'display': 'popup',
       });
 
-      // Once signed in, return the UserCredential
       await FirebaseAuth.instance.signInWithPopup(facebookProvider);
     } else {
       final LoginResult loginResult = await FacebookAuth.instance.login();
@@ -280,6 +281,14 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
 
     if (user != null) {
       await DangKyThemThongTin(user);
+    } else {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Đăng nhập thất bại"),
+          ),
+        );
+      }
     }
   }
 

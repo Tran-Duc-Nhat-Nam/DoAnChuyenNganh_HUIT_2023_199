@@ -32,9 +32,9 @@ const RESOURCES = {"assets/Assert/Fonts/Fira_Sans/FiraSans-ExtraBoldItalic.ttf":
 "icons/Icon-512.png": "b0b3b3eb3b471a9b36782bd904666566",
 "icons/Icon-maskable-192.png": "fae5311ae36f2164c82a137de930de16",
 "icons/Icon-maskable-512.png": "b0b3b3eb3b471a9b36782bd904666566",
-"index.html": "ab7e9a9d78cc48a8654c7b975f22ca2e",
-"/": "ab7e9a9d78cc48a8654c7b975f22ca2e",
-"main.dart.js": "067f900471f2236fa098ff1dd0d022c6",
+"index.html": "62a90acb40382c5d5b360afdef384e9d",
+"/": "62a90acb40382c5d5b360afdef384e9d",
+"main.dart.js": "5d454caf834797f82081b2dc9f93bedf",
 "manifest.json": "f6fa8de1483d70dbd767a7ca7e589223",
 "version.json": "3033a166c6551d28a708797c3e6ad9d5"};
 // The application shell files that are downloaded before a service worker can

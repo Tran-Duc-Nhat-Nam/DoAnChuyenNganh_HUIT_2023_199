@@ -98,7 +98,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 decoration: InputDecoration(
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                   labelText: "Mật khẩu",
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
@@ -108,7 +108,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      hidePassword ? Icons.visibility_off : Icons.visibility,
+                      hidePassword ? Icons.visibility : Icons.visibility_off,
                       color: Theme.of(context).primaryColorDark,
                     ),
                     onPressed: () {
@@ -137,7 +137,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 decoration: InputDecoration(
                   filled: true,
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                   labelText: "Nhập lại mật khẩu",
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
@@ -147,7 +147,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      hidePassword ? Icons.visibility_off : Icons.visibility,
+                      hidePassword ? Icons.visibility : Icons.visibility_off,
                       color: Theme.of(context).primaryColorDark,
                     ),
                     onPressed: () {
@@ -202,7 +202,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 },
                 popupProps: const PopupProps.menu(
                   title: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15),
+                    padding: EdgeInsets.symmetric(vertical: 10),
                     child: Center(
                       child: Text(
                         "Danh sách tỉnh thành",
