@@ -1,10 +1,10 @@
-import 'package:app_dac_san/Service/thu_vien_widget.dart';
-import 'package:app_dac_san/main.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../Model/dac_san.dart';
 import '../Service/thu_vien_api.dart';
+import '../Service/thu_vien_widget.dart';
+import '../main.dart';
 
 class TrangDanhSachDacSan extends StatefulWidget {
   const TrangDanhSachDacSan({
@@ -12,10 +12,12 @@ class TrangDanhSachDacSan extends StatefulWidget {
     this.ten,
     this.xuatSu,
     this.thanhPhan,
+    this.noiBat,
   });
   final String? ten;
   final String? thanhPhan;
   final int? xuatSu;
+  final bool? noiBat;
   @override
   State<TrangDanhSachDacSan> createState() => _TrangDanhSachDacSanState();
 }
@@ -43,6 +45,14 @@ class _TrangDanhSachDacSanState extends State<TrangDanhSachDacSan> {
       dsDacSanDaLoc = dsDacSanDaLoc
           .where((element) => element.xuatXu! == widget.xuatSu)
           .toList();
+    }
+    if (widget.noiBat != null) {
+      if (widget.noiBat!) {
+        dsDacSanDaLoc = dsDacSanDaLoc
+            .where((dacSan) => dsDacSanNoiBat
+                .any((element) => element.idDacSan == dacSan.idDacSan))
+            .toList();
+      }
     }
     super.initState();
   }

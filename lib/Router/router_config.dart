@@ -1,18 +1,18 @@
-import 'package:app_dac_san/Page/trang_chi_tiet_dac_san.dart';
-import 'package:app_dac_san/Page/trang_dac_san.dart';
-import 'package:app_dac_san/Page/trang_dac_san_theo_vung.dart';
-import 'package:app_dac_san/Page/trang_danh_sach_dac_san.dart';
-import 'package:app_dac_san/Page/trang_nguoi_dung.dart';
-import 'package:app_dac_san/Screen/man_hinh_chinh.dart';
-import 'package:app_dac_san/Screen/man_hinh_cho_xac_nhan.dart';
-import 'package:app_dac_san/Screen/man_hinh_dang_ky.dart';
-import 'package:app_dac_san/Screen/man_hinh_dang_nhap.dart';
-import 'package:app_dac_san/Screen/man_hinh_gioi_thieu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
+import '../Page/trang_chi_tiet_dac_san.dart';
+import '../Page/trang_dac_san.dart';
+import '../Page/trang_dac_san_theo_vung.dart';
+import '../Page/trang_danh_sach_dac_san.dart';
 import '../Page/trang_doi_mat_khau.dart';
+import '../Page/trang_nguoi_dung.dart';
+import '../Screen/man_hinh_chinh.dart';
+import '../Screen/man_hinh_cho_xac_nhan.dart';
+import '../Screen/man_hinh_dang_ky.dart';
+import '../Screen/man_hinh_dang_nhap.dart';
+import '../Screen/man_hinh_gioi_thieu.dart';
 import '../main.dart';
 
 final rootNavKey = GlobalKey<NavigatorState>();
@@ -78,15 +78,25 @@ final GoRouter router = GoRouter(
                     int? xs = -1;
 
                     try {
-                      xs = int.tryParse(state.pathParameters['xuatSu']!);
+                      xs = int.tryParse(state.uri.queryParameters['xuatSu']!);
                     } catch (e) {
                       xs = null;
+                    }
+
+                    bool? noiBat = false;
+
+                    try {
+                      noiBat =
+                          bool.tryParse(state.uri.queryParameters['noiBat']!);
+                    } catch (e) {
+                      noiBat = null;
                     }
 
                     return TrangDanhSachDacSan(
                       ten: state.uri.queryParameters['ten'],
                       thanhPhan: state.uri.queryParameters['thanhPhan'],
                       xuatSu: xs,
+                      noiBat: noiBat,
                     );
                   },
                 ),

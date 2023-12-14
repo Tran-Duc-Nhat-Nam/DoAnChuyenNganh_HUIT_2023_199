@@ -2,13 +2,13 @@
 
 import 'dart:convert';
 
-import 'package:app_dac_san/main.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 
 import '../Model/vung_mien.dart';
 import '../Widget/xemHinh.dart';
+import '../main.dart';
 
 class TrangChiTietDacSan extends StatefulWidget {
   final int maDS;

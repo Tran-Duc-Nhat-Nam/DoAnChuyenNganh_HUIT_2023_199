@@ -3,8 +3,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:app_dac_san/Model/nguoi_dung.dart';
-import 'package:app_dac_san/Screen/man_hinh_dang_ky.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +12,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart';
 
+import '../Model/nguoi_dung.dart';
+import '../Screen/man_hinh_dang_ky.dart';
 import '../Service/thu_vien_style.dart';
 import '../Service/thu_vien_widget.dart';
 import '../Widget/HorizontalGapSizedBox.dart';
@@ -47,7 +47,9 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                  "assets/images/adsvn-low-resolution-logo-transparent.png"),
+                "assets/images/logo_pho.png",
+                height: 180,
+              ),
               Container(
                 height: 125,
                 alignment: Alignment.center,

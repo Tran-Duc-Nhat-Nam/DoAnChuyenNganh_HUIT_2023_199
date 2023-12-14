@@ -1,12 +1,12 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:app_dac_san/Model/loai_dac_san.dart';
-import 'package:app_dac_san/Model/vung_mien.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../Model/dac_san.dart';
+import '../Model/loai_dac_san.dart';
+import '../Model/vung_mien.dart';
 import '../Service/thu_vien_api.dart';
 import '../Service/thu_vien_widget.dart';
 import '../Widget/thong_bao_xac_nhan_thoat.dart';
@@ -56,6 +56,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
                 ),
                 items: buildBanner(5),
               ),
+              buildDacSanNoiBat(),
               headerLoaiDacSan(),
               Column(
                 children: buildDanhSachDacSan(),
@@ -83,6 +84,39 @@ class _TrangDacSanState extends State<TrangDacSan> {
             lstDacSan: lstDacSan
                 .where((dacSan) => dacSan.idMien == vungMien.idMien)
                 .toList()),
+      ],
+    );
+  }
+
+  Column buildDacSanNoiBat() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: TextButton(
+            onPressed: () {
+              context.goNamed(
+                "timKiem",
+                queryParameters: {"noiBat": "true"},
+              );
+            },
+            child: const Text("Những đặc sản Việt Nam bạn không thể bỏ qua",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.lightBlue,
+                )),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            bottom: 10,
+          ),
+          child: DacSanList(
+              lstDacSan: lstDacSan
+                  .where((dacSan) => dsDacSanNoiBat
+                      .any((element) => element.idDacSan == dacSan.idDacSan))
+                  .toList()),
+        ),
       ],
     );
   }

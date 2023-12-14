@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:app_dac_san/Model/noi_bat.dart';
 import 'package:http/http.dart';
 
 import '../Model/dac_san.dart';
 import '../Model/hinh_anh.dart';
 import '../Model/loai_dac_san.dart';
 import '../Model/nguoi_dung.dart';
+import '../Model/noi_bat.dart';
 import '../Model/tinh_thanh.dart';
 import '../Model/vung_mien.dart';
 import '../main.dart';
@@ -103,8 +103,8 @@ Future<void> getDacSan() async {
 }
 
 Future<void> getDacSanNoiBat() async {
-  var reponse =
-  await get(Uri.parse('https://cntt199.000webhostapp.com/getDacSanNoiBat.php'));
+  var reponse = await get(
+      Uri.parse('https://cntt199.000webhostapp.com/getDacSanNoiBat.php'));
   var result = json.decode(utf8.decode(reponse.bodyBytes));
 
   for (var document in result) {

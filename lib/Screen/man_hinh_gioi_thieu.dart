@@ -28,7 +28,8 @@ class _ManHinhGioiThieuState extends State<ManHinhGioiThieu> {
       pages: [
         PageViewModel(
           title: "Chào mừng",
-          body: "Chào mừng bạn đã tới với App đặc sản VN.",
+          body:
+              "Chào mừng bạn đã tới với VinaFoods - ứng dụng quảng bá đặc sản ẩm thực Việt Nam.",
           image: const Center(
             child: Icon(Icons.waving_hand, size: 64.0),
           ),
@@ -36,7 +37,7 @@ class _ManHinhGioiThieuState extends State<ManHinhGioiThieu> {
         PageViewModel(
           title: "Mục tiêu",
           body:
-              "App đặc sản VN sẽ mang đến cho bạn thông tin đặc sản của 63 tỉnh thành Việt Nam.",
+              "VinaFoods sẽ mang đến cho bạn thông tin về các món đặc sản ẩm thực của 63 tỉnh thành Việt Nam.",
           image: const Center(
             child: Icon(Icons.food_bank, size: 64.0),
           ),
@@ -44,7 +45,7 @@ class _ManHinhGioiThieuState extends State<ManHinhGioiThieu> {
         PageViewModel(
           title: "Đăng nhập",
           body:
-              "Bây giờ bạn có thể bắt đầu sử dụng bằng cách đăng ký tài khoản mới hoặc đăng nhập vào ứng dụng.",
+              "Bây giờ bạn có thể bắt đầu sử dụng VinaFoods bằng cách đăng ký tài khoản mới hoặc đăng nhập nếu đã có tài khoản rồi.",
           image: const Center(
             child: Icon(Icons.login, size: 64.0),
           ),
