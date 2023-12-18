@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class xemHinh extends StatelessWidget {
   final String link;
-  xemHinh(this.link);
+  const xemHinh(this.link, {super.key});
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

@@ -66,7 +66,7 @@ class _TrangDacSanTheoVungState extends State<TrangDacSanTheoVung> {
                           vertical: 10,
                         ),
                         title: Text(
-                          dacSan.tenDacSan!,
+                          dacSan.tenDacSan,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),

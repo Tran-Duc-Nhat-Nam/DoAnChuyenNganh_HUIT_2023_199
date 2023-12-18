@@ -154,18 +154,17 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
       },
       suggestionsCallback: (String pattern) {
         return dsDacSan
-            .where((element) => element.tenDacSan!
-                .toLowerCase()
-                .contains(pattern.toLowerCase()))
+            .where((element) =>
+                element.tenDacSan.toLowerCase().contains(pattern.toLowerCase()))
             .toList();
       },
       itemBuilder: (BuildContext context, item) {
         return ListTile(
-          title: Text(item.tenDacSan!),
+          title: Text(item.tenDacSan),
         );
       },
       onSelected: (item) {
-        context.go("/dacsan/chitiet/${item.idDacSan!}");
+        context.go("/dacsan/chitiet/${item.idDacSan}");
       },
       emptyBuilder: (context) {
         return const ListTile(

@@ -228,7 +228,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
       padding: const EdgeInsets.all(10.0),
       child: Row(
         children: <Widget>[
-          Text(vungMien.tenMien!,
+          Text(vungMien.tenMien,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.lightBlue,
@@ -292,7 +292,7 @@ class DacSanList extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 15),
-                          Text(lstDacSan[index].tenDacSan!,
+                          Text(lstDacSan[index].tenDacSan,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,

@@ -37,7 +37,7 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
     widget.emailController.text = nguoiDung.email;
     widget.hoTenController.text = nguoiDung.hoTen;
     widget.diaChiController.text = nguoiDung.diaChi!;
-    isNam = nguoiDung.gioiTinh == "Nam";
+    isNam = nguoiDung.isNam;
     super.initState();
   }
 

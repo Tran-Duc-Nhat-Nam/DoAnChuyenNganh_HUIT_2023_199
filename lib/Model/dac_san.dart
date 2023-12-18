@@ -1,23 +1,22 @@
-class DacSan
-{
-  int? idDacSan;
-  String? tenDacSan;
+class DacSan {
+  int idDacSan;
+  String tenDacSan;
   int? avatar;
   String? moTa;
   String? thanhPhan;
-  int? xuatXu;
-  int? idMien;
-  int? loaiDacSan;
+  int xuatXu;
+  int idMien;
+  int loaiDacSan;
 
   DacSan({
-    this.idDacSan,
-    this.tenDacSan,
+    required this.idDacSan,
+    required this.tenDacSan,
     this.avatar,
     this.moTa,
     this.thanhPhan,
-    this.xuatXu,
-    this.idMien,
-    this.loaiDacSan,
+    required this.xuatXu,
+    required this.idMien,
+    required this.loaiDacSan,
   });
 
   factory DacSan.fromJson(Map<String, dynamic> json) {

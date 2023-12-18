@@ -29,7 +29,7 @@ class _TrangDanhSachDacSanState extends State<TrangDanhSachDacSan> {
     // TODO: implement initState
     if (widget.ten != null) {
       dsDacSanDaLoc = dsDacSanDaLoc
-          .where((element) => element.tenDacSan!
+          .where((element) => element.tenDacSan
               .toLowerCase()
               .contains(widget.ten!.toLowerCase()))
           .toList();
@@ -43,7 +43,7 @@ class _TrangDanhSachDacSanState extends State<TrangDanhSachDacSan> {
     }
     if (widget.xuatSu != null) {
       dsDacSanDaLoc = dsDacSanDaLoc
-          .where((element) => element.xuatXu! == widget.xuatSu)
+          .where((element) => element.xuatXu == widget.xuatSu)
           .toList();
     }
     if (widget.noiBat != null) {
@@ -79,7 +79,7 @@ class _TrangDanhSachDacSanState extends State<TrangDanhSachDacSan> {
                 ),
               ),
               title: Text(
-                dsDacSanDaLoc[index].tenDacSan!,
+                dsDacSanDaLoc[index].tenDacSan,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),

@@ -152,6 +152,7 @@ final GoRouter router = GoRouter(
             if (FirebaseAuth.instance.currentUser != null) {
               return null;
             }
+            return null;
           },
         ),
       ],

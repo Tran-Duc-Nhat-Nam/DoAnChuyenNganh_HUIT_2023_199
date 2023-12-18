@@ -2,14 +2,16 @@ class NguoiDung {
   String uid;
   String email;
   String hoTen;
-  String gioiTinh;
+  bool isNam;
   String? diaChi;
+  String? soDienThoat;
+  DateTime? ngaySinh;
 
   NguoiDung({
     required this.uid,
     required this.email,
     required this.hoTen,
-    required this.gioiTinh,
+    required this.isNam,
     this.diaChi,
   });
 
@@ -17,7 +19,7 @@ class NguoiDung {
     return NguoiDung(
       uid: json['uid'],
       email: json['email'],
-      gioiTinh: json['gioitinh'],
+      isNam: json['gioitinh'] == "Nam",
       hoTen: json['hoten'],
       diaChi: json['diachi'],
     );

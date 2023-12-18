@@ -1,11 +1,10 @@
-class VungMien
-{
-  int? idMien;
-  String? tenMien;
+class VungMien {
+  int idMien;
+  String tenMien;
 
   VungMien({
-    this.idMien,
-    this.tenMien,
+    required this.idMien,
+    required this.tenMien,
   });
 
   factory VungMien.fromJson(Map<String, dynamic> json) {

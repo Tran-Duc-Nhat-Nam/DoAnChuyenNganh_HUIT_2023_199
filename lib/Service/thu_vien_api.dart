@@ -122,7 +122,7 @@ Future<void> getDacSanVungMien() async {
 List<DacSan> getDanhSachDacSanTheoTen(String ten) {
   List<DacSan> kq = [];
   for (var dacSan in dsDacSan) {
-    if (dacSan.tenDacSan!.toLowerCase().contains(ten.toLowerCase())) {
+    if (dacSan.tenDacSan.toLowerCase().contains(ten.toLowerCase())) {
       kq.add(dacSan);
     }
   }
@@ -132,7 +132,7 @@ List<DacSan> getDanhSachDacSanTheoTen(String ten) {
 
 int? getDacSanTheoTen(String ten) {
   for (var dacSan in dsDacSan) {
-    if (dacSan.tenDacSan! == ten) {
+    if (dacSan.tenDacSan == ten) {
       return dacSan.idDacSan;
     }
   }

@@ -1,14 +1,13 @@
-class HinhAnh
-{
-  int? idAnh;
-  int? idDacSan;
-  String? link;
+class HinhAnh {
+  int idAnh;
+  int idDacSan;
+  String link;
   String? moTa;
 
   HinhAnh({
-    this.idAnh,
-    this.idDacSan,
-    this.link,
+    required this.idAnh,
+    required this.idDacSan,
+    required this.link,
     this.moTa,
   });
 

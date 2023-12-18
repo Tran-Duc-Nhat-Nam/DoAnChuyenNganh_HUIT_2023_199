@@ -45,7 +45,7 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
               padding: const EdgeInsets.only(
                 left: 15,
               ),
-              child: Text(dsDacSan[widget.maDS - 1].tenDacSan ?? '',
+              child: Text(dsDacSan[widget.maDS - 1].tenDacSan,
                   style: const TextStyle(
                       fontWeight: FontWeight.w900,
                       color: Colors.teal,
@@ -90,8 +90,7 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount:
-                      getHinhAnhDS(dsDacSan[widget.maDS - 1].idDacSan ?? 0)
-                          .length,
+                      getHinhAnhDS(dsDacSan[widget.maDS - 1].idDacSan).length,
                   // itemCount: 10,
                   itemBuilder: (context, index) {
                     return Container(
@@ -106,16 +105,15 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => xemHinh(getHinhAnhDS(
-                                      dsDacSan[widget.maDS - 1].idDacSan ??
-                                          0)[index])),
+                                      dsDacSan[widget.maDS - 1]
+                                          .idDacSan)[index])),
                             );
                           },
                           child: Hero(
                             tag: 'hinhDS$index',
                             child: Image.network(
                                 getHinhAnhDS(
-                                    dsDacSan[widget.maDS - 1].idDacSan ??
-                                        0)[index],
+                                    dsDacSan[widget.maDS - 1].idDacSan)[index],
                                 fit: BoxFit.cover,
                                 width:
                                     double.infinity, // Đặt chiều rộng mong muốn

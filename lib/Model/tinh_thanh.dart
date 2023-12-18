@@ -1,11 +1,10 @@
-class TinhThanh
-{
-  int? maTT;
-  String? ten;
+class TinhThanh {
+  int maTT;
+  String ten;
 
   TinhThanh({
-    this.maTT,
-    this.ten,
+    required this.maTT,
+    required this.ten,
   });
 
   factory TinhThanh.fromJson(Map<String, dynamic> json) {

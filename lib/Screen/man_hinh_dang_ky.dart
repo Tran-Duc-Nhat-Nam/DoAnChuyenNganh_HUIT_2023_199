@@ -22,8 +22,8 @@ class ManHinhDangKy extends StatefulWidget {
     this.uid,
     this.email,
   });
-  String? uid;
-  String? email;
+  final String? uid;
+  final String? email;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController matKhauController = TextEditingController();
@@ -64,7 +64,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
     final List<String> dsLabelTinhThanh = [];
     for (var tinhThanh in dsTT) {
       dsLabelTinhThanh.add(
-        tinhThanh.ten!,
+        tinhThanh.ten,
       );
     }
 
@@ -217,12 +217,12 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 },
                 onChanged: (value) {
                   if (value != null) {
-                    tinhThanh = value.ten!;
+                    tinhThanh = value.ten;
                   }
                 },
                 items: dsTT,
                 itemAsString: (value) {
-                  return value.ten!;
+                  return value.ten;
                 },
               ),
               VerticalGapSizedBox(),
