@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:vina_foods/Widget/hinh_cache.dart';
 
-class xemHinh extends StatelessWidget {
+class PreviewHinh extends StatelessWidget {
   final String link;
-  const xemHinh(this.link, {super.key});
+  const PreviewHinh(this.link, {super.key});
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: OrientationBuilder(
@@ -13,19 +13,14 @@ class xemHinh extends StatelessWidget {
           return RotatedBox(
             quarterTurns: orientation == Orientation.landscape ? 4 : 0,
             child: InteractiveViewer(
-              maxScale: 5.0, // Giới hạn tốc độ zoom-in
-              minScale: 0.5, // Giới hạn tốc độ zoom-out
+              maxScale: 2.0,
+              minScale: 0.5,
               child: Container(
-                color: const Color.fromARGB(225, 104, 163, 187),
+                color: Theme.of(context).shadowColor,
                 width: double.infinity,
                 height: 300,
                 alignment: Alignment.center,
-                child: Hero(
-                    tag: 'hinhDS',
-                    child: Image.network(link,
-                        fit: BoxFit.cover,
-                        width: double.infinity, // Đặt chiều rộng mong muốn
-                        height: 300)),
+                child: HinhCache(link, 300),
               ),
             ),
           );

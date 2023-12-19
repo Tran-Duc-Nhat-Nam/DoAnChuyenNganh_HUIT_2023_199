@@ -3,11 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vina_foods/Service/doc_nguoi_dung.dart';
 
-import '../Service/thu_vien_api.dart';
-import '../Service/thu_vien_widget.dart';
-import '../Widget/thong_bao_xac_nhan_thoat.dart';
-import '../main.dart';
+import '../../Service/thu_vien_api.dart';
+import '../../Widget/thong_bao_xac_nhan_thoat.dart';
+import '../../main.dart';
+import 'man_hinh_loading.dart';
 
 class ManHinhChinh extends StatefulWidget {
   ManHinhChinh({
@@ -37,7 +38,8 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
         await getDacSan();
         await getDacSanVungMien();
         await getDacSanNoiBat();
-        nguoiDung = (await getUser(FirebaseAuth.instance.currentUser!.uid))!;
+        nguoiDung =
+            (await docNguoiDung(FirebaseAuth.instance.currentUser!.uid))!;
         return "";
       },
     );
@@ -48,7 +50,7 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
   Widget build(BuildContext context) {
     return AsyncBuilder(
       future: myFuture,
-      waiting: (context) => LoadingScreen(),
+      waiting: (context) => const ManHinhLoading(),
       builder: (context, value) => PopScope(
         onPopInvoked: (popped) {
           ThongBaoXacNhanThoat(context);

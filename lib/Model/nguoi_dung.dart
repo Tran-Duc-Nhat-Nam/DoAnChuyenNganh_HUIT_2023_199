@@ -4,7 +4,7 @@ class NguoiDung {
   String hoTen;
   bool isNam;
   String? diaChi;
-  String? soDienThoat;
+  String? soDienThoai;
   DateTime? ngaySinh;
 
   NguoiDung({
@@ -13,6 +13,8 @@ class NguoiDung {
     required this.hoTen,
     required this.isNam,
     this.diaChi,
+    this.soDienThoai,
+    this.ngaySinh,
   });
 
   factory NguoiDung.fromJson(Map<String, dynamic> json) {

@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Service/thu_vien_style.dart';
-import '../Widget/VerticalGapSizedBox.dart';
+import '../../Service/thu_vien_style.dart';
+import '../../Widget/khoang_trong_doc.dart';
 
 class TrangDoiMatKhau extends StatefulWidget {
   TrangDoiMatKhau({super.key, required this.uid});
@@ -47,7 +47,7 @@ class _TrangDoiMatKhauState extends State<TrangDoiMatKhau> {
                   return null;
                 },
               ),
-              VerticalGapSizedBox(),
+              KhoangTrongDoc(),
               TextFormField(
                 obscureText: hidePassword,
                 enableSuggestions: false,
@@ -83,7 +83,7 @@ class _TrangDoiMatKhauState extends State<TrangDoiMatKhau> {
                   return null;
                 },
               ),
-              VerticalGapSizedBox(),
+              KhoangTrongDoc(),
               TextFormField(
                 obscureText: hidePassword,
                 enableSuggestions: false,
@@ -121,7 +121,7 @@ class _TrangDoiMatKhauState extends State<TrangDoiMatKhau> {
                   return null;
                 },
               ),
-              VerticalGapSizedBox(),
+              KhoangTrongDoc(),
               TextFormField(
                 obscureText: hidePassword,
                 enableSuggestions: false,
@@ -159,7 +159,7 @@ class _TrangDoiMatKhauState extends State<TrangDoiMatKhau> {
                   return null;
                 },
               ),
-              VerticalGapSizedBox(),
+              KhoangTrongDoc(),
               OutlinedButton(
                   style: RoundButtonStyle(),
                   onPressed: () async {

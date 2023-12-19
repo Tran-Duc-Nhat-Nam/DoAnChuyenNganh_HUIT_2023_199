@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Model/dac_san.dart';
-import '../Model/loai_dac_san.dart';
-import '../Service/thu_vien_api.dart';
-import '../Service/thu_vien_widget.dart';
-import '../main.dart';
+import '../../Model/dac_san.dart';
+import '../../Model/loai_dac_san.dart';
+import '../../Service/thu_vien_api.dart';
+import '../../main.dart';
+import '../hinh_cache.dart';
 
 class TrangDacSanTheoVung extends StatefulWidget {
   final int maVung;
@@ -86,7 +86,8 @@ class _TrangDacSanTheoVungState extends State<TrangDacSanTheoVung> {
                             borderRadius: BorderRadius.circular(5),
                             child: SizedBox(
                               width: 100,
-                              child: cachedImage(dacSan.avatar!),
+                              child:
+                                  HinhCache(getURLImage(dacSan.avatar!), 150),
                             ),
                           ),
                         ),

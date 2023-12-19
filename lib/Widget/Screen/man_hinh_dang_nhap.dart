@@ -12,12 +12,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart';
 
-import '../Model/nguoi_dung.dart';
-import '../Screen/man_hinh_dang_ky.dart';
-import '../Service/thu_vien_style.dart';
-import '../Service/thu_vien_widget.dart';
-import '../Widget/HorizontalGapSizedBox.dart';
-import '../Widget/VerticalGapSizedBox.dart';
+import '../../Model/nguoi_dung.dart';
+import '../../Service/thu_vien_style.dart';
+import '../../Widget/khoang_trong_doc.dart';
+import '../../Widget/khoang_trong_ngang.dart';
+import '../snackbar_firebase_auth.dart';
+import 'man_hinh_dang_ky.dart';
 
 class ManHinhDangNhap extends StatefulWidget {
   ManHinhDangNhap({
@@ -72,7 +72,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                   return null;
                 },
               ),
-              VerticalGapSizedBox(),
+              KhoangTrongDoc(),
               TextFormField(
                 obscureText: hidePassword,
                 enableSuggestions: false,
@@ -107,9 +107,9 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                   }
                 },
               ),
-              VerticalGapSizedBox(),
-              VerticalGapSizedBox(),
-              VerticalGapSizedBox(),
+              KhoangTrongDoc(),
+              KhoangTrongDoc(),
+              KhoangTrongDoc(),
               ElevatedButton(
                   style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all(Colors.white),
@@ -156,7 +156,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                     }
                   },
                   child: const Text("Đăng nhập")),
-              VerticalGapSizedBox(),
+              KhoangTrongDoc(),
               OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size.fromHeight(35),
@@ -169,7 +169,7 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                   ),
                   onPressed: () => context.go("/signup"),
                   child: const Text("Đăng ký")),
-              VerticalGapSizedBox(),
+              KhoangTrongDoc(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -178,15 +178,15 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                         maximumSize:
                             MaterialStateProperty.all(const Size(56, 56))),
                     onPressed: DangNhapGoogle,
-                    icon: LoadHinh("assets/images/google.png"),
+                    icon: Image.asset("assets/images/google.png"),
                   ),
-                  HorizontalGapSizedBox(),
+                  KhoangTrongNgang(),
                   IconButton(
                     style: ButtonStyle(
                         maximumSize:
                             MaterialStateProperty.all(const Size(56, 56))),
                     onPressed: DangNhapFacebook,
-                    icon: LoadHinh("assets/images/facebook.png"),
+                    icon: Image.asset("assets/images/facebook.png"),
                   ),
                 ],
               ),

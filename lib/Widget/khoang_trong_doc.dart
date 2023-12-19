@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-SizedBox HorizontalGapSizedBox() {
+SizedBox KhoangTrongDoc() {
   return const SizedBox(
-    width: 25,
+    height: 15,
   );
 }

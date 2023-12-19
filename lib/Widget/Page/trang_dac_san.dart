@@ -4,13 +4,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Model/dac_san.dart';
-import '../Model/loai_dac_san.dart';
-import '../Model/vung_mien.dart';
-import '../Service/thu_vien_api.dart';
-import '../Service/thu_vien_widget.dart';
-import '../Widget/thong_bao_xac_nhan_thoat.dart';
-import '../main.dart';
+import '../../Model/dac_san.dart';
+import '../../Model/loai_dac_san.dart';
+import '../../Model/vung_mien.dart';
+import '../../Service/thu_vien_api.dart';
+import '../../Widget/thong_bao_xac_nhan_thoat.dart';
+import '../../main.dart';
+import '../hinh_cache.dart';
 
 class TrangDacSan extends StatefulWidget {
   const TrangDacSan({super.key});
@@ -150,7 +150,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: cachedImage(dsDacSan[i].avatar!),
+                  child: HinhCache(getURLImage(dsDacSan[i].avatar!), 150),
                 ),
               ),
             ),
@@ -236,11 +236,10 @@ class _TrangDacSanState extends State<TrangDacSan> {
           const Spacer(), // use Spacer
           TextButton(
             onPressed: () {
-              // context.goNamed(
-              //   "timKiem",
-              //   queryParameters: {"ten": "Mì"},
-              // );
-              context.go("/dacsan/vungmien/${vungMien.idMien}");
+              context.goNamed(
+                "timKiem",
+                queryParameters: {"vungMien": vungMien.idMien},
+              );
             },
             child: const Text("Xem thêm",
                 style: TextStyle(
@@ -288,7 +287,8 @@ class DacSanList extends StatelessWidget {
                           Center(
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
-                              child: cachedImage(lstDacSan[index].avatar!),
+                              child: HinhCache(
+                                  getURLImage(lstDacSan[index].avatar!), 150),
                             ),
                           ),
                           const SizedBox(height: 15),

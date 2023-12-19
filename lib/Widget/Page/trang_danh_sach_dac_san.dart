@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Model/dac_san.dart';
-import '../Service/thu_vien_api.dart';
-import '../Service/thu_vien_widget.dart';
-import '../main.dart';
+import '../../Model/dac_san.dart';
+import '../../Service/thu_vien_api.dart';
+import '../../main.dart';
+import '../hinh_cache.dart';
 
 class TrangDanhSachDacSan extends StatefulWidget {
   const TrangDanhSachDacSan({
@@ -13,10 +13,12 @@ class TrangDanhSachDacSan extends StatefulWidget {
     this.xuatSu,
     this.thanhPhan,
     this.noiBat,
+    this.vungMien,
   });
   final String? ten;
   final String? thanhPhan;
   final int? xuatSu;
+  final int? vungMien;
   final bool? noiBat;
   @override
   State<TrangDanhSachDacSan> createState() => _TrangDanhSachDacSanState();
@@ -44,6 +46,11 @@ class _TrangDanhSachDacSanState extends State<TrangDanhSachDacSan> {
     if (widget.xuatSu != null) {
       dsDacSanDaLoc = dsDacSanDaLoc
           .where((element) => element.xuatXu == widget.xuatSu)
+          .toList();
+    }
+    if (widget.vungMien != null) {
+      dsDacSanDaLoc = dsDacSanDaLoc
+          .where((element) => element.idMien == widget.vungMien)
           .toList();
     }
     if (widget.noiBat != null) {
@@ -99,7 +106,8 @@ class _TrangDanhSachDacSanState extends State<TrangDanhSachDacSan> {
                   child: SizedBox(
                     width: 80,
                     height: 80,
-                    child: cachedImage(dsDacSanDaLoc[index].avatar!),
+                    child: HinhCache(
+                        getURLImage(dsDacSanDaLoc[index].avatar!), 150),
                   ),
                 ),
               ),

@@ -3,18 +3,21 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
+import 'package:intl/intl.dart';
+import 'package:vina_foods/Model/nguoi_dung.dart';
+import 'package:vina_foods/Service/them_nguoi_dung.dart';
 
-import '../Model/tinh_thanh.dart';
-import '../Screen/man_hinh_cho_xac_nhan.dart';
-import '../Service/thu_vien_api.dart';
-import '../Service/thu_vien_style.dart';
-import '../Widget/VerticalGapSizedBox.dart';
+import '../../Model/tinh_thanh.dart';
+import '../../Service/thu_vien_style.dart';
+import '../../Widget/khoang_trong_doc.dart';
+import 'man_hinh_cho_xac_nhan.dart';
 
 class ManHinhDangKy extends StatefulWidget {
   ManHinhDangKy({
@@ -43,6 +46,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
   String? tinhThanh;
   bool isPasswordReadOnly = false;
   bool isEmailReadOnly = false;
+  DateTime selectedDate = DateTime.now();
 
   @override
   void initState() {
@@ -88,7 +92,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   return null;
                 },
               ),
-              VerticalGapSizedBox(),
+              KhoangTrongDoc(),
               TextFormField(
                 enabled: !isPasswordReadOnly,
                 obscureText: hidePassword,
@@ -127,7 +131,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   return null;
                 },
               ),
-              VerticalGapSizedBox(),
+              KhoangTrongDoc(),
               TextFormField(
                 enabled: !isPasswordReadOnly,
                 obscureText: hidePassword,
@@ -168,7 +172,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   return null;
                 },
               ),
-              VerticalGapSizedBox(),
+              KhoangTrongDoc(),
               TextFormField(
                 controller: widget.hoTenController,
                 decoration: RoundInputDecoration("Họ tên"),
@@ -179,7 +183,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   return null;
                 },
               ),
-              VerticalGapSizedBox(),
+              KhoangTrongDoc(),
               TextFormField(
                 controller: widget.sdtController,
                 decoration: RoundInputDecoration("Số điện thoại"),
@@ -192,7 +196,27 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
-              VerticalGapSizedBox(),
+              KhoangTrongDoc(),
+              DateTimeField(
+                decoration: RoundInputDecoration("Ngày sinh"),
+                format: DateFormat("dd/MM/yyyy"),
+                onShowPicker: (context, currentValue) {
+                  return showDatePicker(
+                      context: context,
+                      firstDate: DateTime(1900),
+                      initialDate: currentValue ?? DateTime.now(),
+                      lastDate: DateTime(2100));
+                },
+                onChanged: (value) {
+                  setState(() {
+                    if (value != null) {
+                      selectedDate = value;
+                      print(selectedDate.toString());
+                    }
+                  });
+                },
+              ),
+              KhoangTrongDoc(),
               DropdownSearch<TinhThanh>(
                 validator: (value) {
                   if (value == null) {
@@ -225,11 +249,13 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   return value.ten;
                 },
               ),
-              VerticalGapSizedBox(),
+              KhoangTrongDoc(),
               Row(
                 mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Flexible(
+                    fit: FlexFit.tight,
                     child: ListTile(
                       title: const Text("Nam"),
                       leading: Radio(
@@ -244,6 +270,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                     ),
                   ),
                   Flexible(
+                    fit: FlexFit.tight,
                     child: ListTile(
                       title: const Text("Nữ"),
                       leading: Radio(
@@ -259,7 +286,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                   ),
                 ],
               ),
-              VerticalGapSizedBox(),
+              KhoangTrongDoc(),
               OutlinedButton(
                   style: MaxWidthRoundButtonStyle(),
                   onPressed: () async {
@@ -269,13 +296,15 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                           await FirebaseAuth.instance.currentUser!
                               .updateEmail(widget.emailController.text)
                               .whenComplete(() async {
-                            await addUser(
-                              FirebaseAuth.instance.currentUser!.uid,
-                              widget.emailController.text,
-                              widget.hoTenController.text,
-                              isNam,
-                              tinhThanh!,
-                            );
+                            await themNguoiDung(NguoiDung(
+                              uid: FirebaseAuth.instance.currentUser!.uid,
+                              email: widget.emailController.text,
+                              hoTen: widget.hoTenController.text,
+                              isNam: isNam,
+                              diaChi: tinhThanh!,
+                              soDienThoai: widget.sdtController.text,
+                              ngaySinh: selectedDate,
+                            ));
                             if (context.mounted) {
                               context.go("/");
                             }
@@ -294,13 +323,15 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                               email: widget.emailController.text,
                               password: widget.matKhauController.text,
                             );
-                            await addUser(
-                              user.uid,
-                              widget.emailController.text,
-                              widget.hoTenController.text,
-                              isNam,
-                              tinhThanh!,
-                            );
+                            await themNguoiDung(NguoiDung(
+                              uid: user.uid,
+                              email: widget.emailController.text,
+                              hoTen: widget.hoTenController.text,
+                              isNam: isNam,
+                              diaChi: tinhThanh!,
+                              soDienThoai: widget.sdtController.text,
+                              ngaySinh: selectedDate,
+                            ));
                             if (context.mounted) {
                               Navigator.push(
                                   context,

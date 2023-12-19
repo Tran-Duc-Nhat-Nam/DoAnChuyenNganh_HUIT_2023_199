@@ -5,18 +5,19 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../Model/nguoi_dung.dart';
-import '../Model/tinh_thanh.dart';
-import '../Service/thu_vien_api.dart';
-import '../Service/thu_vien_style.dart';
-import '../Widget/thong_bao_xac_nhan_thoat.dart';
-import '../main.dart';
+import '../../Model/nguoi_dung.dart';
+import '../../Model/tinh_thanh.dart';
+import '../../Service/thu_vien_api.dart';
+import '../../Service/thu_vien_style.dart';
+import '../../Widget/thong_bao_xac_nhan_thoat.dart';
+import '../../main.dart';
 
 class TrangNguoiDung extends StatefulWidget {
   TrangNguoiDung({
     super.key,
+    this.nguoiDung,
   });
-  NguoiDung? nguoiDung;
+  final NguoiDung? nguoiDung;
   final TextEditingController uidController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController hoTenController = TextEditingController();
@@ -123,13 +124,13 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                       },
                       onChanged: (value) {
                         if (value != null) {
-                          widget.diaChiController.text = value.ten!;
+                          widget.diaChiController.text = value.ten;
                         }
                       },
                       selectedItem: dsTinhThanh[0],
                       items: dsTinhThanh,
                       itemAsString: (value) {
-                        return value.ten!;
+                        return value.ten;
                       },
                     ),
                   ),

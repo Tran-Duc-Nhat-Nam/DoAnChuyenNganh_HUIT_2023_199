@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 
-import '../Model/vung_mien.dart';
-import '../Widget/xemHinh.dart';
-import '../main.dart';
+import '../../Model/vung_mien.dart';
+import '../../main.dart';
+import '../preview_hinh.dart';
 
 class TrangChiTietDacSan extends StatefulWidget {
   final int maDS;
@@ -104,8 +104,8 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => xemHinh(getHinhAnhDS(
-                                      dsDacSan[widget.maDS - 1]
+                                  builder: (context) => PreviewHinh(
+                                      getHinhAnhDS(dsDacSan[widget.maDS - 1]
                                           .idDacSan)[index])),
                             );
                           },

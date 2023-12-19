@@ -2,17 +2,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Page/trang_chi_tiet_dac_san.dart';
-import '../Page/trang_dac_san.dart';
-import '../Page/trang_dac_san_theo_vung.dart';
-import '../Page/trang_danh_sach_dac_san.dart';
-import '../Page/trang_doi_mat_khau.dart';
-import '../Page/trang_nguoi_dung.dart';
-import '../Screen/man_hinh_chinh.dart';
-import '../Screen/man_hinh_cho_xac_nhan.dart';
-import '../Screen/man_hinh_dang_ky.dart';
-import '../Screen/man_hinh_dang_nhap.dart';
-import '../Screen/man_hinh_gioi_thieu.dart';
+import '../Widget/Page/trang_chi_tiet_dac_san.dart';
+import '../Widget/Page/trang_dac_san.dart';
+import '../Widget/Page/trang_dac_san_theo_vung.dart';
+import '../Widget/Page/trang_danh_sach_dac_san.dart';
+import '../Widget/Page/trang_doi_mat_khau.dart';
+import '../Widget/Page/trang_nguoi_dung.dart';
+import '../Widget/Screen/man_hinh_chinh.dart';
+import '../Widget/Screen/man_hinh_cho_xac_nhan.dart';
+import '../Widget/Screen/man_hinh_dang_ky.dart';
+import '../Widget/Screen/man_hinh_dang_nhap.dart';
+import '../Widget/Screen/man_hinh_gioi_thieu.dart';
 import '../main.dart';
 
 final rootNavKey = GlobalKey<NavigatorState>();
@@ -83,6 +83,14 @@ final GoRouter router = GoRouter(
                       xs = null;
                     }
 
+                    int? vm = -1;
+
+                    try {
+                      vm = int.tryParse(state.uri.queryParameters['vungMien']!);
+                    } catch (e) {
+                      vm = null;
+                    }
+
                     bool? noiBat = false;
 
                     try {
@@ -96,6 +104,7 @@ final GoRouter router = GoRouter(
                       ten: state.uri.queryParameters['ten'],
                       thanhPhan: state.uri.queryParameters['thanhPhan'],
                       xuatSu: xs,
+                      vungMien: vm,
                       noiBat: noiBat,
                     );
                   },
