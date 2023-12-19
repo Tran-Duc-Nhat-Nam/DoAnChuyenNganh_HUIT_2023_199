@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:vina_foods/Model/nguoi_dung.dart';
@@ -81,6 +82,18 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Container(
+                height: 100,
+                alignment: Alignment.center,
+                child: Text(
+                  "ĐĂNG KÝ",
+                  style: GoogleFonts.mulish(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    color: Colors.lightBlueAccent,
+                  ),
+                ),
+              ),
               TextFormField(
                 enabled: !isEmailReadOnly,
                 controller: widget.emailController,
@@ -93,85 +106,9 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 },
               ),
               KhoangTrongDoc(),
-              TextFormField(
-                enabled: !isPasswordReadOnly,
-                obscureText: hidePassword,
-                enableSuggestions: false,
-                autocorrect: false,
-                controller: widget.matKhauController,
-                decoration: InputDecoration(
-                  filled: true,
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                  labelText: "Mật khẩu",
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(35),
-                    ),
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      // Based on passwordVisible state choose the icon
-                      hidePassword ? Icons.visibility : Icons.visibility_off,
-                      color: Theme.of(context).primaryColorDark,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        hidePassword = !hidePassword;
-                      });
-                    },
-                  ),
-                ),
-                validator: (value) {
-                  if (isPasswordReadOnly) {
-                    return null;
-                  } else if (value!.isEmpty) {
-                    return "Vui lòng nhập mật khẩu";
-                  }
-                  return null;
-                },
-              ),
+              textFormFieldMatKhau(context),
               KhoangTrongDoc(),
-              TextFormField(
-                enabled: !isPasswordReadOnly,
-                obscureText: hidePassword,
-                enableSuggestions: false,
-                autocorrect: false,
-                controller: widget.xacNhanMatKhauController,
-                decoration: InputDecoration(
-                  filled: true,
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                  labelText: "Nhập lại mật khẩu",
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(35),
-                    ),
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      // Based on passwordVisible state choose the icon
-                      hidePassword ? Icons.visibility : Icons.visibility_off,
-                      color: Theme.of(context).primaryColorDark,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        hidePassword = !hidePassword;
-                      });
-                    },
-                  ),
-                ),
-                validator: (value) {
-                  if (isPasswordReadOnly) {
-                    return null;
-                  } else if (value!.isEmpty) {
-                    return "Vui lòng nhập mật khẩu";
-                  } else if (value != widget.matKhauController.text) {
-                    return "Mật khẩu vừa nhập không trùng khớp";
-                  }
-                  return null;
-                },
-              ),
+              textFormFieldNhapLaiMatKhau(context),
               KhoangTrongDoc(),
               TextFormField(
                 controller: widget.hoTenController,
@@ -235,6 +172,19 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                     ),
                   ),
                   showSelectedItems: true,
+                ),
+                dropdownDecoratorProps: DropDownDecoratorProps(
+                  dropdownSearchDecoration: InputDecoration(
+                    label: const Text("Tỉnh thành"),
+                    contentPadding: const EdgeInsetsDirectional.only(
+                      start: 25,
+                      top: 15,
+                      bottom: 15,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(35),
+                    ),
+                  ),
                 ),
                 compareFn: (item1, item2) {
                   return item1 == item2;
@@ -359,6 +309,90 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
           ),
         ),
       ),
+    );
+  }
+
+  TextFormField textFormFieldNhapLaiMatKhau(BuildContext context) {
+    return TextFormField(
+      enabled: !isPasswordReadOnly,
+      obscureText: hidePassword,
+      enableSuggestions: false,
+      autocorrect: false,
+      controller: widget.xacNhanMatKhauController,
+      decoration: InputDecoration(
+        filled: true,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+        labelText: "Nhập lại mật khẩu",
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(35),
+          ),
+        ),
+        suffixIcon: IconButton(
+          icon: Icon(
+            // Based on passwordVisible state choose the icon
+            hidePassword ? Icons.visibility : Icons.visibility_off,
+            color: Theme.of(context).primaryColorDark,
+          ),
+          onPressed: () {
+            setState(() {
+              hidePassword = !hidePassword;
+            });
+          },
+        ),
+      ),
+      validator: (value) {
+        if (isPasswordReadOnly) {
+          return null;
+        } else if (value!.isEmpty) {
+          return "Vui lòng nhập mật khẩu";
+        } else if (value != widget.matKhauController.text) {
+          return "Mật khẩu vừa nhập không trùng khớp";
+        }
+        return null;
+      },
+    );
+  }
+
+  TextFormField textFormFieldMatKhau(BuildContext context) {
+    return TextFormField(
+      enabled: !isPasswordReadOnly,
+      obscureText: hidePassword,
+      enableSuggestions: false,
+      autocorrect: false,
+      controller: widget.matKhauController,
+      decoration: InputDecoration(
+        filled: true,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+        labelText: "Mật khẩu",
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(35),
+          ),
+        ),
+        suffixIcon: IconButton(
+          icon: Icon(
+            // Based on passwordVisible state choose the icon
+            hidePassword ? Icons.visibility : Icons.visibility_off,
+            color: Theme.of(context).primaryColorDark,
+          ),
+          onPressed: () {
+            setState(() {
+              hidePassword = !hidePassword;
+            });
+          },
+        ),
+      ),
+      validator: (value) {
+        if (isPasswordReadOnly) {
+          return null;
+        } else if (value!.isEmpty) {
+          return "Vui lòng nhập mật khẩu";
+        }
+        return null;
+      },
     );
   }
 

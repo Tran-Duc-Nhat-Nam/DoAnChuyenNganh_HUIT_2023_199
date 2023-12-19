@@ -1,9 +1,11 @@
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:intl/intl.dart';
 
 import '../../Model/nguoi_dung.dart';
 import '../../Model/tinh_thanh.dart';
@@ -22,6 +24,7 @@ class TrangNguoiDung extends StatefulWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController hoTenController = TextEditingController();
   final TextEditingController diaChiController = TextEditingController();
+  final TextEditingController soDienThoaiController = TextEditingController();
 
   @override
   State<TrangNguoiDung> createState() => _TrangNguoiDungState();
@@ -31,14 +34,19 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
   bool isReadOnly = true;
   String updateText = "Cập nhật thông tin";
   bool isNam = true;
+  DateTime selectedDate = DateTime.now();
 
   @override
   void initState() {
     widget.uidController.text = FirebaseAuth.instance.currentUser!.uid;
     widget.emailController.text = nguoiDung.email;
     widget.hoTenController.text = nguoiDung.hoTen;
-    widget.diaChiController.text = nguoiDung.diaChi!;
+    widget.diaChiController.text =
+        nguoiDung.diaChi ?? "Chưa có thông tin địa chỉ";
+    widget.soDienThoaiController.text =
+        nguoiDung.soDienThoai ?? "Chưa có số điện thoại";
     isNam = nguoiDung.isNam;
+    selectedDate = nguoiDung.ngaySinh ?? DateTime.now();
     super.initState();
   }
 
@@ -85,6 +93,42 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                   text: "Họ tên",
                   isReadOnly: isReadOnly,
                 ),
+                TextFieldNguoiDung(
+                  controller: widget.soDienThoaiController,
+                  text: "Số điện thoại",
+                  isReadOnly: true,
+                ),
+                ListTile(
+                  title: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: DateTimeField(
+                      enabled: !isReadOnly,
+                      initialValue: selectedDate,
+                      decoration: RoundInputDecoration("Ngày sinh"),
+                      format: DateFormat("dd/MM/yyyy"),
+                      onShowPicker: (context, currentValue) {
+                        return showDatePicker(
+                            context: context,
+                            firstDate: DateTime(1900),
+                            initialDate: selectedDate,
+                            lastDate: DateTime(2100));
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          if (value != null) {
+                            selectedDate = value;
+                            print(selectedDate.toString());
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                  shape: LinearBorder.bottom(
+                    side: const BorderSide(
+                      color: Color.fromARGB(155, 211, 211, 211),
+                    ),
+                  ),
+                ),
                 ListTile(
                   shape: LinearBorder.bottom(
                     side: const BorderSide(
@@ -127,7 +171,11 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                           widget.diaChiController.text = value.ten;
                         }
                       },
-                      selectedItem: dsTinhThanh[0],
+                      selectedItem: widget.diaChiController.text !=
+                              "Chưa có thông tin địa chỉ"
+                          ? dsTinhThanh.firstWhere((element) =>
+                              element.ten == widget.diaChiController.text)
+                          : dsTinhThanh[0],
                       items: dsTinhThanh,
                       itemAsString: (value) {
                         return value.ten;
