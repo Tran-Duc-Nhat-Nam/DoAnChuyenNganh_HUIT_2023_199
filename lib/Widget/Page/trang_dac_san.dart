@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../Model/dac_san.dart';
-import '../../Model/loai_dac_san.dart';
 import '../../Model/vung_mien.dart';
 import '../../Service/thu_vien_api.dart';
 import '../../Widget/thong_bao_xac_nhan_thoat.dart';
@@ -20,14 +19,8 @@ class TrangDacSan extends StatefulWidget {
 }
 
 class _TrangDacSanState extends State<TrangDacSan> {
-  String selectedChip = dsLoaiDacSan[0].tenLoai;
+  String selectedChip = "";
   List<DacSan> lstDacSan = dsDacSan;
-
-  void selectChip(LoaiDacSan chip) {
-    setState(() {
-      selectedChip = chip.tenLoai;
-    });
-  }
 
   @override
   void initState() {
@@ -112,7 +105,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
             bottom: 10,
           ),
           child: DacSanList(
-              lstDacSan: lstDacSan
+              lstDacSan: dsDacSan
                   .where((dacSan) => dsDacSanNoiBat
                       .any((element) => element.idDacSan == dacSan.idDacSan))
                   .toList()),
@@ -185,9 +178,8 @@ class _TrangDacSanState extends State<TrangDacSan> {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: dsLoaiDacSan.map((loaiDacSan) {
-                  bool isSelected = loaiDacSan.tenLoai == selectedChip;
-                  return AnimatedContainer(
+                children: [
+                  AnimatedContainer(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 15,
                     ),
@@ -195,26 +187,59 @@ class _TrangDacSanState extends State<TrangDacSan> {
                     curve: Curves.easeInOut,
                     child: FilterChip(
                       label: Text(
-                        loaiDacSan.tenLoai,
+                        "Tất cả",
                         style: TextStyle(
-                          color: isSelected
+                          color: "" == selectedChip
                               ? Colors.white
                               : Theme.of(context).disabledColor,
                         ),
                       ),
-                      selected: isSelected,
+                      selected: "" == selectedChip,
                       onSelected: (selected) {
-                        selectChip(loaiDacSan);
-                        lstDacSan = dsDacSan
-                            .where((dacSan) =>
-                                dacSan.loaiDacSan == loaiDacSan.idLoai)
-                            .toList();
+                        setState(() {
+                          selectedChip = "";
+                          lstDacSan = dsDacSan.toList();
+                        });
                       },
                       selectedColor: Colors.blue,
                       checkmarkColor: Colors.white,
                     ),
-                  );
-                }).toList(),
+                  ),
+                  Row(
+                    children: dsLoaiDacSan.map((loaiDacSan) {
+                      bool isSelected = loaiDacSan.tenLoai == selectedChip;
+                      return AnimatedContainer(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                        ),
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                        child: FilterChip(
+                          label: Text(
+                            loaiDacSan.tenLoai,
+                            style: TextStyle(
+                              color: isSelected
+                                  ? Colors.white
+                                  : Theme.of(context).disabledColor,
+                            ),
+                          ),
+                          selected: isSelected,
+                          onSelected: (selected) {
+                            setState(() {
+                              selectedChip = loaiDacSan.tenLoai;
+                              lstDacSan = dsDacSan
+                                  .where((dacSan) =>
+                                      dacSan.loaiDacSan == loaiDacSan.idLoai)
+                                  .toList();
+                            });
+                          },
+                          selectedColor: Colors.blue,
+                          checkmarkColor: Colors.white,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ],
               ),
             ),
           ),
@@ -238,7 +263,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
             onPressed: () {
               context.goNamed(
                 "timKiem",
-                queryParameters: {"vungMien": vungMien.idMien},
+                queryParameters: {"vungMien": vungMien.idMien.toString()},
               );
             },
             child: const Text("Xem thêm",

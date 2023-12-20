@@ -33,3 +33,18 @@ InputDecoration RoundInputDecoration(String text) {
     ),
   );
 }
+
+BoxConstraints boxMaxWidthConstraint() {
+  return const BoxConstraints(maxWidth: 900);
+}
+
+BoxDecoration boxBottomLineDecoration(BuildContext context) {
+  return BoxDecoration(
+    border: BorderDirectional(
+      bottom: BorderSide(
+        width: 1,
+        color: Theme.of(context).dividerColor,
+      ),
+    ),
+  );
+}

@@ -63,8 +63,12 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
                 ),
               ),
               onPressed: () {
-                context.push(
-                    "/dacsan/vungmien/${dsDacSan[widget.maDS - 1].idMien}");
+                context.pushNamed(
+                  "timKiem",
+                  queryParameters: {
+                    "vungMien": dsDacSan[widget.maDS - 1].idMien.toString()
+                  },
+                );
               },
               child: Text(
                   "Đặc sản ${getMien(dsDacSan[widget.maDS - 1].idMien)}",

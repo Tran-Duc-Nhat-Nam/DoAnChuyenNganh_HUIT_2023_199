@@ -78,11 +78,11 @@ class _TrangDanhSachDacSanState extends State<TrangDanhSachDacSan> {
             onTap: () => context.go("/dacsan/chitiet/${index + 1}"),
             child: ListTile(
               contentPadding: const EdgeInsets.symmetric(
-                vertical: 15,
+                vertical: 10,
               ),
               shape: LinearBorder.bottom(
                 side: BorderSide(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).dividerColor,
                 ),
               ),
               title: Text(
@@ -91,12 +91,21 @@ class _TrangDanhSachDacSanState extends State<TrangDanhSachDacSan> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Thành phần: ${dsDacSanDaLoc[index].thanhPhan!}"),
-                  Text('Xuất xứ: ${getTenTinh(dsDacSanDaLoc[index].xuatXu)}'),
-                ],
+              subtitle: Padding(
+                padding: const EdgeInsets.only(
+                  right: 15,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Thành phần: ${dsDacSanDaLoc[index].thanhPhan!}",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text('Xuất xứ: ${getTenTinh(dsDacSanDaLoc[index].xuatXu)}'),
+                  ],
+                ),
               ),
               leading: Padding(
                 padding:
@@ -104,8 +113,8 @@ class _TrangDanhSachDacSanState extends State<TrangDanhSachDacSan> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: SizedBox(
-                    width: 80,
-                    height: 80,
+                    width: 100,
+                    height: 85,
                     child: HinhCache(
                         getURLImage(dsDacSanDaLoc[index].avatar!), 150),
                   ),

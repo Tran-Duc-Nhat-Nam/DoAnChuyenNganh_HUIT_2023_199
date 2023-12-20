@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import '../Widget/Page/trang_chi_tiet_dac_san.dart';
 import '../Widget/Page/trang_dac_san.dart';
-import '../Widget/Page/trang_dac_san_theo_vung.dart';
 import '../Widget/Page/trang_danh_sach_dac_san.dart';
 import '../Widget/Page/trang_doi_mat_khau.dart';
 import '../Widget/Page/trang_nguoi_dung.dart';
@@ -59,15 +58,6 @@ final GoRouter router = GoRouter(
                   builder: (context, state) {
                     return TrangChiTietDacSan(
                       maDS: int.parse(state.pathParameters['id']!),
-                    );
-                  },
-                ),
-                GoRoute(
-                  path: "vungmien/:id",
-                  name: "Danh sách đặc sản theo vùng",
-                  builder: (context, state) {
-                    return TrangDacSanTheoVung(
-                      maVung: int.parse(state.pathParameters['id']!),
                     );
                   },
                 ),

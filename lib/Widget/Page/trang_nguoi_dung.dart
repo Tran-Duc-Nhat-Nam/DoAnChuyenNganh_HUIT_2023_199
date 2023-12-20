@@ -6,6 +6,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
+import 'package:vina_foods/Widget/khoang_trong_doc.dart';
 
 import '../../Model/nguoi_dung.dart';
 import '../../Model/tinh_thanh.dart';
@@ -190,9 +191,11 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                     ),
                   ),
                   title: Row(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Flexible(
+                      SizedBox(
+                        width: 150,
                         child: ListTile(
                           title: const Text("Nam"),
                           leading: Radio(
@@ -208,7 +211,8 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                           ),
                         ),
                       ),
-                      Flexible(
+                      SizedBox(
+                        width: 150,
                         child: ListTile(
                           title: const Text("Nữ"),
                           leading: Radio(
@@ -322,6 +326,7 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                     child: const Text("Đăng xuất"),
                   ),
                 ),
+                KhoangTrongDoc(),
               ],
             ),
           ),

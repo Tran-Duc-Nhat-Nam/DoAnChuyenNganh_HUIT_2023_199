@@ -1,5 +1,6 @@
 import 'package:async_builder/async_builder.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:go_router/go_router.dart';
@@ -48,6 +49,15 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
 
   @override
   Widget build(BuildContext context) {
+    Widget page = widget.page;
+    if (kIsWeb) {
+      page = Center(
+        child: AspectRatio(
+          aspectRatio: 9 / 16,
+          child: widget.page,
+        ),
+      );
+    }
     return AsyncBuilder(
       future: myFuture,
       waiting: (context) => const ManHinhLoading(),
@@ -72,7 +82,7 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
         Flexible(
           flex: 1,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               InkWell(
                 onTap: () {
@@ -86,15 +96,21 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
                 ),
               ),
               Flexible(
-                flex: 3,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 10,
-                    bottom: 10,
-                    left: 20,
-                    right: 20,
+                fit: FlexFit.loose,
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 10,
+                      bottom: 10,
+                      left: 20,
+                      right: 20,
+                    ),
+                    child: Container(
+                      constraints: BoxConstraints(maxWidth: 400),
+                      child: buildSearchAnchor(),
+                    ),
                   ),
-                  child: buildSearchAnchor(),
                 ),
               ),
             ],
@@ -155,12 +171,14 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
         );
       },
       suggestionsCallback: (String pattern) {
+        print("Test");
         return dsDacSan
             .where((element) =>
                 element.tenDacSan.toLowerCase().contains(pattern.toLowerCase()))
             .toList();
       },
       itemBuilder: (BuildContext context, item) {
+        print("Test");
         return ListTile(
           title: Text(item.tenDacSan),
         );
