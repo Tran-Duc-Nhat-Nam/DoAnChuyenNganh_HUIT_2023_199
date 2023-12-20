@@ -49,7 +49,7 @@ final GoRouter router = GoRouter(
               path: '/dacsan',
               name: "Danh sách đặc sản",
               builder: (context, state) {
-                return const TrangDacSan();
+                return TrangDacSan();
               },
               routes: [
                 GoRoute(

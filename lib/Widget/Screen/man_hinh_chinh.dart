@@ -6,6 +6,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vina_foods/Service/doc_nguoi_dung.dart';
 
+import '../../Model/dac_san.dart';
 import '../../Service/thu_vien_api.dart';
 import '../../Widget/thong_bao_xac_nhan_thoat.dart';
 import '../../main.dart';
@@ -122,12 +123,23 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
   }
 
   Widget buildSearchAnchor() {
-    return TypeAheadField(
+    return TypeAheadField<DacSan>(
+      controller: widget.controller,
+      suggestionsCallback: (pattern) => dsDacSan
+          .where((element) =>
+              element.tenDacSan.toLowerCase().contains(pattern.toLowerCase()))
+          .toList(),
       builder: (context, controller, focusNode) {
         return TextField(
-          style: const TextStyle(color: Colors.white),
-          textAlignVertical: TextAlignVertical.center,
+          onSubmitted: (value) {
+            context.goNamed(
+              "timKiem",
+              queryParameters: {"ten": value},
+            );
+          },
           controller: widget.controller,
+          focusNode: focusNode,
+          autofocus: true,
           decoration: InputDecoration(
               focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(width: 2, color: Colors.white70),
@@ -157,39 +169,15 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
                 icon: const Icon(Icons.search_outlined),
               ),
               suffixIconColor: Colors.white),
-          onSubmitted: (value) {
-            context.goNamed(
-              "timKiem",
-              queryParameters: {"ten": value},
-            );
-          },
         );
       },
-      decorationBuilder: (context, child) {
-        return Material(
-          borderRadius: BorderRadius.circular(15),
-        );
-      },
-      suggestionsCallback: (String pattern) {
-        print("Test");
-        return dsDacSan
-            .where((element) =>
-                element.tenDacSan.toLowerCase().contains(pattern.toLowerCase()))
-            .toList();
-      },
-      itemBuilder: (BuildContext context, item) {
-        print("Test");
+      itemBuilder: (context, dacSan) {
         return ListTile(
-          title: Text(item.tenDacSan),
+          title: Text(dacSan.tenDacSan),
         );
       },
-      onSelected: (item) {
-        context.go("/dacsan/chitiet/${item.idDacSan}");
-      },
-      emptyBuilder: (context) {
-        return const ListTile(
-          title: Text("Không tìm thấy đặc sản"),
-        );
+      onSelected: (dacSan) {
+        context.push("/dacsan/chitiet/${dacSan.idDacSan}");
       },
     );
   }

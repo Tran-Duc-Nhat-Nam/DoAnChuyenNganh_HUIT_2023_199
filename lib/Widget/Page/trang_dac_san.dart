@@ -12,8 +12,8 @@ import '../../main.dart';
 import '../hinh_cache.dart';
 
 class TrangDacSan extends StatefulWidget {
-  const TrangDacSan({super.key});
-
+  TrangDacSan({super.key});
+  final TextEditingController controller = TextEditingController();
   @override
   _TrangDacSanState createState() => _TrangDacSanState();
 }
