@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vina_foods/Widget/Screen/man_hinh_admin.dart';
 
 import '../Widget/Page/trang_chi_tiet_dac_san.dart';
 import '../Widget/Page/trang_dac_san.dart';
@@ -17,6 +18,7 @@ import '../main.dart';
 final rootNavKey = GlobalKey<NavigatorState>();
 final dacsanNavKey = GlobalKey<NavigatorState>();
 final nguoiDungNavKey = GlobalKey<NavigatorState>();
+final quanLyNavKey = GlobalKey<NavigatorState>();
 
 final GoRouter router = GoRouter(
   initialLocation: "/",
@@ -151,9 +153,44 @@ final GoRouter router = GoRouter(
             if (FirebaseAuth.instance.currentUser != null) {
               return null;
             }
-            return null;
+            return "signup";
           },
         ),
+      ],
+    ),
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, child) {
+        User? user = FirebaseAuth.instance.currentUser;
+        if (user != null) {
+          return ManHinhAdmin(
+            page: child,
+          );
+        }
+        return ManHinhDangNhap();
+      },
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/admin/dacsan',
+              name: "Quản lý đặc sản",
+              builder: (context, state) {
+                return TrangDacSan();
+              },
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/admin/nguoidung',
+              name: "Quản lý người dùng",
+              builder: (context, state) {
+                return TrangNguoiDung();
+              },
+            ),
+          ],
+        )
       ],
     ),
   ],

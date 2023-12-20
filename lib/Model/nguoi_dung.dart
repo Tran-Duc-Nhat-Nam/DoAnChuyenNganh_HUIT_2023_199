@@ -6,12 +6,14 @@ class NguoiDung {
   String? diaChi;
   String? soDienThoai;
   DateTime? ngaySinh;
+  bool isAdmin;
 
   NguoiDung({
     required this.uid,
     required this.email,
     required this.hoTen,
     required this.isNam,
+    this.isAdmin = false,
     this.diaChi,
     this.soDienThoai,
     this.ngaySinh,

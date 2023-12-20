@@ -1,10 +1,9 @@
 import 'package:async_builder/async_builder.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vina_foods/Service/doc_nguoi_dung.dart';
+import 'package:vina_foods/Service/dich_vu_nguoi_dung.dart';
 
 import '../../Model/dac_san.dart';
 import '../../Service/thu_vien_api.dart';
@@ -50,15 +49,6 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
 
   @override
   Widget build(BuildContext context) {
-    Widget page = widget.page;
-    if (kIsWeb) {
-      page = Center(
-        child: AspectRatio(
-          aspectRatio: 9 / 16,
-          child: widget.page,
-        ),
-      );
-    }
     return AsyncBuilder(
       future: myFuture,
       waiting: (context) => const ManHinhLoading(),
@@ -108,7 +98,7 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
                       right: 20,
                     ),
                     child: Container(
-                      constraints: BoxConstraints(maxWidth: 400),
+                      constraints: const BoxConstraints(maxWidth: 400),
                       child: buildSearchAnchor(),
                     ),
                   ),

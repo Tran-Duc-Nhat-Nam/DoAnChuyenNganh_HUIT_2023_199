@@ -25,6 +25,7 @@ List<DacSan> dsDacSanMienTrung = [];
 List<DacSan> dsDacSanMienNam = [];
 List<LoaiDacSan> dsLoaiDacSan = [];
 List<NoiBat> dsDacSanNoiBat = [];
+List<NguoiDung> dsNguoiDung = [];
 late NguoiDung nguoiDung;
 
 Future<void> main() async {
