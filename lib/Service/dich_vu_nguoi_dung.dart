@@ -31,7 +31,7 @@ Future<List<NguoiDung>> docDanhSachNguoiDung() async {
     Map<String, dynamic>? data = doc.data();
     dsNguoiDung.add(NguoiDung(
       uid: doc.id,
-      email: data["hoTen"],
+      email: data["email"],
       hoTen: data["hoTen"],
       isNam: data["isNam"],
       diaChi: data["diaChi"],

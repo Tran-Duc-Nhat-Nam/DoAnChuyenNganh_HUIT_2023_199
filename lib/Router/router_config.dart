@@ -1,6 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vina_foods/Widget/Page/trang_quan_ly_dac_san.dart';
+import 'package:vina_foods/Widget/Page/trang_quan_ly_loai_dac_san.dart';
+import 'package:vina_foods/Widget/Page/trang_quan_ly_nguoi_dung.dart';
+import 'package:vina_foods/Widget/Page/trang_quan_ly_tinh_thanh.dart';
 import 'package:vina_foods/Widget/Screen/man_hinh_admin.dart';
 
 import '../Widget/Page/trang_chi_tiet_dac_san.dart';
@@ -8,6 +12,7 @@ import '../Widget/Page/trang_dac_san.dart';
 import '../Widget/Page/trang_danh_sach_dac_san.dart';
 import '../Widget/Page/trang_doi_mat_khau.dart';
 import '../Widget/Page/trang_nguoi_dung.dart';
+import '../Widget/Page/trang_quan_ly_vung_mien.dart';
 import '../Widget/Screen/man_hinh_chinh.dart';
 import '../Widget/Screen/man_hinh_cho_xac_nhan.dart';
 import '../Widget/Screen/man_hinh_dang_ky.dart';
@@ -175,7 +180,40 @@ final GoRouter router = GoRouter(
               path: '/admin/dacsan',
               name: "Quản lý đặc sản",
               builder: (context, state) {
-                return TrangDacSan();
+                return const TrangQuanLyDacSan();
+              },
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/admin/loaidacsan',
+              name: "Quản lý loại đặc sản",
+              builder: (context, state) {
+                return const TrangQuanLyLoaiDacSan();
+              },
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/admin/xuatsu',
+              name: "Quản lý xuất sứ",
+              builder: (context, state) {
+                return const TrangQuanLyTinhThanh();
+              },
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/admin/vungmien',
+              name: "Quản lý vùng miền",
+              builder: (context, state) {
+                return const TrangQuanLyVungMien();
               },
             ),
           ],
@@ -186,7 +224,7 @@ final GoRouter router = GoRouter(
               path: '/admin/nguoidung',
               name: "Quản lý người dùng",
               builder: (context, state) {
-                return TrangNguoiDung();
+                return const TrangQuanLyNguoiDung();
               },
             ),
           ],

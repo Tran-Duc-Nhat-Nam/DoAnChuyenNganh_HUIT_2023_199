@@ -46,6 +46,13 @@ class _ManHinhAdminState extends State<ManHinhAdmin> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> dsSidebar = [
+      "Đặc sản",
+      "Loại đặc sản",
+      "Xuất sứ",
+      "Vùng miền",
+      "Người dùng",
+    ];
     return AsyncBuilder(
       future: myFuture,
       waiting: (context) => const ManHinhLoading(),
@@ -59,29 +66,35 @@ class _ManHinhAdminState extends State<ManHinhAdmin> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Container(
-                constraints: BoxConstraints(maxWidth: 150),
-                color: Colors.blueAccent,
+                constraints: const BoxConstraints(maxWidth: 150),
+                color: const Color.fromARGB(255, 0, 114, 225),
                 child: Column(
-                  children: [
-                    ListTile(
-                      title: Text("Đặc sản"),
-                      onTap: () {
-                        setState(() {
-                          widget.page.goBranch(0);
-                          selectedIndex = 0;
-                        });
-                      },
-                    ),
-                    ListTile(
-                      title: Text("Người dùng"),
-                      onTap: () {
-                        setState(() {
-                          widget.page.goBranch(1);
-                          selectedIndex = 1;
-                        });
-                      },
-                    ),
-                  ],
+                  children: dsSidebar
+                      .map((e) => ListTile(
+                            title: Text(
+                              e,
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 15,
+                            ),
+                            shape: LinearBorder.bottom(
+                              side: const BorderSide(
+                                color: Colors.white,
+                                width: 2,
+                              ),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                widget.page.goBranch(dsSidebar.indexOf(e));
+                                selectedIndex = dsSidebar.indexOf(e);
+                              });
+                            },
+                          ))
+                      .toList(),
                 ),
               ),
               Flexible(flex: 9, child: widget.page),
