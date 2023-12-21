@@ -13,7 +13,6 @@ import 'Model/noi_bat.dart';
 import 'Model/tinh_thanh.dart';
 import 'Model/vung_mien.dart';
 import 'Router/router_config.dart';
-import 'Service/thu_vien_api.dart';
 
 late final SharedPreferences ref;
 List<VungMien> dsVungMien = [];
@@ -45,8 +44,6 @@ Future<void> main() async {
 
   ref = await SharedPreferences.getInstance();
 
-  deleteUser("NzUeEuQvJiY9e6SOET96Jajv0Ur2");
-
   runApp(const MainApp());
 }
 
@@ -61,7 +58,7 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: "App đặc sản",
+      title: "VinaFoods",
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromARGB(255, 30, 144, 255),

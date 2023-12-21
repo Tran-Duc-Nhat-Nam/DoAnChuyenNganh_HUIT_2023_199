@@ -26,6 +26,7 @@ class TrangNguoiDung extends StatefulWidget {
   final TextEditingController hoTenController = TextEditingController();
   final TextEditingController diaChiController = TextEditingController();
   final TextEditingController soDienThoaiController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   State<TrangNguoiDung> createState() => _TrangNguoiDungState();
@@ -324,6 +325,90 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                       });
                     },
                     child: const Text("Đăng xuất"),
+                  ),
+                ),
+                KhoangTrongDoc(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 25,
+                  ),
+                  child: ElevatedButton(
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(35),
+                      padding: const EdgeInsets.all(12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      side: const BorderSide(width: 1, color: Colors.redAccent),
+                    ),
+                    onPressed: () async {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext dialogContext) {
+                          return AlertDialog(
+                            titleTextStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color:
+                                  Theme.of(context).textTheme.titleLarge!.color,
+                            ),
+                            titlePadding: const EdgeInsets.only(
+                              left: 25,
+                              top: 25,
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 25, vertical: 15),
+                            actionsPadding: const EdgeInsets.only(
+                              right: 15,
+                              bottom: 10,
+                            ),
+                            alignment: Alignment.center,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            title: const Text("Nhập mật khẩu"),
+                            content: TextField(
+                              controller: widget.passwordController,
+                            ),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(dialogContext);
+                                  },
+                                  child: const Text("Hủy")),
+                              TextButton(
+                                onPressed: () async {
+                                  bool kq = await nguoiDung
+                                      .xoaNguoiDung(
+                                          widget.passwordController.text)
+                                      .onError((error, stackTrace) {
+                                    if (context.mounted) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text("Xóa thất bại"),
+                                        ),
+                                      );
+                                    }
+                                    return false;
+                                  });
+                                  if (kq && context.mounted) {
+                                    dsDacSan.clear();
+                                    dsHinhAnh.clear();
+                                    dsTinhThanh.clear();
+                                    dsVungMien.clear();
+                                    context.go("/");
+                                  } else if (context.mounted) {
+                                    Navigator.pop(dialogContext);
+                                  }
+                                },
+                                child: const Text("Xóa"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: const Text("Xóa tài khoản"),
                   ),
                 ),
                 KhoangTrongDoc(),

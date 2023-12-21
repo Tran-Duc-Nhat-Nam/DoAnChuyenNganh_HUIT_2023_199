@@ -15,7 +15,6 @@ import 'package:intl/intl.dart';
 import 'package:vina_foods/Model/nguoi_dung.dart';
 
 import '../../Model/tinh_thanh.dart';
-import '../../Service/dich_vu_nguoi_dung.dart';
 import '../../Service/thu_vien_style.dart';
 import '../../Widget/khoang_trong_doc.dart';
 import 'man_hinh_cho_xac_nhan.dart';
@@ -246,7 +245,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                           await FirebaseAuth.instance.currentUser!
                               .updateEmail(widget.emailController.text)
                               .whenComplete(() async {
-                            await themNguoiDung(NguoiDung(
+                            await NguoiDung(
                               uid: FirebaseAuth.instance.currentUser!.uid,
                               email: widget.emailController.text,
                               hoTen: widget.hoTenController.text,
@@ -254,7 +253,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                               diaChi: tinhThanh!,
                               soDienThoai: widget.sdtController.text,
                               ngaySinh: selectedDate,
-                            ));
+                            ).themNguoiDung();
                             if (context.mounted) {
                               context.go("/");
                             }
@@ -273,7 +272,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                               email: widget.emailController.text,
                               password: widget.matKhauController.text,
                             );
-                            await themNguoiDung(NguoiDung(
+                            await NguoiDung(
                               uid: user.uid,
                               email: widget.emailController.text,
                               hoTen: widget.hoTenController.text,
@@ -281,7 +280,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                               diaChi: tinhThanh!,
                               soDienThoai: widget.sdtController.text,
                               ngaySinh: selectedDate,
-                            ));
+                            ).themNguoiDung();
                             if (context.mounted) {
                               Navigator.push(
                                   context,

@@ -26,7 +26,7 @@ class _TrangQuanLyDacSanState extends State<TrangQuanLyDacSan> {
           sortColumnIndex: sortIndex,
           columns: [
             DataColumn(
-              label: Text("Mã đặc sản"),
+              label: const Text("Mã đặc sản"),
               onSort: (columnIndex, ascending) {
                 if (ascending) {
                   dsDacSan.sort(
@@ -44,7 +44,7 @@ class _TrangQuanLyDacSanState extends State<TrangQuanLyDacSan> {
               },
             ),
             DataColumn(
-              label: Text("Tên đặc sản"),
+              label: const Text("Tên đặc sản"),
               onSort: (columnIndex, ascending) {
                 setState(() {
                   asc = ascending;
@@ -63,7 +63,7 @@ class _TrangQuanLyDacSanState extends State<TrangQuanLyDacSan> {
               },
             ),
             DataColumn(
-              label: Text("Vùng miền"),
+              label: const Text("Vùng miền"),
               onSort: (columnIndex, ascending) {
                 setState(() {
                   asc = ascending;
@@ -94,7 +94,7 @@ class _TrangQuanLyDacSanState extends State<TrangQuanLyDacSan> {
               },
             ),
             DataColumn(
-              label: Text("Xuất sứ"),
+              label: const Text("Xuất sứ"),
               onSort: (columnIndex, ascending) {
                 setState(() {
                   asc = ascending;
@@ -122,7 +122,7 @@ class _TrangQuanLyDacSanState extends State<TrangQuanLyDacSan> {
                 });
               },
             ),
-            DataColumn(
+            const DataColumn(
               label: Text("Thành phần"),
             ),
           ],

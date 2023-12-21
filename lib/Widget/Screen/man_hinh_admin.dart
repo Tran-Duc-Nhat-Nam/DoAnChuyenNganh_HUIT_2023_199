@@ -2,9 +2,9 @@ import 'package:async_builder/async_builder.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vina_foods/Service/dich_vu_nguoi_dung.dart';
 import 'package:vina_foods/main.dart';
 
+import '../../Model/nguoi_dung.dart';
 import '../../Service/thu_vien_api.dart';
 import '../thong_bao_xac_nhan_thoat.dart';
 import 'man_hinh_loading.dart';
@@ -35,9 +35,9 @@ class _ManHinhAdminState extends State<ManHinhAdmin> {
         await getDacSan();
         await getDacSanVungMien();
         await getDacSanNoiBat();
-        dsNguoiDung = await docDanhSachNguoiDung();
-        nguoiDung =
-            (await docNguoiDung(FirebaseAuth.instance.currentUser!.uid))!;
+        dsNguoiDung = await NguoiDung.docDanhSachNguoiDung();
+        nguoiDung = (await NguoiDung.docNguoiDung(
+            FirebaseAuth.instance.currentUser!.uid))!;
         return "";
       },
     );

@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vina_foods/Service/dich_vu_nguoi_dung.dart';
 
 import '../../Model/dac_san.dart';
+import '../../Model/nguoi_dung.dart';
 import '../../Service/thu_vien_api.dart';
 import '../../Widget/thong_bao_xac_nhan_thoat.dart';
 import '../../main.dart';
@@ -39,8 +39,8 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
         await getDacSan();
         await getDacSanVungMien();
         await getDacSanNoiBat();
-        nguoiDung =
-            (await docNguoiDung(FirebaseAuth.instance.currentUser!.uid))!;
+        nguoiDung = (await NguoiDung.docNguoiDung(
+            FirebaseAuth.instance.currentUser!.uid))!;
         return "";
       },
     );

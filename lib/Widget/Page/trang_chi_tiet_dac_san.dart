@@ -15,7 +15,7 @@ class TrangChiTietDacSan extends StatefulWidget {
   const TrangChiTietDacSan({super.key, required this.maDS});
 
   @override
-  _TrangChiTietDacSanState createState() => _TrangChiTietDacSanState();
+  State<TrangChiTietDacSan> createState() => _TrangChiTietDacSanState();
 }
 
 class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {

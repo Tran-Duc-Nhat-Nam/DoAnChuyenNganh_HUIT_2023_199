@@ -54,6 +54,7 @@ dependencies:
   intl: ^0.19.0
   cloud_firestore: ^4.13.6
   advanced_datatable: ^0.0.8
+  data_table_2: ^2.5.9
 
 dev_dependencies:
   flutter_test:
