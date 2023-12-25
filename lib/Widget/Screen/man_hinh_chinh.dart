@@ -5,8 +5,11 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../Model/dac_san.dart';
+import '../../Model/hinh_anh.dart';
+import '../../Model/loai_dac_san.dart';
 import '../../Model/nguoi_dung.dart';
-import '../../Service/thu_vien_api.dart';
+import '../../Model/tinh_thanh.dart';
+import '../../Model/vung_mien.dart';
 import '../../Widget/thong_bao_xac_nhan_thoat.dart';
 import '../../main.dart';
 import 'man_hinh_loading.dart';
@@ -32,13 +35,11 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
     myFuture = Future.delayed(
       const Duration(milliseconds: 100),
       () async {
-        await getTinhThanh();
-        await getHinhAnh();
-        await getVungMien();
-        await getLoaiDacSan();
-        await getDacSan();
-        await getDacSanVungMien();
-        await getDacSanNoiBat();
+        dsDacSan = await DacSan.docDanhSach();
+        dsLoaiDacSan = await LoaiDacSan.docDanhSach();
+        dsTinhThanh = await TinhThanh.docDanhSach();
+        dsVungMien = await VungMien.docDanhSach();
+        dsHinhAnh = await HinhAnh.docDanhSach();
         nguoiDung = (await NguoiDung.docNguoiDung(
             FirebaseAuth.instance.currentUser!.uid))!;
         return "";
@@ -77,7 +78,11 @@ class _ManHinhChinhState extends State<ManHinhChinh> {
             children: [
               InkWell(
                 onTap: () {
-                  context.go('/');
+                  if (nguoiDung.isAdmin) {
+                    context.go('/admin/dacsan');
+                  } else {
+                    context.go('/');
+                  }
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(

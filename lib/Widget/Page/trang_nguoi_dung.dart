@@ -10,7 +10,6 @@ import 'package:vina_foods/Widget/khoang_trong_doc.dart';
 
 import '../../Model/nguoi_dung.dart';
 import '../../Model/tinh_thanh.dart';
-import '../../Service/thu_vien_api.dart';
 import '../../Service/thu_vien_style.dart';
 import '../../Widget/thong_bao_xac_nhan_thoat.dart';
 import '../../main.dart';
@@ -170,17 +169,18 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                       },
                       onChanged: (value) {
                         if (value != null) {
-                          widget.diaChiController.text = value.ten;
+                          widget.diaChiController.text = value.tenTinhThanh;
                         }
                       },
                       selectedItem: widget.diaChiController.text !=
                               "Chưa có thông tin địa chỉ"
                           ? dsTinhThanh.firstWhere((element) =>
-                              element.ten == widget.diaChiController.text)
+                              element.tenTinhThanh ==
+                              widget.diaChiController.text)
                           : dsTinhThanh[0],
                       items: dsTinhThanh,
                       itemAsString: (value) {
-                        return value.ten;
+                        return value.tenTinhThanh;
                       },
                     ),
                   ),
@@ -256,13 +256,13 @@ class _TrangNguoiDungState extends State<TrangNguoiDung> {
                           updateText = "Lưu thông tin";
                         } else {
                           isReadOnly = true;
-                          updateUser(
-                            widget.uidController.text,
-                            widget.emailController.text,
-                            widget.hoTenController.text,
-                            isNam,
-                            widget.diaChiController.text,
-                          );
+                          nguoiDung.email = widget.emailController.text;
+                          nguoiDung.diaChi = widget.diaChiController.text;
+                          nguoiDung.soDienThoai =
+                              widget.soDienThoaiController.text;
+                          nguoiDung.ngaySinh = selectedDate;
+                          nguoiDung.isNam = isNam;
+                          nguoiDung.themNguoiDung();
                           updateText = "Cập nhật thông tin";
                         }
                       });

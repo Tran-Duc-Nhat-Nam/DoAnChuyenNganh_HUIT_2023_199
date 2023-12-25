@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../Model/dac_san.dart';
-import '../../Service/thu_vien_api.dart';
 import '../../main.dart';
 import '../hinh_cache.dart';
 
@@ -17,8 +16,8 @@ class TrangDanhSachDacSan extends StatefulWidget {
   });
   final String? ten;
   final String? thanhPhan;
-  final int? xuatSu;
-  final int? vungMien;
+  final String? xuatSu;
+  final String? vungMien;
   final bool? noiBat;
   @override
   State<TrangDanhSachDacSan> createState() => _TrangDanhSachDacSanState();
@@ -45,21 +44,13 @@ class _TrangDanhSachDacSanState extends State<TrangDanhSachDacSan> {
     }
     if (widget.xuatSu != null) {
       dsDacSanDaLoc = dsDacSanDaLoc
-          .where((element) => element.xuatXu == widget.xuatSu)
+          .where((element) => element.idTinhThanh == widget.xuatSu)
           .toList();
     }
     if (widget.vungMien != null) {
       dsDacSanDaLoc = dsDacSanDaLoc
-          .where((element) => element.idMien == widget.vungMien)
+          .where((element) => element.idVungMien == widget.vungMien)
           .toList();
-    }
-    if (widget.noiBat != null) {
-      if (widget.noiBat!) {
-        dsDacSanDaLoc = dsDacSanDaLoc
-            .where((dacSan) => dsDacSanNoiBat
-                .any((element) => element.idDacSan == dacSan.idDacSan))
-            .toList();
-      }
     }
     super.initState();
   }
@@ -103,7 +94,9 @@ class _TrangDanhSachDacSanState extends State<TrangDanhSachDacSan> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    Text('Xuất xứ: ${getTenTinh(dsDacSanDaLoc[index].xuatXu)}'),
+                    Text(
+                      'Xuất xứ: ${dsTinhThanh.firstWhere((element) => element.idTinhThanh == dsDacSanDaLoc[index].idTinhThanh)}',
+                    ),
                   ],
                 ),
               ),
@@ -116,7 +109,12 @@ class _TrangDanhSachDacSanState extends State<TrangDanhSachDacSan> {
                     width: 100,
                     height: 85,
                     child: HinhCache(
-                        getURLImage(dsDacSanDaLoc[index].avatar!), 150),
+                        dsHinhAnh
+                            .firstWhere((element) =>
+                                element.idAnh ==
+                                dsDacSanDaLoc[index].idHinhDaiDien!)
+                            .link,
+                        150),
                   ),
                 ),
               ),

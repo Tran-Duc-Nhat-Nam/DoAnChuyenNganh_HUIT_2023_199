@@ -1,3 +1,4 @@
+import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:vina_foods/main.dart';
 
@@ -12,57 +13,68 @@ class _TrangQuanLyTinhThanhState extends State<TrangQuanLyTinhThanh> {
   bool asc = true;
   int sortIndex = 0;
   @override
+  void initState() {
+    // Future.delayed(
+    //   const Duration(milliseconds: 10),
+    //   () async {
+    //     for (var e in dsTinhThanh) {
+    //       print(e.tenTinhThanh);
+    //       await TinhThanh.them(e.tenTinhThanh);
+    //     }
+    //   },
+    // );
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: PaginatedDataTable(
-          showCheckboxColumn: true,
-          checkboxHorizontalMargin: 0,
-          rowsPerPage: 20,
-          sortAscending: asc,
-          sortColumnIndex: sortIndex,
-          columns: [
-            DataColumn(
-              label: const Text("Mã tỉnh thành"),
-              onSort: (columnIndex, ascending) {
-                if (ascending) {
-                  dsTinhThanh.sort(
-                    (a, b) => a.maTT.compareTo(b.maTT),
-                  );
-                } else {
-                  dsTinhThanh.sort(
-                    (a, b) => b.maTT.compareTo(a.maTT),
-                  );
-                }
-                setState(() {
-                  asc = ascending;
-                  sortIndex = columnIndex;
-                });
-              },
-            ),
-            DataColumn(
-              label: const Text("Tên tỉnh thành"),
-              onSort: (columnIndex, ascending) {
-                if (ascending) {
-                  dsTinhThanh.sort(
-                    (a, b) => a.ten.compareTo(b.ten),
-                  );
-                } else {
-                  dsTinhThanh.sort(
-                    (a, b) => b.ten.compareTo(a.ten),
-                  );
-                }
-                setState(() {
-                  asc = ascending;
-                  sortIndex = columnIndex;
-                });
-              },
-            ),
-          ],
-          source: TinhThanhDataSource(),
-        ),
+      child: PaginatedDataTable2(
+        showCheckboxColumn: true,
+        checkboxHorizontalMargin: 0,
+        rowsPerPage: 20,
+        sortAscending: asc,
+        sortColumnIndex: sortIndex,
+        columns: [
+          DataColumn(
+            label: const Text("Mã tỉnh thành"),
+            onSort: (columnIndex, ascending) {
+              if (ascending) {
+                dsTinhThanh.sort(
+                  (a, b) => a.idTinhThanh.compareTo(b.idTinhThanh),
+                );
+              } else {
+                dsTinhThanh.sort(
+                  (a, b) => b.idTinhThanh.compareTo(a.idTinhThanh),
+                );
+              }
+              setState(() {
+                asc = ascending;
+                sortIndex = columnIndex;
+              });
+            },
+          ),
+          DataColumn(
+            label: const Text("Tên tỉnh thành"),
+            onSort: (columnIndex, ascending) {
+              if (ascending) {
+                dsTinhThanh.sort(
+                  (a, b) => a.tenTinhThanh.compareTo(b.tenTinhThanh),
+                );
+              } else {
+                dsTinhThanh.sort(
+                  (a, b) => b.tenTinhThanh.compareTo(a.tenTinhThanh),
+                );
+              }
+              setState(() {
+                asc = ascending;
+                sortIndex = columnIndex;
+              });
+            },
+          ),
+        ],
+        source: TinhThanhDataSource(),
       ),
     );
   }
@@ -82,10 +94,10 @@ class TinhThanhDataSource extends DataTableSource {
       selected: selectedRowIndexs[index],
       cells: [
         DataCell(
-          Text(dsTinhThanh[index].maTT.toString()),
+          Text(dsTinhThanh[index].idTinhThanh.toString()),
         ),
         DataCell(
-          Text(dsTinhThanh[index].ten),
+          Text(dsTinhThanh[index].tenTinhThanh),
         ),
       ],
     );

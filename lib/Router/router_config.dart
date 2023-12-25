@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vina_foods/Widget/Page/trang_quan_ly_dac_san.dart';
+import 'package:vina_foods/Widget/Page/trang_quan_ly_hinh_anh.dart';
 import 'package:vina_foods/Widget/Page/trang_quan_ly_loai_dac_san.dart';
 import 'package:vina_foods/Widget/Page/trang_quan_ly_nguoi_dung.dart';
 import 'package:vina_foods/Widget/Page/trang_quan_ly_tinh_thanh.dart';
@@ -64,30 +65,20 @@ final GoRouter router = GoRouter(
                   name: "Chi tiết đặc sản",
                   builder: (context, state) {
                     return TrangChiTietDacSan(
-                      maDS: int.parse(state.pathParameters['id']!),
+                      maDS: state.pathParameters['id']!,
                     );
+                  },
+                  redirect: (context, state) {
+                    if (state.pathParameters['id'] != null) {
+                      return "/dacsan/chitiet/${state.pathParameters['id']}";
+                    }
+                    return null;
                   },
                 ),
                 GoRoute(
                   path: "timkiem",
                   name: "timKiem",
                   builder: (context, state) {
-                    int? xs = -1;
-
-                    try {
-                      xs = int.tryParse(state.uri.queryParameters['xuatSu']!);
-                    } catch (e) {
-                      xs = null;
-                    }
-
-                    int? vm = -1;
-
-                    try {
-                      vm = int.tryParse(state.uri.queryParameters['vungMien']!);
-                    } catch (e) {
-                      vm = null;
-                    }
-
                     bool? noiBat = false;
 
                     try {
@@ -100,8 +91,8 @@ final GoRouter router = GoRouter(
                     return TrangDanhSachDacSan(
                       ten: state.uri.queryParameters['ten'],
                       thanhPhan: state.uri.queryParameters['thanhPhan'],
-                      xuatSu: xs,
-                      vungMien: vm,
+                      xuatSu: state.uri.queryParameters['xuatSu'],
+                      vungMien: state.uri.queryParameters['vungMien'],
                       noiBat: noiBat,
                     );
                   },
@@ -191,7 +182,7 @@ final GoRouter router = GoRouter(
               path: '/admin/loaidacsan',
               name: "Quản lý loại đặc sản",
               builder: (context, state) {
-                return const TrangQuanLyLoaiDacSan();
+                return TrangQuanLyLoaiDacSan();
               },
             ),
           ],
@@ -214,6 +205,17 @@ final GoRouter router = GoRouter(
               name: "Quản lý vùng miền",
               builder: (context, state) {
                 return const TrangQuanLyVungMien();
+              },
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/admin/hinhanh',
+              name: "Quản lý hình đặc sản",
+              builder: (context, state) {
+                return const TrangQuanLyHinhAnh();
               },
             ),
           ],

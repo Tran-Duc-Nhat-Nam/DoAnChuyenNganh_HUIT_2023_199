@@ -50,7 +50,19 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
 
   @override
   void initState() {
-    xemTinhThanh();
+    Future.delayed(
+      const Duration(microseconds: 100),
+      () async {
+        var reponse = await get(
+            Uri.parse('https://cntt199.000webhostapp.com/getTinhThanh.php'));
+        var result = json.decode(utf8.decode(reponse.bodyBytes));
+
+        for (var document in result) {
+          TinhThanh tinhThanh = TinhThanh.fromJson(document);
+          dsTT.add(tinhThanh);
+        }
+      },
+    );
 
     if (widget.uid != null) {
       isPasswordReadOnly = true;
@@ -68,7 +80,7 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
     final List<String> dsLabelTinhThanh = [];
     for (var tinhThanh in dsTT) {
       dsLabelTinhThanh.add(
-        tinhThanh.ten,
+        tinhThanh.tenTinhThanh,
       );
     }
 
@@ -190,12 +202,12 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
                 },
                 onChanged: (value) {
                   if (value != null) {
-                    tinhThanh = value.ten;
+                    tinhThanh = value.tenTinhThanh;
                   }
                 },
                 items: dsTT,
                 itemAsString: (value) {
-                  return value.ten;
+                  return value.tenTinhThanh;
                 },
               ),
               KhoangTrongDoc(),
@@ -395,12 +407,6 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
     );
   }
 
-  SizedBox HorizontalGapSizedBox() {
-    return const SizedBox(
-      width: 15,
-    );
-  }
-
   ButtonStyle MaxWidthRoundButtonStyle() {
     return ButtonStyle(
       minimumSize: MaterialStateProperty.all(const Size.fromHeight(40)),
@@ -421,17 +427,5 @@ class _ManHinhDangKyState extends State<ManHinhDangKy> {
         ),
       ),
     );
-  }
-
-  Future<void> xemTinhThanh() async {
-    var reponse = await get(Uri.parse(
-        'https://cntt199.000webhostapp.com/getTinhThanh.php')); //https://cntt199.000webhostapp.com/getTinhThanh.php //https://provinces.open-api.vn/api/?depth=1
-    var result = json.decode(utf8.decode(reponse.bodyBytes));
-
-    for (var document in result) {
-      TinhThanh tinhThanh = TinhThanh.fromJson(document);
-      dsTT.add(tinhThanh);
-    }
-    setState(() {});
   }
 }

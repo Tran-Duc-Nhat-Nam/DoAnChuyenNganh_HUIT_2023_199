@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +9,6 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart';
 
 import '../../Model/nguoi_dung.dart';
 import '../../Service/thu_vien_style.dart';
@@ -85,76 +83,14 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
                   }
                   return null;
                 },
-                onFieldSubmitted: (value) async {
-                  if (widget.formKey.currentState!.validate()) {
-                    try {
-                      User? user = (await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                        email: widget.emailController.text,
-                        password: widget.passwordController.text,
-                      ))
-                          .user;
-
-                      if (user != null && context.mounted) {
-                        context.go("/dacsan");
-                      }
-                    } on FirebaseAuthException catch (e) {
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(snackBarFirebaseAuth(e));
-                      }
-                    }
-                  }
-                },
+                onFieldSubmitted: (value) => dangNhap(),
               ),
               KhoangTrongDoc(),
               KhoangTrongDoc(),
               KhoangTrongDoc(),
               ElevatedButton(
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.lightBlue),
-                    minimumSize:
-                        MaterialStateProperty.all(const Size.fromHeight(25)),
-                    textStyle: MaterialStateProperty.all(
-                      const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    padding: MaterialStateProperty.all(const EdgeInsets.only(
-                      top: 15,
-                      bottom: 15,
-                      left: 35,
-                      right: 35,
-                    )),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                      ),
-                    ),
-                  ),
-                  onPressed: () async {
-                    if (widget.formKey.currentState!.validate()) {
-                      try {
-                        User? user = (await FirebaseAuth.instance
-                                .signInWithEmailAndPassword(
-                          email: widget.emailController.text,
-                          password: widget.passwordController.text,
-                        ))
-                            .user;
-
-                        if (user != null && context.mounted) {
-                          context.go("/");
-                        }
-                      } on FirebaseAuthException catch (e) {
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(snackBarFirebaseAuth(e));
-                        }
-                      }
-                    }
-                  },
+                  style: RoundButtonStyle(),
+                  onPressed: dangNhap,
                   child: const Text("Đăng nhập")),
               KhoangTrongDoc(),
               OutlinedButton(
@@ -220,6 +156,26 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
         },
       ),
     );
+  }
+
+  void dangNhap() async {
+    if (widget.formKey.currentState!.validate()) {
+      try {
+        User? user = (await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: widget.emailController.text,
+          password: widget.passwordController.text,
+        ))
+            .user;
+
+        if (user != null && context.mounted) {
+          context.go("/");
+        }
+      } on FirebaseAuthException catch (e) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(snackBarFirebaseAuth(e));
+        }
+      }
+    }
   }
 
   void DangNhapGoogle() async {
@@ -295,18 +251,9 @@ class _ManHinhDangNhapState extends State<ManHinhDangNhap> {
   }
 
   Future<void> DangKyThemThongTin(User user) async {
-    List<NguoiDung> dsNguoiDung = [];
-
-    var response = await get(Uri.parse(
-        'https://cntt199.000webhostapp.com/getNguoiDung.php')); //https://cntt199.000webhostapp.com/getTinhThanh.php //https://provinces.open-api.vn/api/?depth=1
-    var result = json.decode(utf8.decode(response.bodyBytes));
+    List<NguoiDung> dsNguoiDung = await NguoiDung.docDanhSachNguoiDung();
 
     if (context.mounted) {
-      for (var document in result) {
-        NguoiDung nguoiDung = NguoiDung.fromJson(document);
-        dsNguoiDung.add(nguoiDung);
-      }
-
       for (var nd in dsNguoiDung) {
         if (nd.uid == user.uid) {
           context.go("/");

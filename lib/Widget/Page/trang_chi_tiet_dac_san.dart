@@ -1,17 +1,15 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart';
+import 'package:vina_foods/Widget/hinh_cache.dart';
 
-import '../../Model/vung_mien.dart';
+import '../../Model/dac_san.dart';
 import '../../main.dart';
 import '../preview_hinh.dart';
 
 class TrangChiTietDacSan extends StatefulWidget {
-  final int maDS;
+  final String maDS;
   const TrangChiTietDacSan({super.key, required this.maDS});
 
   @override
@@ -21,6 +19,8 @@ class TrangChiTietDacSan extends StatefulWidget {
 class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
   @override
   Widget build(BuildContext context) {
+    DacSan dacSan =
+        dsDacSan.firstWhere((element) => element.idDacSan == widget.maDS);
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -33,7 +33,10 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
                   child: Image.network(
-                    getURLImage(dsDacSan[widget.maDS - 1].avatar),
+                    dsHinhAnh
+                        .firstWhere(
+                            (element) => element.idAnh == dacSan.idHinhDaiDien)
+                        .link,
                     width: double.infinity,
                     fit: BoxFit.fitWidth,
                   ),
@@ -45,7 +48,7 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
               padding: const EdgeInsets.only(
                 left: 15,
               ),
-              child: Text(dsDacSan[widget.maDS - 1].tenDacSan,
+              child: Text(dacSan.tenDacSan,
                   style: const TextStyle(
                       fontWeight: FontWeight.w900,
                       color: Colors.teal,
@@ -65,13 +68,11 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
               onPressed: () {
                 context.pushNamed(
                   "timKiem",
-                  queryParameters: {
-                    "vungMien": dsDacSan[widget.maDS - 1].idMien.toString()
-                  },
+                  queryParameters: {"vungMien": dacSan.idVungMien.toString()},
                 );
               },
               child: Text(
-                  "Đặc sản ${getMien(dsDacSan[widget.maDS - 1].idMien)}",
+                  "Đặc sản ${dsVungMien.firstWhere((element) => element.idVungMien == dacSan.idVungMien).tenVungMien}",
                   style: const TextStyle(
                       fontWeight: FontWeight.w900,
                       color: Colors.amber,
@@ -93,8 +94,9 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
               height: 230,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount:
-                      getHinhAnhDS(dsDacSan[widget.maDS - 1].idDacSan).length,
+                  itemCount: dsHinhAnh
+                      .where((element) => element.idDacSan == dacSan.idDacSan)
+                      .length,
                   // itemCount: 10,
                   itemBuilder: (context, index) {
                     return Container(
@@ -108,20 +110,22 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PreviewHinh(
-                                      getHinhAnhDS(dsDacSan[widget.maDS - 1]
-                                          .idDacSan)[index])),
+                                  builder: (context) => PreviewHinh(dsHinhAnh
+                                      .where((element) =>
+                                          element.idDacSan == dacSan.idDacSan)
+                                      .toList()[index]
+                                      .link)),
                             );
                           },
                           child: Hero(
                             tag: 'hinhDS$index',
-                            child: Image.network(
-                                getHinhAnhDS(
-                                    dsDacSan[widget.maDS - 1].idDacSan)[index],
-                                fit: BoxFit.cover,
-                                width:
-                                    double.infinity, // Đặt chiều rộng mong muốn
-                                height: double.infinity),
+                            child: HinhCache(
+                                dsHinhAnh
+                                    .where((element) =>
+                                        element.idDacSan == dacSan.idDacSan)
+                                    .toList()[index]
+                                    .link,
+                                150),
                           ),
                         ),
                       ),
@@ -146,7 +150,7 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
                     borderRadius: BorderRadius.circular(5)),
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
-                  child: SelectableText(dsDacSan[widget.maDS - 1].moTa ?? '',
+                  child: SelectableText(dacSan.moTa ?? '',
                       textDirection: TextDirection.ltr,
                       textAlign: TextAlign.justify,
                       style: const TextStyle(
@@ -176,8 +180,7 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(8.0),
-                  child: SelectableText(
-                      dsDacSan[widget.maDS - 1].thanhPhan ?? '',
+                  child: SelectableText(dacSan.thanhPhan ?? '',
                       textDirection: TextDirection.ltr,
                       textAlign: TextAlign.justify,
                       style: const TextStyle(
@@ -193,47 +196,5 @@ class _TrangChiTietDacSanState extends State<TrangChiTietDacSan> {
         ),
       ),
     );
-  }
-
-  List<String> getHinhAnhDS(int idDacSan) {
-    List<String> ds = [];
-    for (var ha in dsHinhAnh) {
-      if (ha.idDacSan == idDacSan) {
-        ds.add(getURLImage(ha.idAnh));
-      }
-    }
-    return ds;
-  }
-
-  Future<void> getVungMien() async {
-    var reponse = await get(
-        Uri.parse('https://cntt199.000webhostapp.com/getVungMien.php'));
-    var result = json.decode(utf8.decode(reponse.bodyBytes));
-
-    for (var document in result) {
-      VungMien vungMien = VungMien.fromJson(document);
-      dsVungMien.add(vungMien);
-    }
-    setState(() {});
-  }
-
-  String getURLImage(int? idImage) {
-    //// cai nay dung duoc
-    String url = 'http://www.clker.com/cliparts/2/l/m/p/B/b/error-md.png';
-    int index = dsHinhAnh.indexWhere(
-        (hinhAnh) => hinhAnh.idAnh.toString() == idImage.toString());
-    if (index != -1) {
-      return dsHinhAnh[index].link.toString();
-    }
-    return url;
-  }
-
-  String getMien(int? IdMien) {
-    String name = '404';
-    int index = dsVungMien.indexWhere((vungMien) => vungMien.idMien == IdMien);
-    if (index != -1) {
-      return dsVungMien[index].tenMien.toString();
-    }
-    return name;
   }
 }

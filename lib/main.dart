@@ -9,7 +9,6 @@ import 'Model/dac_san.dart';
 import 'Model/hinh_anh.dart';
 import 'Model/loai_dac_san.dart';
 import 'Model/nguoi_dung.dart';
-import 'Model/noi_bat.dart';
 import 'Model/tinh_thanh.dart';
 import 'Model/vung_mien.dart';
 import 'Router/router_config.dart';
@@ -19,11 +18,7 @@ List<VungMien> dsVungMien = [];
 List<HinhAnh> dsHinhAnh = [];
 List<TinhThanh> dsTinhThanh = [];
 List<DacSan> dsDacSan = [];
-List<DacSan> dsDacSanMienBac = [];
-List<DacSan> dsDacSanMienTrung = [];
-List<DacSan> dsDacSanMienNam = [];
 List<LoaiDacSan> dsLoaiDacSan = [];
-List<NoiBat> dsDacSanNoiBat = [];
 List<NguoiDung> dsNguoiDung = [];
 late NguoiDung nguoiDung;
 
@@ -59,55 +54,8 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: "VinaFoods",
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 30, 144, 255),
-            background: Colors.black,
-            brightness: Brightness.dark),
-        scaffoldBackgroundColor: Colors.black,
-        textTheme: TextTheme(
-          displayLarge: const TextStyle(
-            fontSize: 72,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-          // ···
-          titleLarge: GoogleFonts.robotoFlex(
-            fontSize: 30,
-            color: Colors.white,
-          ),
-          bodyMedium: GoogleFonts.robotoFlex(
-            color: Colors.white,
-          ),
-          displaySmall: GoogleFonts.robotoFlex(
-            color: Colors.white,
-          ),
-        ),
-      ),
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 30, 144, 255),
-            background: Colors.white),
-        scaffoldBackgroundColor: Colors.white,
-        textTheme: TextTheme(
-          displayLarge: const TextStyle(
-            fontSize: 72,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-          // ···
-          titleLarge: GoogleFonts.robotoFlex(
-            fontSize: 30,
-            color: Colors.black,
-          ),
-          bodyMedium: GoogleFonts.robotoFlex(
-            color: Colors.black,
-          ),
-          displaySmall: GoogleFonts.robotoFlex(
-            color: Colors.black,
-          ),
-        ),
-      ),
+      darkTheme: getDarkThemeData(),
+      theme: getThemeData(),
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {
           PointerDeviceKind.mouse,
@@ -118,6 +66,61 @@ class _MainAppState extends State<MainApp> {
       ),
       routerConfig: router,
       debugShowCheckedModeBanner: false,
+    );
+  }
+
+  ThemeData getDarkThemeData() {
+    return ThemeData(
+      colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 30, 144, 255),
+          background: Colors.black,
+          brightness: Brightness.dark),
+      scaffoldBackgroundColor: Colors.black,
+      textTheme: TextTheme(
+        displayLarge: const TextStyle(
+          fontSize: 72,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+        // ···
+        titleLarge: GoogleFonts.robotoFlex(
+          fontSize: 30,
+          color: Colors.white,
+        ),
+        bodyMedium: GoogleFonts.robotoFlex(
+          color: Colors.white,
+        ),
+        displaySmall: GoogleFonts.robotoFlex(
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  ThemeData getThemeData() {
+    return ThemeData(
+      colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 30, 144, 255),
+          background: Colors.white),
+      scaffoldBackgroundColor: Colors.white,
+      textTheme: TextTheme(
+        displayLarge: const TextStyle(
+          fontSize: 72,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),
+        // ···
+        titleLarge: GoogleFonts.robotoFlex(
+          fontSize: 30,
+          color: Colors.black,
+        ),
+        bodyMedium: GoogleFonts.robotoFlex(
+          color: Colors.black,
+        ),
+        displaySmall: GoogleFonts.robotoFlex(
+          color: Colors.black,
+        ),
+      ),
     );
   }
 }

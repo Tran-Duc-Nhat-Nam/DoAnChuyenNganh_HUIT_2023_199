@@ -1,3 +1,4 @@
+import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:vina_foods/main.dart';
 
@@ -15,128 +16,129 @@ class _TrangQuanLyNguoiDungState extends State<TrangQuanLyNguoiDung> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: PaginatedDataTable(
-          showCheckboxColumn: true,
-          checkboxHorizontalMargin: 0,
-          rowsPerPage: 20,
-          sortAscending: asc,
-          sortColumnIndex: sortIndex,
-          columns: [
-            DataColumn(
-              label: const Text("UID"),
-              onSort: (columnIndex, ascending) {
-                if (ascending) {
-                  dsNguoiDung.sort(
-                    (a, b) => a.uid.compareTo(b.uid),
-                  );
-                } else {
-                  dsNguoiDung.sort(
-                    (a, b) => b.uid.compareTo(a.uid),
-                  );
-                }
-                setState(() {
-                  asc = ascending;
-                  sortIndex = columnIndex;
-                });
-              },
-            ),
-            DataColumn(
-              label: const Text("Email"),
-              onSort: (columnIndex, ascending) {
-                if (ascending) {
-                  dsNguoiDung.sort(
-                    (a, b) => a.email.compareTo(b.email),
-                  );
-                } else {
-                  dsNguoiDung.sort(
-                    (a, b) => b.email.compareTo(a.email),
-                  );
-                }
-                setState(() {
-                  asc = ascending;
-                  sortIndex = columnIndex;
-                });
-              },
-            ),
-            DataColumn(
-              label: const Text("Họ tên"),
-              onSort: (columnIndex, ascending) {
-                if (ascending) {
-                  dsNguoiDung.sort(
-                    (a, b) => a.hoTen.compareTo(b.hoTen),
-                  );
-                } else {
-                  dsNguoiDung.sort(
-                    (a, b) => b.hoTen.compareTo(a.hoTen),
-                  );
-                }
-                setState(() {
-                  asc = ascending;
-                  sortIndex = columnIndex;
-                });
-              },
-            ),
-            DataColumn(
-              label: const Text("Giới tính"),
-              onSort: (columnIndex, ascending) {
-                if (ascending) {
-                  dsNguoiDung.sort(
-                    (a, b) => a.isNam.toString().compareTo(b.isNam.toString()),
-                  );
-                } else {
-                  dsNguoiDung.sort(
-                    (a, b) => b.isNam.toString().compareTo(a.isNam.toString()),
-                  );
-                }
-                setState(() {
-                  asc = ascending;
-                  sortIndex = columnIndex;
-                });
-              },
-            ),
-            DataColumn(
-              label: const Text("Số điện thoại"),
-              onSort: (columnIndex, ascending) {
-                if (ascending) {
-                  dsNguoiDung.sort(
-                    (a, b) => a.soDienThoai!.compareTo(b.soDienThoai!),
-                  );
-                } else {
-                  dsNguoiDung.sort(
-                    (a, b) => b.soDienThoai!.compareTo(a.soDienThoai!),
-                  );
-                }
-                setState(() {
-                  asc = ascending;
-                  sortIndex = columnIndex;
-                });
-              },
-            ),
-            DataColumn(
-              label: const Text("Địa chỉ"),
-              onSort: (columnIndex, ascending) {
-                if (ascending) {
-                  dsNguoiDung.sort(
-                    (a, b) => a.diaChi!.compareTo(b.diaChi!),
-                  );
-                } else {
-                  dsNguoiDung.sort(
-                    (a, b) => b.diaChi!.compareTo(a.diaChi!),
-                  );
-                }
-                setState(() {
-                  asc = ascending;
-                  sortIndex = columnIndex;
-                });
-              },
-            ),
-          ],
-          source: NguoiDungDataSource(),
-        ),
+      child: PaginatedDataTable2(
+        showCheckboxColumn: true,
+        checkboxHorizontalMargin: 0,
+        rowsPerPage: 20,
+        sortAscending: asc,
+        sortColumnIndex: sortIndex,
+        columns: columnNguoiDung(),
+        source: NguoiDungDataSource(),
       ),
     );
+  }
+
+  List<DataColumn> columnNguoiDung() {
+    return [
+      DataColumn(
+        label: const Text("UID"),
+        onSort: (columnIndex, ascending) {
+          if (ascending) {
+            dsNguoiDung.sort(
+              (a, b) => a.uid.compareTo(b.uid),
+            );
+          } else {
+            dsNguoiDung.sort(
+              (a, b) => b.uid.compareTo(a.uid),
+            );
+          }
+          setState(() {
+            asc = ascending;
+            sortIndex = columnIndex;
+          });
+        },
+      ),
+      DataColumn(
+        label: const Text("Email"),
+        onSort: (columnIndex, ascending) {
+          if (ascending) {
+            dsNguoiDung.sort(
+              (a, b) => a.email.compareTo(b.email),
+            );
+          } else {
+            dsNguoiDung.sort(
+              (a, b) => b.email.compareTo(a.email),
+            );
+          }
+          setState(() {
+            asc = ascending;
+            sortIndex = columnIndex;
+          });
+        },
+      ),
+      DataColumn(
+        label: const Text("Họ tên"),
+        onSort: (columnIndex, ascending) {
+          if (ascending) {
+            dsNguoiDung.sort(
+              (a, b) => a.hoTen.compareTo(b.hoTen),
+            );
+          } else {
+            dsNguoiDung.sort(
+              (a, b) => b.hoTen.compareTo(a.hoTen),
+            );
+          }
+          setState(() {
+            asc = ascending;
+            sortIndex = columnIndex;
+          });
+        },
+      ),
+      DataColumn(
+        label: const Text("Giới tính"),
+        onSort: (columnIndex, ascending) {
+          if (ascending) {
+            dsNguoiDung.sort(
+              (a, b) => a.isNam.toString().compareTo(b.isNam.toString()),
+            );
+          } else {
+            dsNguoiDung.sort(
+              (a, b) => b.isNam.toString().compareTo(a.isNam.toString()),
+            );
+          }
+          setState(() {
+            asc = ascending;
+            sortIndex = columnIndex;
+          });
+        },
+      ),
+      DataColumn(
+        label: const Text("Số điện thoại"),
+        onSort: (columnIndex, ascending) {
+          if (ascending) {
+            dsNguoiDung.sort(
+              (a, b) => a.soDienThoai!.compareTo(b.soDienThoai!),
+            );
+          } else {
+            dsNguoiDung.sort(
+              (a, b) => b.soDienThoai!.compareTo(a.soDienThoai!),
+            );
+          }
+          setState(() {
+            asc = ascending;
+            sortIndex = columnIndex;
+          });
+        },
+      ),
+      DataColumn(
+        label: const Text("Địa chỉ"),
+        onSort: (columnIndex, ascending) {
+          if (ascending) {
+            dsNguoiDung.sort(
+              (a, b) => a.diaChi!.compareTo(b.diaChi!),
+            );
+          } else {
+            dsNguoiDung.sort(
+              (a, b) => b.diaChi!.compareTo(a.diaChi!),
+            );
+          }
+          setState(() {
+            asc = ascending;
+            sortIndex = columnIndex;
+          });
+        },
+      ),
+    ];
   }
 }
 

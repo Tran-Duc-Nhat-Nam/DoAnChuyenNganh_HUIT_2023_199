@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../Model/dac_san.dart';
 import '../../Model/vung_mien.dart';
-import '../../Service/thu_vien_api.dart';
 import '../../Widget/thong_bao_xac_nhan_thoat.dart';
 import '../../main.dart';
 import '../hinh_cache.dart';
@@ -75,7 +74,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
         headerVungMien(vungMien),
         DacSanList(
             lstDacSan: lstDacSan
-                .where((dacSan) => dacSan.idMien == vungMien.idMien)
+                .where((dacSan) => dacSan.idVungMien == vungMien.idVungMien)
                 .toList()),
       ],
     );
@@ -104,11 +103,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
           padding: const EdgeInsets.only(
             bottom: 10,
           ),
-          child: DacSanList(
-              lstDacSan: dsDacSan
-                  .where((dacSan) => dsDacSanNoiBat
-                      .any((element) => element.idDacSan == dacSan.idDacSan))
-                  .toList()),
+          child: DacSanList(lstDacSan: dsDacSan.sublist(0, 5)),
         ),
       ],
     );
@@ -143,7 +138,12 @@ class _TrangDacSanState extends State<TrangDacSan> {
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: HinhCache(getURLImage(dsDacSan[i].avatar!), 150),
+                  child: HinhCache(
+                      dsHinhAnh
+                          .firstWhere((element) =>
+                              element.idAnh == dsDacSan[i].idHinhDaiDien!)
+                          .link,
+                      150),
                 ),
               ),
             ),
@@ -229,7 +229,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
                               selectedChip = loaiDacSan.tenLoai;
                               lstDacSan = dsDacSan
                                   .where((dacSan) =>
-                                      dacSan.loaiDacSan == loaiDacSan.idLoai)
+                                      dacSan.idLoai == loaiDacSan.idLoai)
                                   .toList();
                             });
                           },
@@ -253,7 +253,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
       padding: const EdgeInsets.all(10.0),
       child: Row(
         children: <Widget>[
-          Text(vungMien.tenMien,
+          Text(vungMien.tenVungMien,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.lightBlue,
@@ -263,7 +263,7 @@ class _TrangDacSanState extends State<TrangDacSan> {
             onPressed: () {
               context.goNamed(
                 "timKiem",
-                queryParameters: {"vungMien": vungMien.idMien.toString()},
+                queryParameters: {"vungMien": vungMien.idVungMien.toString()},
               );
             },
             child: const Text("Xem thêm",
@@ -313,7 +313,12 @@ class DacSanList extends StatelessWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
                               child: HinhCache(
-                                  getURLImage(lstDacSan[index].avatar!), 150),
+                                  dsHinhAnh
+                                      .firstWhere((element) =>
+                                          element.idAnh ==
+                                          lstDacSan[index].idHinhDaiDien!)
+                                      .link,
+                                  150),
                             ),
                           ),
                           const SizedBox(height: 15),
@@ -323,7 +328,7 @@ class DacSanList extends StatelessWidget {
                                 fontSize: 15,
                               )),
                           Text(
-                            'Xuất xứ: ${getTenTinh(lstDacSan[index].xuatXu)}',
+                            'Xuất xứ: ${dsTinhThanh.firstWhere((element) => element.idTinhThanh == lstDacSan[index].idTinhThanh).tenTinhThanh}',
                           ),
                         ],
                       ),

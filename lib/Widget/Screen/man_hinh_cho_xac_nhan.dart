@@ -49,7 +49,7 @@ class _ManHinhChoXacNhanState extends State<ManHinhChoXacNhan> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                  vertical: 35,
+                  vertical: 50,
                 ),
                 child: LoadingAnimationWidget.discreteCircle(
                     color: Colors.cyan, size: 100),
